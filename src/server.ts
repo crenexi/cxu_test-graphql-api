@@ -1,29 +1,25 @@
-require('dotenv-safe').config();
 import 'reflect-metadata';
-// import { ApolloServer, ApolloError } from "apollo-server-express";
-// import { v4 } from "uuid";
+import dotEnvSafe from 'dotenv-safe';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import path from 'path';
-import errorHandler from "errorhandler";
+import errorHandler from 'errorhandler';
+// import { ApolloServer, ApolloError } from "apollo-server-express";
+// import { v4 } from "uuid";
 import accessLogger from './middlewares/access-logger';
-// import serverConfig from './config/server-config';
-import apiRouter from './api';
+// import config from './config';
+import apiController from './api';
 
-// Load dot-env
-dotEnv.config();
+// Load environment variables as soon as possible
+dotEnvSafe.config();
 
 // Environment
 const env = process.env.NODE_ENV || 'development';
 const isProduction = env === 'production';
-const isDevelopment = env === 'development';
-
-// Configuration values
-// const { dbName } = config;
+// const isDevelopment = env === 'development';
 
 // Database URI
-// const defaultDbUri = `mongodb://localhost:27017/${dbName}`;
 // const dbUri = process.env.DB_URI || defaultDbUri;
 
 // Create application
@@ -48,7 +44,7 @@ app.use(accessLogger({
 }));
 
 // Routes setup
-app.use('/', apiRouter);
+app.use('/', apiController);
 
 // Create server and listen
 app.set('port', port);

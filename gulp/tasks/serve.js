@@ -8,7 +8,7 @@ const wwwScript = './dist/bin/www';
 const startDevServer = (started) => {
   // Avoid nodemon being started multiple times
   if (!started) {
-    started = true; // eslint-disable-line
+    started = true;
   }
 };
 
@@ -22,20 +22,18 @@ const restartNodemon = (done) => {
 const serveDev = (done) => {
   const started = false;
 
-  const options = {
-    nodemon: {
-      done,
-      env: {
-        NODE_ENV: 'development',
-      },
-      script: wwwScript,
-      exec: "npm start",
-      watch: ["src"],
-      ext: 'ts',
+  const nodemonOpts = {
+    done,
+    env: {
+      NODE_ENV: 'development',
     },
-  };
+    script: wwwScript,
+    ext: 'ts js json',
+    exec: "ts-node src/server.ts",
+    watch: ["src"],
+  },
 
-  return gulpNodemon(options.nodemon)
+  return gulpNodemon(nodemonOpts)
     .on('start', () => startDevServer(started))
     .on('crash', () => {
       logger.error('APPLICATION HAS CRASHED!');
