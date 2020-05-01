@@ -1,6 +1,8 @@
 {
   "name": "webb-universe-api",
   "version": "0.1.0",
+  "repository": {},
+  "license": "UNLICENSED",
   "scripts": {
     "lint": "gulp lint",
     "start": "npm run serve",
