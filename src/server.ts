@@ -1,14 +1,10 @@
-import debug from 'debug';
+import debugLib from 'debug';
 import http from 'http';
 import log from 'fancy-log';
 import chalk from 'chalk';
 import app from './app';
 
-// Debug
-debug('express:server');
-
-// Boostrap application
-app.bootstrap();
+const debug = debugLib('express:server');
 
 /** Normalize port */
 const normalizePort = (val: number | string) => {
@@ -36,6 +32,7 @@ const onListening = () => {
 
   const msgStr = `Magic now at ${bind}`;
   log(chalk.blue.bold(msgStr));
+  debug(msgStr);
 };
 
 /** Server error */
@@ -52,10 +49,12 @@ const onError = (err: NodeJS.ErrnoException) => {
   switch (err.code) {
     case 'EACCES':
       log(chalk.red.bold(privilegesMsg));
+      debug(privilegesMsg);
       process.exit(1);
       break;
     case 'EADDRINUSE':
       log(chalk.red.bold(inUseMessage));
+      debug(inUseMessage);
       process.exit(1);
       break;
     default:

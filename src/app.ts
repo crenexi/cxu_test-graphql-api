@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import dotEnvSafe from 'dotenv-safe';
 import express from 'express';
+import debugLib from 'debug';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 // import path from 'path';
@@ -8,10 +9,10 @@ import errorHandler from 'errorhandler';
 // import { ApolloServer, ApolloError } from "apollo-server-express";
 // import { v4 } from "uuid";
 // import accessLogger from './middlewares/access-logger';
-import logger from './services/logger';
 // import config from './config';
 import apiController from './api';
 
+const debug = debugLib('express:app');
 const app = express();
 
 // Environment
@@ -64,12 +65,12 @@ const initControllers = () => {
 // ### Bootstrap ############
 // ##########################
 
-logger.info('Bootstrapping app...');
+debug('Bootstrapping app...');
 
 initDatabase();
 initMiddlewares();
 initControllers();
 
-logger.info('App boostrap complete');
+debug('App boostrap complete');
 
 export default app;
