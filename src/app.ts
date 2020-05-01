@@ -49,4 +49,4 @@ app.use('/', apiController);
 // Create server and listen
 app.set('port', port);
 
-module.exports = app;
+export default app;

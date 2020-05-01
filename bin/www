@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 'use strict';
 
-const app = require('../dist/server');
+const app = require('../dist/app');
 const debug = require('debug')('express:server');
 const http = require('http');
 const log = require('fancy-log');

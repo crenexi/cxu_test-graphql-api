@@ -13,11 +13,6 @@
     "pm2:info": "pm2 describe api.webbuniverse.com",
     "pm2:logs": "pm2 logs api.webbuniverse.com"
   },
-  "_moduleAliases": {
-    "@config": "config",
-    "@endpoints": "api/endpoints",
-    "@services": "api/services"
-  },
   "devDependencies": {
     "@types/cors": "^2.8.6",
     "@types/dotenv-safe": "^8.1.0",

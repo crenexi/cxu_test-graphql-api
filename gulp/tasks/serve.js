@@ -29,7 +29,7 @@ const serveDev = (done) => {
     },
     script: wwwScript,
     ext: 'ts js json',
-    exec: "ts-node src/server.ts",
+    exec: "ts-node src/app.ts",
     watch: ["src"],
   },
 
