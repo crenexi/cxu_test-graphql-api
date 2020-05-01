@@ -1,1 +1,5 @@
+node_modules
+bin
+dist
 gulpfile.js
+gulp/**/*.js

@@ -1,4 +1,7 @@
-import dogEnv from 'dotenv';
+require('dotenv-safe').config();
+import 'reflect-metadata';
+// import { ApolloServer, ApolloError } from "apollo-server-express";
+// import { v4 } from "uuid";
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
@@ -9,7 +12,7 @@ import accessLogger from './middlewares/access-logger';
 import apiRouter from './api';
 
 // Load dot-env
-dogEnv.config();
+dotEnv.config();
 
 // Environment
 const env = process.env.NODE_ENV || 'development';

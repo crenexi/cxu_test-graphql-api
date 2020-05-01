@@ -1,18 +1,7 @@
 {
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
-  },
-  "settings": {
-    "import/resolver": {
-      "alias": [
-        ["@config", "./config"],
-        ["@endpoints", "./api/endpoints"],
-        ["@services", "./api/services"]
-      ]
-    }
-  },
+  "root": true,
   "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "extends": [
     "plugin:@typescript-eslint/recommended",
     "airbnb-base"
@@ -22,6 +11,19 @@
     "node": true,
     "browser": true,
     "commonjs": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"],
+        "extensions": [".js", ".ts"]
+      },
+      "alias": [
+        ["@config", "./config"],
+        ["@endpoints", "./api/endpoints"],
+        ["@services", "./api/services"]
+      ]
+    }
   },
   "rules": {
     "no-unused-vars": 1,
@@ -57,6 +59,7 @@
       "ExportDeclaration": { "minProperties": 7, "multiline": true, "consistent": true }
     }],
     "no-shadow": 0,
+    "import/extensions": [2, "never"],
     "import/newline-after-import": 0,
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": 1,
