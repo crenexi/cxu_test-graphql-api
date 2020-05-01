@@ -2,7 +2,7 @@ const gulpNodemon = require('gulp-nodemon');
 const nodemon = require('nodemon');
 const stream = require('stream');
 const logger = require('../logger');
-const wwwScript = './bin/www';
+const wwwScript = './dist/bin/www';
 
 /** Starts development server */
 const startDevServer = (started) => {
@@ -13,7 +13,7 @@ const startDevServer = (started) => {
 };
 
 /** Restarts nodemon */
-function restartNodemon(done) {
+const restartNodemon = (done) => {
   nodemon.emit('restart');
   done();
 }
@@ -29,7 +29,9 @@ const serveDev = (done) => {
         NODE_ENV: 'development',
       },
       script: wwwScript,
-      ext: 'js json html ejs',
+      exec: "npm start",
+      watch: ["src"],
+      ext: 'ts',
     },
   };
 

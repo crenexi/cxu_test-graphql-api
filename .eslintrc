@@ -1,5 +1,8 @@
 {
-  "parserOptions": {},
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
   "settings": {
     "import/resolver": {
       "alias": [
@@ -9,7 +12,11 @@
       ]
     }
   },
-  "extends": ["airbnb-base"],
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "plugin:@typescript-eslint/recommended",
+    "airbnb-base"
+  ],
   "env": {
     "es6": true,
     "node": true,
@@ -50,6 +57,14 @@
       "ExportDeclaration": { "minProperties": 7, "multiline": true, "consistent": true }
     }],
     "no-shadow": 0,
-    "import/newline-after-import": 0
+    "import/newline-after-import": 0,
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-explicit-any": 1,
+    "@typescript-eslint/no-inferrable-types": [
+      "warn", {
+        "ignoreParameters": true
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": "warn"
   }
 }

@@ -10,7 +10,7 @@ class LoggerService {
     const consoleTransport = (() => new winston.transports.Console())();
 
     // Creates File log tranport
-    // const logFileName = `./logs/general.log`;
+    // const logFileName = `../logs/general.log`;
     // const fileTransport = () => new winston.transports.File({ logFileName });
 
     // Format method
