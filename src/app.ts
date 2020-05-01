@@ -3,11 +3,11 @@ import dotEnvSafe from 'dotenv-safe';
 import express from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-import path from 'path';
+// import path from 'path';
 import errorHandler from 'errorhandler';
 // import { ApolloServer, ApolloError } from "apollo-server-express";
 // import { v4 } from "uuid";
-import accessLogger from './middlewares/access-logger';
+// import accessLogger from './middlewares/access-logger';
 // import config from './config';
 import apiController from './api';
 
@@ -39,9 +39,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Setup logger middleware
-app.use(accessLogger({
-  logDir: path.join(__dirname, '../logs'),
-}));
+// app.use(accessLogger({
+//   logDir: path.join(__dirname, '../logs'),
+// }));
 
 // Routes setup
 app.use('/', apiController);
