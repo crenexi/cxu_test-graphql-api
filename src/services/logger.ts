@@ -1,8 +1,17 @@
-const winston = require('winston');
+import winston from 'winston';
 
 const dateFormat = () => new Date(Date.now()).toUTCString();
 
+interface LogOpts {
+  type: string;
+  message: string;
+  obj?: null | object;
+}
+
 class LoggerService {
+  logData: null | object;
+  logger: winston.Logger;
+
   constructor() {
     this.logData = null;
 
@@ -28,29 +37,45 @@ class LoggerService {
     });
   }
 
-  setLogData(logData) {
+  /** Sets the log data */
+  setLogData(logData: null | object) {
     this.logData = logData;
   }
 
-  log(type, message, obj) {
-    if (obj !== null) {
+  /** Info log */
+  async info(
+    message: string,
+    obj: null | object = null,
+  ) {
+    this.log({ message, obj, type: 'info' });
+  }
+
+  /** Debug log */
+  async debug(
+    message: string,
+    obj: null | object = null,
+  ) {
+    this.log({ message, obj, type: 'debug' });
+  }
+
+  /** Error log */
+  async error(
+    message: string,
+    obj: null | object = null,
+  ) {
+    this.log({ message, obj, type: 'error' });
+  }
+
+  /** Helper */
+  private log(opts: LogOpts) {
+    const { type, message, obj } = opts;
+
+    if (obj != null) {
       this.logger.log(type, message, { obj });
     } else {
       this.logger.log(type, message);
     }
   }
-
-  async info(message, obj = null) {
-    this.log('info', message, obj);
-  }
-
-  async debug(message, obj = null) {
-    this.log('debug', message, obj);
-  }
-
-  async error(message, obj = null) {
-    this.log('error', message, obj);
-  }
 }
 
-module.exports = LoggerService;
+export default new LoggerService();

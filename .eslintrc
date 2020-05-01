@@ -61,6 +61,7 @@
     "no-shadow": 0,
     "import/extensions": [2, "never"],
     "import/newline-after-import": 0,
+    "lines-between-class-members": [2, "always", { "exceptAfterSingleLine": true }],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": 1,
     "@typescript-eslint/no-inferrable-types": [

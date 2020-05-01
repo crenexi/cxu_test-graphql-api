@@ -8,45 +8,68 @@ import errorHandler from 'errorhandler';
 // import { ApolloServer, ApolloError } from "apollo-server-express";
 // import { v4 } from "uuid";
 // import accessLogger from './middlewares/access-logger';
+import logger from './services/logger';
 // import config from './config';
 import apiController from './api';
 
-// Load environment variables as soon as possible
-dotEnvSafe.config();
+const app = express();
 
 // Environment
+dotEnvSafe.config();
 const env = process.env.NODE_ENV || 'development';
 const isProduction = env === 'production';
 // const isDevelopment = env === 'development';
 
-// Database URI
-// const dbUri = process.env.DB_URI || defaultDbUri;
+// ##########################
+// ### Database #############
+// ##########################
 
-// Create application
-const port = process.env.PORT || '3000';
-const app = express();
+const initDatabase = () => {
+  // Database URI
+  // const dbUri = process.env.DB_URI || defaultDbUri;
+};
 
-// Use error handler if not production
-if (!isProduction) {
-  app.use(errorHandler());
-}
+// ##########################
+// ### Middlewares ##########
+// ##########################
 
-// CORS configuration
-app.use(cors());
+const initMiddlewares = () => {
+  // Error handler if not production
+  if (!isProduction) {
+    app.use(errorHandler());
+  }
 
-// Setup body parser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+  // CORS
+  app.use(cors());
 
-// Setup logger middleware
-// app.use(accessLogger({
-//   logDir: path.join(__dirname, '../logs'),
-// }));
+  // Body parser
+  app.use(bodyParser.json());
+  app.use(bodyParser.urlencoded({ extended: false }));
 
-// Routes setup
-app.use('/', apiController);
+  // Setup logger middleware
+  // app.use(accessLogger({
+  //   logDir: path.join(__dirname, '../logs'),
+  // }));
+};
 
-// Create server and listen
-app.set('port', port);
+// ##########################
+// ### Controllers ##########
+// ##########################
+
+const initControllers = () => {
+  app.use('/', apiController);
+};
+
+// ##########################
+// ### Bootstrap ############
+// ##########################
+
+logger.info('Bootstrapping app...');
+
+initDatabase();
+initMiddlewares();
+initControllers();
+
+logger.info('App boostrap complete');
 
 export default app;
