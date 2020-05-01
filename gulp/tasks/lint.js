@@ -8,7 +8,7 @@ const esLintOpts = {
 
 /** Lints server JS */
 const lint = () => {
-  logger.message('Linting Server', 'blue.bold');
+  logger.info('Linting Server', 'blue.bold');
 
   return gulp.src([`src/**/*.ts`])
     .pipe(eslint(esLintOpts))

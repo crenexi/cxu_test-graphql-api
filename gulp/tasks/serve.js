@@ -16,7 +16,7 @@ const startDevServer = (started) => {
 const restartNodemon = (done) => {
   nodemon.emit('restart');
   done();
-}
+};
 
 /** Serves development server */
 const serveDev = (done) => {
@@ -29,9 +29,9 @@ const serveDev = (done) => {
     },
     script: wwwScript,
     ext: 'ts js json',
-    exec: "ts-node src/app.ts",
-    watch: ["src"],
-  },
+    exec: 'ts-node src/app.ts',
+    watch: ['src'],
+  };
 
   return gulpNodemon(nodemonOpts)
     .on('start', () => startDevServer(started))
