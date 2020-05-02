@@ -3,13 +3,14 @@ import express from 'express';
 import debugLib from 'debug';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import methodOverride from 'method-override';
 import path from 'path';
 import errorHandler from 'errorhandler';
 // import { ApolloServer, ApolloError } from "apollo-server-express";
 // import { v4 } from "uuid";
 import accessLogger from './middlewares/access-logger';
 // import config from './config';
-import apiController from './api/api.controller';
+import apiRouter from './api/api.router';
 
 const app = express();
 const debug = debugLib('express:app');
@@ -50,8 +51,9 @@ const initMiddlewares = () => {
   app.use(cors());
 
   // Body parser
-  app.use(bodyParser.json());
+  app.use(bodyParser.json({ type: 'application/json' }));
   app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(methodOverride('X-HTTP-Method-Override'));
 
   // Setup logger middleware if prod or debug
   if (isProduction || debugging) {
@@ -59,14 +61,6 @@ const initMiddlewares = () => {
       logDir: path.join(__dirname, '../logs'),
     }));
   }
-};
-
-// ##########################
-// ### Controllers ##########
-// ##########################
-
-const initControllers = () => {
-  app.use('/', apiController);
 };
 
 // ##########################
@@ -78,7 +72,7 @@ debug('Bootstrapping app...');
 initApp();
 initDatabase();
 initMiddlewares();
-initControllers();
+app.use(apiRouter());
 
 debug('App boostrap complete');
 
