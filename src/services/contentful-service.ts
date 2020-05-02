@@ -1,6 +1,14 @@
-const contentful = require('contentful');
+import contentful from 'contentful';
 
-const fetchEntries = async ({ space, accessToken, query }) => {
+interface FetchEntriesOpts {
+  space: string;
+  accessToken: string;
+  query?: string;
+}
+
+const fetchEntries = async (opts: FetchEntriesOpts) => {
+  const { space, accessToken, query } = opts;
+
   // Ensure we have the space and token
   if (!space || !accessToken) {
     throw new Error('Must supply space and accessToken to Contentful');
@@ -22,4 +30,4 @@ const contentfulService = () => ({
   fetchEntries,
 });
 
-module.exports = contentfulService;
+export default contentfulService;

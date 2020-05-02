@@ -2,39 +2,42 @@ const gulpNodemon = require('gulp-nodemon');
 const nodemon = require('nodemon');
 const stream = require('stream');
 const logger = require('../logger');
-const wwwScript = './bin/www';
 
 /** Starts development server */
-const startDevServer = (started) => {
+const startDevServer = (started, done) => {
   // Avoid nodemon being started multiple times
   if (!started) {
-    started = true; // eslint-disable-line
+    started = true;
   }
+
+  // Ensure a graceful exit
+  process.on('SIGINT', () => process.exit(1));
+  done();
 };
 
 /** Restarts nodemon */
-function restartNodemon(done) {
+const restartNodemon = (done) => {
   nodemon.emit('restart');
   done();
-}
+};
 
 /** Serves development server */
 const serveDev = (done) => {
   const started = false;
 
-  const options = {
-    nodemon: {
-      done,
-      env: {
-        NODE_ENV: 'development',
-      },
-      script: wwwScript,
-      ext: 'js json html ejs',
+  const nodemonOpts = {
+    done,
+    env: {
+      NODE_ENV: 'development',
     },
+    watch: ['src'],
+    ignore: ['src/**/*.spec.ts'],
+    ext: 'ts js json',
+    exec: 'ts-node ./src/server.ts',
   };
 
-  return gulpNodemon(options.nodemon)
-    .on('start', () => startDevServer(started))
+  return gulpNodemon(nodemonOpts)
+    .on('start', () => startDevServer(started, done))
     .on('crash', () => {
       logger.error('APPLICATION HAS CRASHED!');
       stream.emit('restart', 10);
