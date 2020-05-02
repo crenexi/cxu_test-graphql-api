@@ -9,7 +9,10 @@ import errorHandler from 'errorhandler';
 // import { v4 } from "uuid";
 import accessLogger from './middlewares/access-logger';
 // import config from './config';
-import apiController from './api';
+import apiController from './api/api.controller';
+
+const app = express();
+const debug = debugLib('express:app');
 
 // Environment
 const env = process.env.NODE_ENV || 'development';
@@ -17,15 +20,19 @@ const isProduction = env === 'production';
 // const isDevelopment = env === 'development';
 const debugging = !!process.env.DEBUG;
 
-const debug = debugLib('express:app');
-const app = express();
+// ##########################
+// ### App setup ############
+// ##########################
+
+const initApp = () => {
+  app.set('view engine', 'ejs');
+};
 
 // ##########################
 // ### Database #############
 // ##########################
 
 const initDatabase = () => {
-  // Database URI
   // const dbUri = process.env.DB_URI || defaultDbUri;
 };
 
@@ -68,6 +75,7 @@ const initControllers = () => {
 
 debug('Bootstrapping app...');
 
+initApp();
 initDatabase();
 initMiddlewares();
 initControllers();

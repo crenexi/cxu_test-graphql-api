@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
+import path from 'path';
 
 const indexController = (_: Request, res: Response) => {
-  // res.render('./index.view.ejs');
-  res.json({ message: 'Hello World' });
+  res.render(path.join(__dirname, 'api.view.ejs'));
+  // res.json({ message: 'Hello World' });
 };
 
 export default indexController;
