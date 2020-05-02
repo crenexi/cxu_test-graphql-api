@@ -14,15 +14,7 @@
   },
   "settings": {
     "import/resolver": {
-      "node": {
-        "paths": ["src"],
-        "extensions": [".js", ".ts"]
-      },
-      "alias": [
-        ["@config", "./config"],
-        ["@endpoints", "./api/endpoints"],
-        ["@services", "./api/services"]
-      ]
+      "typescript": {}
     }
   },
   "rules": {

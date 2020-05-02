@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
-import path from 'path';
+import getSemVer from '@helpers/get-sem-ver';
 
 const indexController = (_: Request, res: Response) => {
-  res.render(path.join(__dirname, 'api.view.ejs'));
+  console.log(getSemVer());
+  res.render('pages/index.ejs');
 };
 
 export default indexController;
