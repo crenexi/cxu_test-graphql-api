@@ -69,7 +69,7 @@
     "reflect-metadata": "^0.1.13",
     "request": "^2.88.2",
     "rfs": "^9.0.2",
-    "rotating-file-stream": "^2.0.2",
+    "rotating-file-stream": "^2.1.0",
     "stream": "0.0.2",
     "type-graphql": "^0.17.6",
     "typeorm": "^0.2.24",

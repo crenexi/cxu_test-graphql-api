@@ -1,25 +1,24 @@
 import 'reflect-metadata';
-import dotEnvSafe from 'dotenv-safe';
 import express from 'express';
 import debugLib from 'debug';
 import cors from 'cors';
 import bodyParser from 'body-parser';
-// import path from 'path';
+import path from 'path';
 import errorHandler from 'errorhandler';
 // import { ApolloServer, ApolloError } from "apollo-server-express";
 // import { v4 } from "uuid";
-// import accessLogger from './middlewares/access-logger';
+import accessLogger from './middlewares/access-logger';
 // import config from './config';
 import apiController from './api';
 
-const debug = debugLib('express:app');
-const app = express();
-
 // Environment
-dotEnvSafe.config();
 const env = process.env.NODE_ENV || 'development';
 const isProduction = env === 'production';
 // const isDevelopment = env === 'development';
+const debugging = !!process.env.DEBUG;
+
+const debug = debugLib('express:app');
+const app = express();
 
 // ##########################
 // ### Database #############
@@ -47,10 +46,12 @@ const initMiddlewares = () => {
   app.use(bodyParser.json());
   app.use(bodyParser.urlencoded({ extended: false }));
 
-  // Setup logger middleware
-  // app.use(accessLogger({
-  //   logDir: path.join(__dirname, '../logs'),
-  // }));
+  // Setup logger middleware if prod or debug
+  if (isProduction || debugging) {
+    app.use(accessLogger({
+      logDir: path.join(__dirname, '../logs'),
+    }));
+  }
 };
 
 // ##########################

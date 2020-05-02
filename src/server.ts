@@ -1,3 +1,6 @@
+/* eslint import/first: 0 */
+import dotEnvSafe from 'dotenv-safe';
+dotEnvSafe.config();
 import debugLib from 'debug';
 import http from 'http';
 import log from 'fancy-log';
