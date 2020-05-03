@@ -9,21 +9,6 @@ colorMagenta=$'\e[1;35m'
 colorCyan=$'\e[1;36m'
 colorEnd=$'\e[0m'
 
-function approveRelease {
-  # Lint project
-  gulp lint
-
-  # Release confirmation
-  printf "\n${colorGreen}READY TO RELEASE${colorEnd}\n"
-  printf "\n${colorRed}/!\ YOU'RE ABOUT TO RELEASE VERSION ${version}${colorEnd}\n"
-  read -p "Are you sure to proceed? " -n 1 -r
-  if [[ ! $REPLY =~ ^[Yy]$ ]]
-  then
-    printf "${colorYellow}Cancelled release${colorEnd}\n\n"
-    exit 1
-  fi
-}
-
 function recentVersion {
   version=$(cat package.json \
     | grep version \
@@ -31,6 +16,29 @@ function recentVersion {
     | awk -F: '{ print $2 }' \
     | sed 's/[",]//g' \
     | tr -d '[[:space:]]')
+}
+
+function confirmRelease {
+  while true; do
+    read -p "Are you sure to proceed? " yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* )
+          printf "${colorYellow}Cancelled release${colorEnd}\n\n"
+          exit 1;;
+        * ) echo "Please answer yes or no.";;
+    esac
+  done
+}
+
+function approveRelease {
+  # Lint project
+  gulp lint
+
+  # Release confirmation
+  printf "\n${colorGreen}READY TO RELEASE${colorEnd}\n"
+  printf "\n${colorRed}/!\ YOU'RE ABOUT TO RELEASE VERSION ${version}${colorEnd}\n"
+  confirmRelease
 }
 
 function finishRelease {
