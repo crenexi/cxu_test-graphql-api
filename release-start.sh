@@ -28,6 +28,19 @@ function approveBump {
   printf "Current Version: ${colorMagenta}${version}${colorEnd}\n\n"
 }
 
+function confirmVersion {
+  while true; do
+    read -p $("You entered version '${newVersion}'. Proceed? [Y/N] ") yn
+    case $yn in
+        [Yy]* ) break;;
+        [Nn]* )
+          printf "${colorYellow}Cancelled${colorEnd}\n\n"
+          exit 1;;
+        * ) echo "Please answer yes or no.";;
+    esac
+  done
+}
+
 function promptVersion {
   read -p "Enter new semantic version: " newVersion
 
@@ -36,6 +49,8 @@ function promptVersion {
     printf "${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}\n\n"
     exit 1
   fi
+
+  confirmVersion
 }
 
 function bumpPackageJson {
