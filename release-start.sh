@@ -42,6 +42,7 @@ function promptVersion {
 
 function bumpPackageJson {
 	output=$(npm version ${input} --no-git-tag-version)
+  echo output;
 	newVersion=${output:1}
 }
 
