@@ -9,11 +9,21 @@ function bump {
 }
 
 function help {
-	echo "Usage: $(basename $0) [<newversion> | major | minor | patch | premajor | preminor | prepatch | prerelease]"
+	echo "
+    When prompted for semver, must supply one of:
+      <newversion>
+      major
+      minor
+      patch
+      premajor
+      preminor
+      prepatch
+      prerelease
+  "
 }
 
 # Help
-if [ "$release" = "help" ]; then
+if [ "$1" = "help" ]; then
   help
   exit
 fi
@@ -31,6 +41,7 @@ if [ -d ".git" ]; then
 
     # Ensure something was entered
     if [ -z "$release" ]; then
+  		echo "No version entered. Exiting."
       help
       exit
     fi
