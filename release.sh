@@ -29,7 +29,7 @@ function recentVersion {
 }
 
 function promptVersion {
-  read -p "SEMVER: " release
+  read -p "Enter bump type or new semantic version: " release
 
   # Ensure something was entered
   if [ -z "$release" ]; then
