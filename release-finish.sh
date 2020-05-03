@@ -9,7 +9,7 @@ colorMagenta=$'\e[1;35m'
 colorCyan=$'\e[1;36m'
 colorEnd=$'\e[0m'
 
-function recentVersion {
+function readVersion {
   version=$(cat package.json \
     | grep version \
     | head -1 \
@@ -41,10 +41,18 @@ function approveRelease {
   confirmRelease
 }
 
+function pushMasterDevelopTags {
+	# git push origin --tags
+  # git checkout master
+  # git push
+  # git checkout develop
+  # git push
+  echo 'testing push...'
+}
+
 function finishRelease {
   # git flow release finish ${version}
-	# git push origin --tags
-  echo 'testing finish release...'
+  pushMasterDevelopTags
 }
 
 # Check for unstaged commits
@@ -52,7 +60,7 @@ if [ -d ".git" ]; then
 	changes=$(git status --porcelain)
 
 	if [ -z "${changes}" ]; then
-    recentVersion
+    readVersion
     approveRelease
     finishRelease
 	else

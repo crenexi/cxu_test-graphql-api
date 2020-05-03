@@ -9,15 +9,7 @@ colorMagenta=$'\e[1;35m'
 colorCyan=$'\e[1;36m'
 colorEnd=$'\e[0m'
 
-function approveBump {
-  # Lint project
-  gulp lint
-
-  # No errors; proceed
-  printf "\n${colorGreen}READY TO START RELEASE${colorEnd}\n"
-}
-
-function recentVersion {
+function readVersion {
   currVer=$(cat package.json \
     | grep version \
     | head -1 \
@@ -25,14 +17,23 @@ function recentVersion {
     | sed 's/[",]//g' \
     | tr -d '[[:space:]]')
 
-  printf "${colorMagenta}${currVer}${colorEnd}\n\n"
+}
+
+function approveBump {
+  # Lint project
+  gulp lint
+
+  # No errors; proceed
+  readVersion
+  printf "\n${colorGreen}READY TO START RELEASE${colorEnd}\n"
+  printf "Current Version: ${colorMagenta}${currVer}${colorEnd}\n\n"
 }
 
 function promptVersion {
-  read -p "Enter bump type or new semantic version: " release
+  read -p "Enter bump type or new semantic version: " newVersion
 
   # Ensure something was entered
-  if [ -z "$release" ]; then
+  if [ -z "$newVersion" ]; then
     printf "\n${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}\n"
     help
     exit
@@ -40,18 +41,14 @@ function promptVersion {
 }
 
 function bumpPackageJson {
-	output=$(npm version ${release} --no-git-tag-version)
+	output=$(npm version ${newVersion} --no-git-tag-version)
 	version=${output:1}
 	search='("version":[[:space:]]*").+(")'
 	replace="\1${version}\2"
 }
 
-function bumpVersion {
-	bumpPackageJson
-  git add .
-	git commit -m "Bump to ${version}"
-	git tag -a "${output}" -m "${version}"
-	git push origin --tags
+function startRelease {
+  git flow release start $newVersion
 }
 
 function help {
@@ -70,9 +67,9 @@ if [ -d ".git" ]; then
 
 	if [ -z "${changes}" ]; then
     approveBump
-    recentVersion
     promptVersion
-    bumpVersion
+  	bumpPackageJson
+    startRelease
 	else
 		echo "Please commit staged files prior to bumping"
 	fi
