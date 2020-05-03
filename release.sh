@@ -39,7 +39,7 @@ if [ -d ".git" ]; then
 
     # Ensure something was entered
     if [ -z "$release" ]; then
-      printf "%s\n\n" "${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}" "\n\n"
+      printf "\n${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}"
       help
       exit
     fi
