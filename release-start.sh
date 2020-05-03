@@ -16,7 +16,6 @@ function readVersion {
     | awk -F: '{ print $2 }' \
     | sed 's/[",]//g' \
     | tr -d '[[:space:]]')
-
 }
 
 function approveBump {
@@ -41,12 +40,12 @@ function promptVersion {
 }
 
 function bumpPackageJson {
-	output=$(npm version ${inputVersion} --no-git-tag-version)
-	newVersion=${output:1}
+	$(npm version ${inputVersion} --no-git-tag-version)
+  readVersion
 }
 
 function startRelease {
-  git flow release start $newVersion
+  $(git flow release start $currVer)
 }
 
 function help {
