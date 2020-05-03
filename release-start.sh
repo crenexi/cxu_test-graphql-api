@@ -68,8 +68,8 @@ if [ -d ".git" ]; then
 	if [ -z "${changes}" ]; then
     approveBump
     promptVersion
-  	bumpPackageJson
     startRelease
+  	bumpPackageJson
 	else
 		echo "Please commit staged files prior to bumping"
 	fi
