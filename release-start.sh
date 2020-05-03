@@ -58,6 +58,7 @@ function bumpPackageJson {
 	npm version $newVersion --no-git-tag-version
   git add .
   git commit -m "Bumped version to ${newVersion}"
+  printf "${colorGreen}BUMPED VERSION TO ${newVersion}${colorEnd}\n\n"
 }
 
 function startRelease {
