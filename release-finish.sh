@@ -43,7 +43,11 @@ function approveRelease {
 
 function finishRelease {
   # Finishes the release and tags
-  git flow release finish ${version}
+  export GIT_MERGE_AUTOEDIT=no
+  git flow release finish -m 'Merge' ${version}
+  unset GIT_MERGE_AUTOEDIT
+
+  # Push updated tags
 	git push origin --tags
 
   printf "\n${colorGreen}RELEASED ${version} AND PUSHED TAGS!${colorEnd}\n"
