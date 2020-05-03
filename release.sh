@@ -1,6 +1,14 @@
 #!/bin/bash
 set -e
 
+function setColorNormal {
+  printf(“\033[0m”);
+}
+
+function setColorError {
+  printf(“\033[0;31m”);
+}
+
 function bump {
 	output=$(npm version ${release} --no-git-tag-version)
 	version=${output:1}
@@ -31,7 +39,9 @@ if [ -d ".git" ]; then
 
     # Ensure something was entered
     if [ -z "$release" ]; then
-  		printf "\nNO VERSION SUPPLIED. EXITING.\n"
+      setColorError
+  		printf "\n/!\ NO VERSION SUPPLIED. EXITING.\n"
+      setColorNormal
       help
       exit
     fi
