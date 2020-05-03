@@ -30,10 +30,10 @@ function approveBump {
 }
 
 function promptVersion {
-  read -p "Enter bump type or new semantic version: " input
+  read -p "Enter bump type or new semantic version: " inputVersion
 
   # Ensure something was entered
-  if [ -z "$input" ]; then
+  if [ -z "$inputVersion" ]; then
     printf "\n${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}\n"
     help
     exit
@@ -41,8 +41,7 @@ function promptVersion {
 }
 
 function bumpPackageJson {
-	output=$(npm version ${input} --no-git-tag-version)
-  echo output;
+	output=$(npm version ${inputVersion} --no-git-tag-version)
 	newVersion=${output:1}
 }
 
