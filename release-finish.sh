@@ -37,20 +37,20 @@ function approveRelease {
 
   # Release confirmation
   printf "\n${colorGreen}READY TO RELEASE${colorEnd}\n"
-  printf "\n${colorYellow}/!\ YOU'RE ABOUT TO RELEASE VERSION ${version}${colorEnd}\n"
+  printf "\n${colorYellow}/!\ YOU'RE ABOUT TO RELEASE v${version}${colorEnd}\n"
   confirmRelease
 }
 
 function finishRelease {
   # Finishes the release and tags
   export GIT_MERGE_AUTOEDIT=no
-  git flow release finish -m 'Merge' ${version}
+  git flow release finish -m 'Merge' v${version}
   unset GIT_MERGE_AUTOEDIT
 
   # Push updated tags
 	git push origin --tags
 
-  printf "\n${colorGreen}RELEASED ${version} AND PUSHED TAGS!${colorEnd}\n\n"
+  printf "\n${colorGreen}RELEASED v${version} AND PUSHED TAGS!${colorEnd}\n\n"
 }
 
 # Check for unstaged commits
