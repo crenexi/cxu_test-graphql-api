@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 0.1.2 - 2020-05-03
+### CHANGES
+- Testing API
+
 ## 0.1.1 - 2020-05-02
 ### Added
 - Initial starting point
