@@ -22,6 +22,7 @@
     "@api": "src/api"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.6",
     "@types/dotenv-safe": "^8.1.0",
     "@types/errorhandler": "^1.5.0",
@@ -56,6 +57,7 @@
     "body-parser": "^1.19.0",
     "chalk": "^3.0.0",
     "contentful": "^7.14.0",
+    "cookie-parser": "^1.4.5",
     "core-util-is": "^1.0.2",
     "cors": "^2.8.5",
     "dataloader": "^2.0.0",

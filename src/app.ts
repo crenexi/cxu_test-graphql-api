@@ -4,6 +4,7 @@ import express from 'express';
 import debugLib from 'debug';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
 import path from 'path';
 import errorHandler from 'errorhandler';
@@ -47,10 +48,11 @@ const initMiddlewares = (app: express.Application): void => {
   // CORS
   app.use(cors());
 
-  // Body parser
+  // Body and cookie parsers
   app.use(bodyParser.json({ type: 'application/json' }));
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(methodOverride('X-HTTP-Method-Override'));
+  app.use(cookieParser());
 };
 
 // ##########################
@@ -62,11 +64,6 @@ const initApp = (): express.Application => {
   debug('Bootstrapping app...');
 
   const app = express();
-
-  // Public directory and views
-  app.use(express.static(path.join(__dirname, 'public')));
-  app.set('views', path.join(__dirname, 'views'));
-  app.set('view engine', 'ejs');
 
   initDatabase();
   initMiddlewares(app);
