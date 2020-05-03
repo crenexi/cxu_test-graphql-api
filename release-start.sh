@@ -45,8 +45,9 @@ function bumpPackageJson {
 }
 
 function startRelease {
-  git pull develop
-  git push develop
+  git checkout develop
+  git pull origin develop
+  git push origin develop
   $(git flow release start $currVer)
 }
 
