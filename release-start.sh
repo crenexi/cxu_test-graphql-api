@@ -48,7 +48,7 @@ function startRelease {
   git checkout develop
   git pull origin develop
   git push origin develop
-  $(git flow release start $currVer)
+  git flow release start $currVer
 }
 
 function help {
