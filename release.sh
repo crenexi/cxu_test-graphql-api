@@ -9,7 +9,18 @@ colorMagenta=$'\e[1;35m'
 colorCyan=$'\e[1;36m'
 colorEnd=$'\e[0m'
 
-function bump {
+function recentVersion {
+  currVer=$(cat package.json \
+    | grep version \
+    | head -1 \
+    | awk -F: '{ print $2 }' \
+    | sed 's/[",]//g' \
+    | tr -d '[[:space:]]')
+
+  printf "\n${colorMagenta}${currVer}${colorEnd}\n"
+}
+
+function bumpPackageJson {
 	output=$(npm version ${release} --no-git-tag-version)
 	version=${output:1}
 	search='("version":[[:space:]]*").+(")'
@@ -36,9 +47,7 @@ if [ -d ".git" ]; then
 
     # If no errors, start the bump
     printf "\n${colorGreen}READY TO START RELEASE${colorEnd}\n"
-    printf "\n${colorMagenta}"
-    git describe
-    printf "${colorEnd}\n"
+    recentVersion
     read -p "SEMVER: " release
 
     # Ensure something was entered
@@ -48,7 +57,7 @@ if [ -d ".git" ]; then
       exit
     fi
 
-		bump
+		bumpPackageJson
 		git add .
 		git commit -m "Bump to ${version}"
 		git tag -a "${output}" -m "${version}"
