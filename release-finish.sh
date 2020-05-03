@@ -37,7 +37,7 @@ function approveRelease {
 
   # Release confirmation
   printf "\n${colorGreen}READY TO RELEASE${colorEnd}\n"
-  printf "\n${colorRed}/!\ YOU'RE ABOUT TO RELEASE VERSION ${version}${colorEnd}\n"
+  printf "\n${colorYellow}/!\ YOU'RE ABOUT TO RELEASE VERSION ${version}${colorEnd}\n"
   confirmRelease
 }
 
