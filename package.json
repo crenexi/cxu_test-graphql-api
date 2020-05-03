@@ -5,26 +5,15 @@
   "license": "UNLICENSED",
   "main": "dist/server.js",
   "scripts": {
-    "start": "node .",
-    "start:live": "gulp default",
-    "clean": "rm -rf ./dist",
     "lint": "gulp lint",
-    "prebuild": "npm run clean && npm run lint",
-    "build": "tsc",
+    "prestart": "npm run lint",
+    "start": "gulp default",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pm2:start": "npm run build && pm2 start ./dist/server.js",
-    "pm2:restart": "pm2 restart api.webbuniverse.com",
-    "pm2:stop": "pm2 stop api.webbuniverse.com",
-    "pm2:delete": "pm2 delete api.webbuniverse.com",
-    "pm2:info": "pm2 describe api.webbuniverse.com",
-    "pm2:logs": "pm2 logs api.webbuniverse.com"
-  },
-  "_moduleAliases": {
-    "@config": "src/config",
-    "@types": "src/types",
-    "@helpers": "src/helpers",
-    "@services": "src/services",
-    "@api": "src/api"
+    "pm2:start": "pm2 start pm2.config.js",
+    "pm2:restart": "pm2 restart pm2.config.js",
+    "pm2:stop": "pm2 stop pm2.config.js",
+    "pm2:delete": "pm2 delete pm2.config.js",
+    "pm2:logs": "pm2 logs pm2.config.js"
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
@@ -54,7 +43,7 @@
     "gulp-rename": "^2.0.0",
     "nodemon": "^2.0.3",
     "ts-node": "^8.9.1",
-    "ts-node-dev": "^1.0.0-pre.44",
+    "tsconfig-paths": "^3.9.0",
     "typescript": "^3.8.3"
   },
   "dependencies": {
