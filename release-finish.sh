@@ -15,7 +15,7 @@ function approveRelease {
 
   # Release confirmation
   printf "\n${colorGreen}READY TO RELEASE${colorEnd}\n"
-  printf "\n${colorRed}/!\ YOU'RE ABOUT TO RELEASE${colorEnd}\n"
+  printf "\n${colorRed}/!\ YOU'RE ABOUT TO RELEASE VERSION ${version}${colorEnd}\n"
   read -p "Are you sure to proceed? " -n 1 -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]
   then
@@ -25,14 +25,12 @@ function approveRelease {
 }
 
 function recentVersion {
-  currVer=$(cat package.json \
+  version=$(cat package.json \
     | grep version \
     | head -1 \
     | awk -F: '{ print $2 }' \
     | sed 's/[",]//g' \
     | tr -d '[[:space:]]')
-
-  printf "${colorMagenta}${currVer}${colorEnd}\n\n"
 }
 
 function finishRelease {
@@ -46,6 +44,7 @@ if [ -d ".git" ]; then
 	changes=$(git status --porcelain)
 
 	if [ -z "${changes}" ]; then
+    recentVersion
     approveRelease
     finishRelease
 	else
