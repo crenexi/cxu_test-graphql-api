@@ -19,7 +19,7 @@ function approveRelease {
   read -p "Are you sure to proceed? " -n 1 -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]
   then
-    printf "\n${colorYellow}Cancelled release${colorEnd}\n"
+    printf "${colorYellow}Cancelled release${colorEnd}\n\n"
     exit 1
   fi
 }
