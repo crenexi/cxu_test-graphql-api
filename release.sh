@@ -9,17 +9,7 @@ function bump {
 }
 
 function help {
-	echo "
-    When prompted for semver, must supply one of:
-      <newversion>
-      major
-      minor
-      patch
-      premajor
-      preminor
-      prepatch
-      prerelease
-  "
+	printf "When prompted for semver, must supply one of:\n - <newversion>\n - major\n - minor\n - patch\n - premajor\n - preminor\n - prepatch\n - prerelease"
 }
 
 # Help
@@ -45,6 +35,8 @@ if [ -d ".git" ]; then
       help
       exit
     fi
+
+    printf "hello\nworld\n"
 
 		bump
 		git add .
