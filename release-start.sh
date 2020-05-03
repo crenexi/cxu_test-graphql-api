@@ -25,12 +25,12 @@ function approveBump {
   # No errors; proceed
   readVersion
   printf "\n${colorGreen}READY TO START RELEASE${colorEnd}\n"
-  printf "Current Version: ${colorMagenta}${version}${colorEnd}\n\n"
+  printf "Current Version: ${colorMagenta}v${version}${colorEnd}\n\n"
 }
 
 function confirmVersion {
   while true; do
-    printf "\nVersion '${colorBlue}${newVersion}${colorEnd}' will be created.\n"
+    printf "\nVersion '${colorBlue}v${newVersion}${colorEnd}' will be created.\n"
     read -p "Proceed to create release? [Y/N] " yn
     case $yn in
         [Yy]* ) break;;
@@ -43,7 +43,7 @@ function confirmVersion {
 }
 
 function promptVersion {
-  read -p "Enter new semantic version: " newVersion
+  read -p "Enter new semantic version (without the v): " newVersion
 
   # Ensure something was entered
   if [ -z "$newVersion" ]; then
@@ -57,15 +57,15 @@ function promptVersion {
 function bumpPackageJson {
 	npm version $newVersion --no-git-tag-version
   git add .
-  git commit -m "Bumped version to ${newVersion}"
-  printf "\n${colorGreen}BUMPED VERSION TO ${newVersion}!${colorEnd}\n\n"
+  git commit -m "Bumped version to v${newVersion}"
+  printf "\n${colorGreen}BUMPED VERSION TO v${newVersion}!${colorEnd}\n\n"
 }
 
 function startRelease {
   git checkout develop
   git pull origin develop
   git push origin develop
-  git flow release start $newVersion
+  git flow release start v$newVersion
 }
 
 # Check for unstaged commits
