@@ -30,10 +30,10 @@ function approveBump {
 }
 
 function promptVersion {
-  read -p "Enter bump type or new semantic version: " newVersion
+  read -p "Enter bump type or new semantic version: " input
 
   # Ensure something was entered
-  if [ -z "$newVersion" ]; then
+  if [ -z "$input" ]; then
     printf "\n${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}\n"
     help
     exit
@@ -41,10 +41,8 @@ function promptVersion {
 }
 
 function bumpPackageJson {
-	output=$(npm version ${newVersion} --no-git-tag-version)
-	version=${output:1}
-	search='("version":[[:space:]]*").+(")'
-	replace="\1${version}\2"
+	output=$(npm version ${input} --no-git-tag-version)
+	newVersion=${output:1}
 }
 
 function startRelease {
@@ -52,7 +50,7 @@ function startRelease {
 }
 
 function help {
-	printf "\nWhen prompted for semver, must supply one of:\n - <newversion>\n - major\n - minor\n - patch\n - premajor\n - preminor\n - prepatch\n - prerelease\n\n"
+	printf "\nWhen prompted for semver, must supply one of:\n - <New Version>\n - major\n - minor\n - patch\n - premajor\n - preminor\n - prepatch\n - prerelease\n\n"
 }
 
 # Help
