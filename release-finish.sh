@@ -41,18 +41,12 @@ function approveRelease {
   confirmRelease
 }
 
-function pushMasterDevelopTags {
-	# git push origin --tags
-  # git checkout master
-  # git push
-  # git checkout develop
-  # git push
-  echo 'testing push...'
-}
-
 function finishRelease {
-  # git flow release finish ${version}
-  pushMasterDevelopTags
+  # Finishes the release and tags
+  git flow release finish ${version}
+	git push origin --tags
+
+  printf "\n${colorGreen}RELEASED ${version} AND PUSHED TAGS!${colorEnd}\n"
 }
 
 # Check for unstaged commits
