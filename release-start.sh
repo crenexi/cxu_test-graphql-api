@@ -33,7 +33,7 @@ function promptVersion {
 
   # Ensure something was entered
   if [ -z "$newVersion" ]; then
-    printf "\n${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}\n"
+    printf "\n${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}\n\n"
     exit 1
   fi
 }
