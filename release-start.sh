@@ -30,7 +30,7 @@ function approveBump {
 
 function confirmVersion {
   while true; do
-    printf "\n\nVersion '${colorYellow}${newVersion}${colorEnd}' will be created.\n"
+    printf "Version '${colorBlue}${newVersion}${colorEnd}' will be created.\n"
     read -p "Proceed to create release? [Y/N] " yn
     case $yn in
         [Yy]* ) break;;
