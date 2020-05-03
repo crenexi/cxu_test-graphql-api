@@ -1,12 +1,12 @@
-import 'module-alias/register';
 import 'reflect-metadata';
 import express from 'express';
 import debugLib from 'debug';
-import cors from 'cors';
+import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import methodOverride from 'method-override';
-import path from 'path';
+import cors from 'cors';
+import helmet from 'helmet';
 import errorHandler from 'errorhandler';
 // import { ApolloServer, ApolloError } from "apollo-server-express";
 // import { v4 } from "uuid";
@@ -45,14 +45,20 @@ const initMiddlewares = (app: express.Application): void => {
     }));
   }
 
-  // CORS
-  app.use(cors());
-
   // Body and cookie parsers
   app.use(bodyParser.json({ type: 'application/json' }));
   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(methodOverride('X-HTTP-Method-Override'));
   app.use(cookieParser());
+
+  // CORS middleware
+  app.use(cors());
+
+  // Helmet middleware
+  app.use(helmet());
+
+  // JSON middleware
+  app.use(express.json());
 };
 
 // ##########################
