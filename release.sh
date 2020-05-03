@@ -35,7 +35,11 @@ if [ -d ".git" ]; then
     gulp lint
 
     # If no errors, start the bump
-    read -p "NEW SEMVER: " release
+    printf "\n${colorGreen}READY TO START RELEASE${colorEnd}\n"
+    printf "\n${colorMagenta}"
+    git describe
+    printf "${colorEnd}\n"
+    read -p "SEMVER: " release
 
     # Ensure something was entered
     if [ -z "$release" ]; then
@@ -43,8 +47,6 @@ if [ -d ".git" ]; then
       help
       exit
     fi
-
-    printf "hello\nworld\n"
 
 		bump
 		git add .
