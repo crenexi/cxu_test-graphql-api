@@ -6,6 +6,7 @@
   "scripts": {
     "lint": "gulp lint",
     "start": "gulp default",
+    "prebuild": "npm run lint",
     "build": "tsc",
     "pm2:start": "npm build && pm2 start ./dist/server.js --name 'api.webbuniverse.com' --update-env",
     "pm2:restart": "pm2 restart api.webbuniverse.com",
