@@ -30,7 +30,7 @@ function approveBump {
 
 function confirmVersion {
   while true; do
-    read -p "You entered version '${newVersion}'. Proceed? [Y/N] " yn
+    read -p "Version '${newVersion}' will be created. Proceed? [Y/N] " yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* )
