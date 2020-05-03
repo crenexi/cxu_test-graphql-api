@@ -41,16 +41,15 @@ function promptVersion {
 
 function bumpPackageJson {
 	npm version $newVersion --no-git-tag-version
-  readVersion
   git add .
-  git commit -m "Bumped version to ${version}"
+  git commit -m "Bumped version to ${newVersion}"
 }
 
 function startRelease {
   git checkout develop
   git pull origin develop
   git push origin develop
-  git flow release start $version
+  git flow release start $newVersion
 }
 
 # Check for unstaged commits
