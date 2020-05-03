@@ -1,6 +1,10 @@
 /* eslint import/first: 0 */
+
+// require('module-alias/register');
+
 import dotEnvSafe from 'dotenv-safe';
 dotEnvSafe.config();
+
 import debugLib from 'debug';
 import http from 'http';
 import log from 'fancy-log';
@@ -11,7 +15,7 @@ const debug = debugLib('express:server');
 
 /** Normalize port */
 const normalizePort = (val: number | string) => {
-  const port = parseInt(`${val}`, 10);
+  const port: number = parseInt(val as string, 10);
 
   if (Number.isNaN(port)) { return val; } // named pipe
   if (port >= 0) { return port; } // port number

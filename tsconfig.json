@@ -9,15 +9,14 @@
       "es2017",
       "esnext.asynciterable"
     ],
-    "rootDir": "./src",
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@config/*": ["config/*"],
-      "@types/*": ["types/*"],
-      "@helpers/*": ["helpers/*"],
-      "@services/*": ["services/*"],
-      "@api/*": ["api/*"]
+      "@config/*": ["src/config/*"],
+      "@types/*": ["src/types/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@services/*": ["src/services/*"],
+      "@api/*": ["src/api/*"]
     },
     "declaration": false,
     "sourceMap": true,
