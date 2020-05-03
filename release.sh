@@ -17,7 +17,7 @@ function recentVersion {
     | sed 's/[",]//g' \
     | tr -d '[[:space:]]')
 
-  printf "\n${colorMagenta}${currVer}${colorEnd}\n"
+  printf "\{colorMagenta}${currVer}${colorEnd}\n\n"
 }
 
 function bumpPackageJson {
