@@ -33,7 +33,7 @@ const serveDev = (done) => {
     watch: ['src'],
     ignore: ['src/**/*.spec.ts'],
     ext: 'ts js json',
-    exec: 'ts-node ./src/server.ts',
+    exec: 'npm run clean && ts-node-dev ./src/server.ts',
   };
 
   return gulpNodemon(nodemonOpts)

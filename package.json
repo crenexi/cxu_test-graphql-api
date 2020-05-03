@@ -3,12 +3,16 @@
   "version": "0.1.1",
   "repository": {},
   "license": "UNLICENSED",
+  "main": "dist/server.js",
   "scripts": {
+    "start": "node .",
+    "start:live": "gulp default",
     "clean": "rm -rf ./dist",
     "lint": "gulp lint",
-    "prestart": "npm run lint && npm run clean",
-    "start": "gulp default",
-    "pm2:start": "npm build && pm2 start ./dist/server.js",
+    "prebuild": "npm run clean && npm run lint",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pm2:start": "npm run build && pm2 start ./dist/server.js",
     "pm2:restart": "pm2 restart api.webbuniverse.com",
     "pm2:stop": "pm2 stop api.webbuniverse.com",
     "pm2:delete": "pm2 delete api.webbuniverse.com",
@@ -50,6 +54,7 @@
     "gulp-rename": "^2.0.0",
     "nodemon": "^2.0.3",
     "ts-node": "^8.9.1",
+    "ts-node-dev": "^1.0.0-pre.44",
     "typescript": "^3.8.3"
   },
   "dependencies": {
