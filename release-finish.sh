@@ -20,7 +20,7 @@ function recentVersion {
 
 function confirmRelease {
   while true; do
-    read -p "Are you sure to proceed? " yn
+    read -p "Are you sure to proceed? [Y/N] " yn
     case $yn in
         [Yy]* ) break;;
         [Nn]* )
