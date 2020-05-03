@@ -15,7 +15,7 @@ function approveRelease {
 
   # Release confirmation
   printf "\n${colorGreen}READY TO RELEASE${colorEnd}\n"
-  printf "\n${colorRed}/!\ YOU'RE ABOUT TO RELEASE${colorEnd}"
+  printf "\n${colorRed}/!\ YOU'RE ABOUT TO RELEASE${colorEnd}\n"
   read -p "Are you sure to proceed? " -n 1 -r
   if [[ ! $REPLY =~ ^[Yy]$ ]]
   then
