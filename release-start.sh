@@ -10,7 +10,7 @@ colorCyan=$'\e[1;36m'
 colorEnd=$'\e[0m'
 
 function readVersion {
-  currVer=$(cat package.json \
+  version=$(cat package.json \
     | grep version \
     | head -1 \
     | awk -F: '{ print $2 }' \
@@ -25,14 +25,14 @@ function approveBump {
   # No errors; proceed
   readVersion
   printf "\n${colorGreen}READY TO START RELEASE${colorEnd}\n"
-  printf "Current Version: ${colorMagenta}${currVer}${colorEnd}\n\n"
+  printf "Current Version: ${colorMagenta}${version}${colorEnd}\n\n"
 }
 
 function promptVersion {
-  read -p "Enter bump type or new semantic version: " inputVersion
+  read -p "Enter new semantic version: " newVersion
 
   # Ensure something was entered
-  if [ -z "$inputVersion" ]; then
+  if [ -z "$newVersion" ]; then
     printf "\n${colorRed}/!\ NO VERSION SUPPLIED. EXITING.${colorEnd}\n"
     help
     exit
@@ -40,26 +40,18 @@ function promptVersion {
 }
 
 function bumpPackageJson {
-	$(npm version ${inputVersion} --no-git-tag-version)
+	npm version $newVersion --no-git-tag-version
   readVersion
+  git add .
+  git commit -m "Bumped version to ${version}"
 }
 
 function startRelease {
   git checkout develop
   git pull origin develop
   git push origin develop
-  git flow release start $currVer
+  git flow release start $version
 }
-
-function help {
-	printf "\nWhen prompted for semver, must supply one of:\n - <New Version>\n - major\n - minor\n - patch\n - premajor\n - preminor\n - prepatch\n - prerelease\n\n"
-}
-
-# Help
-if [ "$1" = "help" ]; then
-  help
-  exit
-fi
 
 # Check for unstaged commits
 if [ -d ".git" ]; then
