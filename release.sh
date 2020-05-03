@@ -9,7 +9,7 @@ function bump {
 }
 
 function help {
-	printf "\nWhen prompted for semver, must supply one of:\n - <newversion>\n - major\n - minor\n - patch\n - premajor\n - preminor\n - prepatch\n - prerelease\n"
+	printf "\nWhen prompted for semver, must supply one of:\n - <newversion>\n - major\n - minor\n - patch\n - premajor\n - preminor\n - prepatch\n - prerelease\n\n"
 }
 
 # Help
@@ -31,7 +31,7 @@ if [ -d ".git" ]; then
 
     # Ensure something was entered
     if [ -z "$release" ]; then
-  		printf "NO VERSION SUPPLIED. EXITING.\n"
+  		printf "\nNO VERSION SUPPLIED. EXITING.\n"
       help
       exit
     fi
