@@ -50,7 +50,7 @@ function finishRelease {
   # Push updated tags
 	git push origin --tags
 
-  printf "\n${colorGreen}RELEASED ${version} AND PUSHED TAGS!${colorEnd}\n"
+  printf "\n${colorGreen}RELEASED ${version} AND PUSHED TAGS!${colorEnd}\n\n"
 }
 
 # Check for unstaged commits
