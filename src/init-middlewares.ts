@@ -1,6 +1,4 @@
-import 'reflect-metadata';
 import express from 'express';
-import debugLib from 'debug';
 import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -8,31 +6,12 @@ import methodOverride from 'method-override';
 import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from 'errorhandler';
-import { createConnection } from 'typeorm';
-import { ApolloServer, ApolloError } from "apollo-server-express";
-// import { v4 } from "uuid";
 import accessLogger from './middlewares/access-logger';
-// import config from './config';
-import router from './router';
 
 // Environment variables
 const env = process.env.NODE_ENV || 'development';
 const isProduction = env === 'production';
-// const isDevelopment = env === 'development';
 const debugging = !!process.env.DEBUG;
-
-// ##########################
-// ### Database #############
-// ##########################
-
-const initDatabase = (): void => {
-  await createConnection();
-  // const dbUri = process.env.DB_URI || defaultDbUri;
-};
-
-// ##########################
-// ### Middlewares ##########
-// ##########################
 
 const initMiddlewares = (app: express.Application): void => {
   // Error handler if not production
@@ -63,22 +42,4 @@ const initMiddlewares = (app: express.Application): void => {
   app.use(express.json());
 };
 
-// ##########################
-// ### App setup ############
-// ##########################
-
-const initApp = (): express.Application => {
-  const debug = debugLib('express:app');
-  debug('Bootstrapping app...');
-
-  const app = express();
-
-  initDatabase();
-  initMiddlewares(app);
-  app.use(router());
-
-  debug('App boostrap complete');
-  return app;
-};
-
-export default initApp();
+export default initMiddlewares;

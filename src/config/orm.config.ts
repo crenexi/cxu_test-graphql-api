@@ -1,3 +1,7 @@
+import { ConnectionOptions } from 'typeorm';
+import fs from 'fs';
+
+// Entity imports
 import SuperHero from '../entity/SuperHero';
 import SuperPower from '../entity/SuperPower';
 
@@ -7,7 +11,13 @@ const entities = [
   SuperPower,
 ];
 
-const ormConfig = {
+// SSL PEM
+const readPEM = () => {
+  const path = './src/config/certs/rds-ca-2019-root.pem';
+  return fs.readFileSync(path).toString();
+};
+
+const ormConfig: ConnectionOptions = {
   entities,
   type: 'postgres',
   host: process.env.DB_HOST,
@@ -17,6 +27,7 @@ const ormConfig = {
   name: process.env.DB_NAME,
   logging: true,
   synchronize: true,
+  ssl: { ca: readPEM() },
 };
 
 export default ormConfig;
