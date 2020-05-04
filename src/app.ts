@@ -8,7 +8,8 @@ import methodOverride from 'method-override';
 import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from 'errorhandler';
-// import { ApolloServer, ApolloError } from "apollo-server-express";
+import { createConnection } from 'typeorm';
+import { ApolloServer, ApolloError } from "apollo-server-express";
 // import { v4 } from "uuid";
 import accessLogger from './middlewares/access-logger';
 // import config from './config';
@@ -25,6 +26,7 @@ const debugging = !!process.env.DEBUG;
 // ##########################
 
 const initDatabase = (): void => {
+  await createConnection();
   // const dbUri = process.env.DB_URI || defaultDbUri;
 };
 
