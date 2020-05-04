@@ -12,7 +12,7 @@ import errorHandler from 'errorhandler';
 // import { v4 } from "uuid";
 import accessLogger from './middlewares/access-logger';
 // import config from './config';
-import apiRouter from './api/api.router';
+import router from './router';
 
 // Environment variables
 const env = process.env.NODE_ENV || 'development';
@@ -73,7 +73,7 @@ const initApp = (): express.Application => {
 
   initDatabase();
   initMiddlewares(app);
-  app.use(apiRouter());
+  app.use(router());
 
   debug('App boostrap complete');
   return app;

@@ -1,15 +1,11 @@
 /* eslint import/first: 0 */
-
-// require('module-alias/register');
-
 import dotEnvSafe from 'dotenv-safe';
 dotEnvSafe.config();
-
 import debugLib from 'debug';
 import http from 'http';
 import log from 'fancy-log';
 import chalk from 'chalk';
-import app from './app';
+import app from '../app';
 
 const debug = debugLib('express:server');
 

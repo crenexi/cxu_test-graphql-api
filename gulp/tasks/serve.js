@@ -33,8 +33,7 @@ const serveDev = (done) => {
     watch: ['src'],
     ignore: ['src/**/*.spec.ts'],
     ext: 'ts js json',
-    // Clean, then run ts-node, and make sure we deal with the paths issue
-    exec: 'ts-node -r tsconfig-paths/register ./src/server.ts',
+    exec: 'ts-node ./src/bin/www.ts',
   };
 
   return gulpNodemon(nodemonOpts)

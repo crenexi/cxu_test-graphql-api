@@ -3,8 +3,8 @@
 const ecosystemConfig = {
   apps: [{
     name: "api.webbuniverse.com",
-    script: 'ts-node',
-    args: '-r tsconfig-paths/register ./src/server.ts',
+    script: 'node',
+    args: './dist/bin/www.js',
     listen_timeout : 5000,
     kill_timeout : 5000,
     exp_backoff_restart_delay: 100,
