@@ -1,4 +1,3 @@
-import 'reflect-metadata';
 import { ConnectionOptions } from 'typeorm';
 import logger from '../services/logger';
 // import fs from 'fs';

@@ -1,4 +1,5 @@
 /* eslint import/first: 0 */
+import 'reflect-metadata';
 import dotEnvSafe from 'dotenv-safe';
 dotEnvSafe.config();
 import debugLib from 'debug';
