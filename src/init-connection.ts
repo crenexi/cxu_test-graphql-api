@@ -13,7 +13,7 @@ const initConnection = async (): Promise<void> => {
     log(chalk.green.bold('Connected to SQL'));
     log(connection);
   } catch (err) {
-    logger.error(new Error('TypeORM connection error'), { test: 'test' });
+    logger.critical(new Error('TypeORM connection error'));
   }
 };
 
