@@ -6,7 +6,6 @@ import winston, {
   LogEntry,
 } from 'winston';
 import Transport from 'winston-transport';
-const { combine, colorize, timestamp } = format;
 
 const config = {
   dateFormat: 'YYYY-MM-DD HH:mm:ss',
@@ -37,7 +36,7 @@ const config = {
 interface LogOpts {
   type: string;
   message: string;
-  obj?: null | object;
+  meta?: object;
 }
 
 // Environment variables
@@ -48,6 +47,8 @@ const debugging = !!process.env.DEBUG;
 // Make winston aware of level colors
 winston.addColors(config.levels.colors);
 
+const { combine } = format;
+
 class LoggerService {
   logData: null | object;
   logger: Logger;
@@ -57,9 +58,9 @@ class LoggerService {
 
     this.logger = createLogger({
       levels: config.levels.map,
-      exitOnError: false,
-      format: LoggerService.format(),
+      format: LoggerService.jsonFormat(),
       transports: LoggerService.transports(),
+      exitOnError: false,
     });
   }
 
@@ -69,55 +70,59 @@ class LoggerService {
   }
 
   /** Severity 0 - emergency */
-  async emergency(message: string, obj?: object): Promise<void> {
-    this.log({ message, obj, level: 'emergency' });
+  async emergency(message: string, meta?: object): Promise<void> {
+    this.log({ message, meta, level: 'emergency' });
   }
 
   /** Severity 1 - critical */
-  async critical(message: string, obj?: object): Promise<void> {
-    this.log({ message, obj, level: 'critical' });
+  async critical(message: string, meta?: object): Promise<void> {
+    this.log({ message, meta, level: 'critical' });
   }
 
   /** Severity 2 - error */
-  async error(message: string, obj?: object): Promise<void> {
-    this.log({ message, obj, level: 'error' });
+  async error(err: string | Error, meta?: object): Promise<void> {
+    const message = (() => {
+      if (err instanceof Error) return err.stack || err.toString();
+      return err;
+    })();
+
+    this.log({ message, meta, level: 'error' });
   }
 
   /** Severity 3 - warning */
-  async warning(message: string, obj?: object): Promise<void> {
-    this.log({ message, obj, level: 'warning' });
+  async warning(message: string, meta?: object): Promise<void> {
+    this.log({ message, meta, level: 'warning' });
   }
 
   /** Severity 4 - info */
-  async info(message: string, obj?: object): Promise<void> {
-    this.log({ message, obj, level: 'info' });
+  async info(message: string, meta?: object): Promise<void> {
+    this.log({ message, meta, level: 'info' });
   }
 
   /** Severity 5 - debug */
-  async debug(message: string, obj?: object): Promise<void> {
+  async debug(message: string, meta?: object): Promise<void> {
     if (debugging) {
-      this.log({ message, obj, level: 'debug' });
+      this.log({ message, meta, level: 'debug' });
     }
   }
 
   /** Helper */
   private log(opts: LogEntry): void {
-    const { level, message, obj } = opts;
+    const { level, message, meta } = opts;
 
-    if (obj != null) {
-      this.logger.log(level, message, { obj });
+    if (meta) {
+      this.logger.log(level, message, { meta });
     } else {
       this.logger.log(level, message);
     }
   }
 
-  /** Format */
-  static format() {
+  /** Format for JSON */
+  static jsonFormat() {
     return combine(
-      colorize(),
-      timestamp({
-        format: config.dateFormat,
-      }),
+      format.colorize(),
+      format.timestamp({ format: config.dateFormat }),
+      format.errors({ stack: true }),
       format.json(),
     );
   }

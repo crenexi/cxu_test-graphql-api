@@ -1,20 +1,20 @@
 import { createConnection, Connection } from 'typeorm';
 import log from 'fancy-log';
 import chalk from 'chalk';
+import logger from './services/logger';
 import { ormConfig } from './config';
 
-const initConnection = async (): Promise<Connection | null> => {
+const initConnection = async (): Promise<void> => {
   log(chalk.blue(`Connecting to SQL...`));
-  let connection = null;
+  let connection: Connection;
 
   try {
     connection = await createConnection(ormConfig);
     log(chalk.green.bold('Connected to SQL'));
+    log(connection);
   } catch (err) {
-    log(chalk.red.bold('TypeORM connection error: ', err));
+    logger.error(new Error('TypeORM connection error'), { test: 'test' });
   }
-
-  return connection;
 };
 
 export default initConnection;
