@@ -3,6 +3,8 @@ import morgan from 'morgan';
 import path from 'path';
 import * as rfs from 'rotating-file-stream';
 
+const logFile = 'app.access.log';
+
 interface AccessLoggerOpts {
   logDir?: string;
   interval?: string;
@@ -16,7 +18,7 @@ const accessLogger = ({ logDir, interval = '7d' }: AccessLoggerOpts) => {
   if (!fs.existsSync(dir)) fs.mkdirSync(dir);
 
   // Get log stream
-  const stream = rfs.createStream('access.log', { interval, path: dir });
+  const stream = rfs.createStream(logFile, { interval, path: dir });
 
   // Setup the logger
   return morgan(format, { stream });

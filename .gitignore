@@ -53,3 +53,4 @@ testem.log
 
 # Certs
 /src/config/certs
+ormconfig.json

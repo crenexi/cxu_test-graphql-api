@@ -1,6 +1,38 @@
-import winston from 'winston';
+import winston, {
+  createLogger,
+  format,
+  transports,
+  Logger,
+  LogEntry,
+} from 'winston';
+import Transport from 'winston-transport';
+const { combine, colorize, timestamp } = format;
 
-const dateFormat = () => new Date(Date.now()).toUTCString();
+const config = {
+  dateFormat: 'YYYY-MM-DD HH:mm:ss',
+  paths: {
+    generalLog: './logs/app.general.log',
+    errorLog: './logs/app.error.log',
+  },
+  levels: {
+    map: {
+      emergency: 0,
+      critical: 1,
+      error: 2,
+      warning: 3,
+      info: 4,
+      debug: 5,
+    },
+    colors: {
+      emergency: 'bold red',
+      critical: 'bold yellow',
+      error: 'red',
+      warning: 'yellow',
+      info: 'blue',
+      debug: 'magenta',
+    },
+  },
+};
 
 interface LogOpts {
   type: string;
@@ -8,32 +40,26 @@ interface LogOpts {
   obj?: null | object;
 }
 
+// Environment variables
+const env = process.env.NODE_ENV || 'development';
+const isDevelopment = env === 'development';
+const debugging = !!process.env.DEBUG;
+
+// Make winston aware of level colors
+winston.addColors(config.levels.colors);
+
 class LoggerService {
   logData: null | object;
-  logger: winston.Logger;
+  logger: Logger;
 
   constructor() {
     this.logData = null;
 
-    // Creates Console log transport
-    const consoleTransport = (() => new winston.transports.Console())();
-
-    // Creates File log tranport
-    // const logFileName = `../logs/general.log`;
-    // const fileTransport = () => new winston.transports.File({ logFileName });
-
-    // Format method
-    const format = (() => winston.format.printf((info) => {
-      let message = `${dateFormat()} | ${info.level.toUpperCase()} | ${info.message}`;
-      message = info.obj ? ` | ${message} data:${JSON.stringify(info.obj)}` : message;
-      message = this.logData ? ` | ${message} logData:${JSON.stringify(this.logData)} | ` : message;
-      return message;
-    }))();
-
-    // Create logger
-    this.logger = winston.createLogger({
-      format,
-      transports: [consoleTransport],
+    this.logger = createLogger({
+      levels: config.levels.map,
+      exitOnError: false,
+      format: LoggerService.format(),
+      transports: LoggerService.transports(),
     });
   }
 
@@ -42,39 +68,92 @@ class LoggerService {
     this.logData = logData;
   }
 
-  /** Info log */
-  async info(
-    message: string,
-    obj: null | object = null,
-  ) {
-    this.log({ message, obj, type: 'info' });
+  /** Severity 0 - emergency */
+  async emergency(message: string, obj?: object): Promise<void> {
+    this.log({ message, obj, level: 'emergency' });
   }
 
-  /** Debug log */
-  async debug(
-    message: string,
-    obj: null | object = null,
-  ) {
-    this.log({ message, obj, type: 'debug' });
+  /** Severity 1 - critical */
+  async critical(message: string, obj?: object): Promise<void> {
+    this.log({ message, obj, level: 'critical' });
   }
 
-  /** Error log */
-  async error(
-    message: string,
-    obj: null | object = null,
-  ) {
-    this.log({ message, obj, type: 'error' });
+  /** Severity 2 - error */
+  async error(message: string, obj?: object): Promise<void> {
+    this.log({ message, obj, level: 'error' });
+  }
+
+  /** Severity 3 - warning */
+  async warning(message: string, obj?: object): Promise<void> {
+    this.log({ message, obj, level: 'warning' });
+  }
+
+  /** Severity 4 - info */
+  async info(message: string, obj?: object): Promise<void> {
+    this.log({ message, obj, level: 'info' });
+  }
+
+  /** Severity 5 - debug */
+  async debug(message: string, obj?: object): Promise<void> {
+    if (debugging) {
+      this.log({ message, obj, level: 'debug' });
+    }
   }
 
   /** Helper */
-  private log(opts: LogOpts) {
-    const { type, message, obj } = opts;
+  private log(opts: LogEntry): void {
+    const { level, message, obj } = opts;
 
     if (obj != null) {
-      this.logger.log(type, message, { obj });
+      this.logger.log(level, message, { obj });
     } else {
-      this.logger.log(type, message);
+      this.logger.log(level, message);
     }
+  }
+
+  /** Format */
+  static format() {
+    return combine(
+      colorize(),
+      timestamp({
+        format: config.dateFormat,
+      }),
+      format.json(),
+    );
+  }
+
+  /** Transports */
+  static transports(): Transport[] {
+    const maxFileSize = 5242880; // 5MB
+    const maxFileCount = 5;
+
+    // General and error logs by default
+    const transportsArr: Transport[] = [
+      new transports.File({
+        level: 'error',
+        handleExceptions: true,
+        filename: config.paths.errorLog,
+        maxsize: maxFileSize,
+        maxFiles: maxFileCount,
+      }),
+      new transports.File({
+        handleExceptions: true,
+        filename: config.paths.generalLog,
+        maxsize: maxFileSize,
+        maxFiles: maxFileCount,
+      }),
+    ];
+
+    // Add Console log transport for development
+    if (isDevelopment) {
+      transportsArr.push(new transports.Console({
+        level: debugging ? 'debug' : 'info',
+        format: format.simple(),
+        handleExceptions: true,
+      }));
+    }
+
+    return transportsArr;
   }
 }
 

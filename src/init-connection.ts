@@ -11,7 +11,7 @@ const initConnection = async (): Promise<Connection | null> => {
     connection = await createConnection(ormConfig);
     log(chalk.green.bold('Connected to SQL'));
   } catch (err) {
-    log(chalk.red.bold('TypeORM connection error: ', err))
+    log(chalk.red.bold('TypeORM connection error: ', err));
   }
 
   return connection;
