@@ -3,6 +3,7 @@ import 'reflect-metadata';
 import dotEnvSafe from 'dotenv-safe';
 dotEnvSafe.config();
 import debugLib from 'debug';
+import express from 'express';
 import http from 'http';
 import log from 'fancy-log';
 import chalk from 'chalk';
@@ -10,8 +11,9 @@ import initApp from '../init-app';
 
 const debug = debugLib('express:server');
 
-(async () => {
-  const app = await initApp();
+(async (): Promise<void> => {
+  const app: express.Application | null = await initApp();
+  if (!app) return;
 
   /** Normalize port */
   const normalizePort = (val: number | string) => {
