@@ -11,7 +11,7 @@ const { combine, colorize, timestamp } = format;
 const config = {
   dateFormat: 'YYYY-MM-DD HH:mm:ss',
   paths: {
-    generalLog: './logs/app.general.log',
+    combinedLog: './logs/app.combined.log',
     errorLog: './logs/app.error.log',
   },
   levels: {
@@ -124,23 +124,23 @@ class LoggerService {
 
   /** Transports */
   static transports(): Transport[] {
-    const maxFileSize = 5242880; // 5MB
-    const maxFileCount = 5;
+    const fileTransportCommons = {
+      maxsize: 5242880, // 5MB
+      maxFiles: !isDevelopment ? 30 : 5,
+    };
 
-    // General and error logs by default
+    // combined and error logs by default
     const transportsArr: Transport[] = [
       new transports.File({
         level: 'error',
         handleExceptions: true,
         filename: config.paths.errorLog,
-        maxsize: maxFileSize,
-        maxFiles: maxFileCount,
+        ...fileTransportCommons,
       }),
       new transports.File({
-        handleExceptions: true,
-        filename: config.paths.generalLog,
-        maxsize: maxFileSize,
-        maxFiles: maxFileCount,
+        handleExceptions: false,
+        filename: config.paths.combinedLog,
+        ...fileTransportCommons,
       }),
     ];
 

@@ -30,7 +30,7 @@ const ormConfig: ConnectionOptions = {
   logging: true,
   synchronize: true,
   // ssl: { ca: readPEM() },
-  poolErrorHandler: (err: Error) => console.error(err),
+  poolErrorHandler: logger.error,
 };
 
 export default ormConfig;
