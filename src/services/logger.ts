@@ -1,10 +1,4 @@
-import winston, {
-  createLogger,
-  format,
-  transports,
-  Logger,
-  LogEntry,
-} from 'winston';
+import winston, { createLogger, format, transports, Logger } from 'winston';
 import Transport from 'winston-transport';
 
 const config = {
