@@ -35,7 +35,7 @@ const initApp = async (): Promise<express.Application | null> => {
     await connectTypeORM();
     return createApp();
   } catch (err) {
-    logger.critical(new Error(`TypeORM connection error: ${err}`));
+    logger.critical(new Error(`[TypeORM connection]: ${err}`));
     return null;
   }
 };

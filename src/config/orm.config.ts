@@ -21,11 +21,11 @@ const entities = [
 const ormConfig: ConnectionOptions = {
   entities,
   type: 'postgres',
-  host: process.env.DB_HOST,
-  port: 5432, // default postgres port
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  name: process.env.DB_NAME,
+  host: process.env.POSTGRES_HOST,
+  port: parseInt(process.env.POSTGRES_PORT as string, 10),
+  username: process.env.POSTGRES_USERNAME,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DATABASE,
   logging: true,
   synchronize: true,
   // ssl: { ca: readPEM() },
