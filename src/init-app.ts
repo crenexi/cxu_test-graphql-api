@@ -10,12 +10,21 @@ import logger from './services/logger';
 import initMiddlewares from './init-middlewares';
 import router from './router';
 
+/** Database connection */
 const connectTypeORM = async (): Promise<Connection> => {
+  const dbName = process.env.POSTGRES_DATABASE;
+  const dbUsername = process.env.POSTGRES_USERNAME;
+  log(chalk.blue(`Connecting to ${dbName} as ${dbUsername}...`));
+
   const connection = await createConnection(ormConfig);
-  log(chalk.blue(`Connecting to SQL...`));
+
+  const msg = `Connected to ${dbName} database`.toUpperCase();
+  log(chalk.blue.bold(msg));
+
   return connection;
 };
 
+/** Express application */
 const createApp = () => {
   const debug = debugLib('express:app');
   debug('Bootstrapping app...');
@@ -30,12 +39,13 @@ const createApp = () => {
   return app;
 };
 
+/** Awaits database connection before proceeding */
 const initApp = async (): Promise<express.Application | null> => {
   try {
     await connectTypeORM();
     return createApp();
   } catch (err) {
-    logger.critical(new Error(`[TypeORM connection]: ${err}`));
+    logger.critical(new Error(`[TypeORM connection] ${err}`));
     return null;
   }
 };

@@ -26,7 +26,7 @@ const ormConfig: ConnectionOptions = {
   username: process.env.POSTGRES_USERNAME,
   password: process.env.POSTGRES_PASSWORD,
   database: process.env.POSTGRES_DATABASE,
-  logging: true,
+  logging: false,
   synchronize: true,
   // ssl: { ca: readPEM() },
   poolErrorHandler: logger.error,

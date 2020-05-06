@@ -39,9 +39,8 @@ const debug = debugLib('express:server');
       ? `pipe ${addr}`
       : `port ${!addr ? '' : addr.port}`;
 
-    const msgStr = `Magic now at ${bind}`;
-    log(chalk.blue.bold(msgStr));
-    debug(msgStr);
+    const msg = `Magic alpacas now at ${bind}`.toUpperCase();
+    log(chalk.green.bold(msg));
   };
 
   /** Server error */
