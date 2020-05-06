@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+## 0.1.3 - 2020-05-06
+### CHANGES
+- Testing TypeORM
+
 ## 0.1.2 - 2020-05-03
 ### CHANGES
 - Testing API
