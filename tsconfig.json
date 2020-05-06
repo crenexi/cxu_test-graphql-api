@@ -10,13 +10,12 @@
       "esnext.asynciterable"
     ],
     "outDir": "./dist",
-    "baseUrl": ".",
+    "baseUrl": "./src",
     "paths": {
-      "@config/*": ["src/config/*"],
-      "@types/*": ["src/types/*"],
-      "@helpers/*": ["src/helpers/*"],
-      "@services/*": ["src/services/*"],
-      "@api/*": ["src/api/*"]
+      "*": [
+        "node_modules/*",
+        "src/types/*"
+      ]
     },
     "declaration": false,
     "sourceMap": true,
@@ -25,17 +24,17 @@
     "strictNullChecks": true,
     "strictFunctionTypes": true,
     "strictPropertyInitialization": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noImplicitAny": true,
     "noImplicitThis": true,
     "noImplicitReturns": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true,
+    "resolveJsonModule": true
   },
   "exclude": ["node_modules"],
   "include": ["./src/**/*.ts"]
