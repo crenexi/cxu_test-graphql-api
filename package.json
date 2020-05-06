@@ -12,6 +12,7 @@
     "prebuild": "npm run clean && npm run lint && npm run test",
     "build": "tsc -b",
     "test": "echo \"Error: no test specified\"",
+    "typeorm": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "pm2:start": "pm2 start pm2.config.js",
     "pm2:restart": "pm2 restart pm2.config.js",
     "pm2:stop": "pm2 stop pm2.config.js",

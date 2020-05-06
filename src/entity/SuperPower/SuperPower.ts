@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import SuperHero from './SuperHero';
+import SuperHero from '../SuperHero';
 
 @Entity()
-export class SuperPower {
+class SuperPower {
   @PrimaryGeneratedColumn()
   public id!: number;
 

@@ -54,6 +54,9 @@
     "import/extensions": [2, "never"],
     "import/newline-after-import": 0,
     "lines-between-class-members": [2, "always", { "exceptAfterSingleLine": true }],
+    "class-methods-use-this": [2, {
+      "exceptMethods": ["up", "down"]
+    }],
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-explicit-any": 1,
     "@typescript-eslint/no-inferrable-types": [
