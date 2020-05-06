@@ -45,7 +45,7 @@ const ormConfig: ConnectionOptions = {
   password: envConfig.password,
   database: envConfig.database,
   migrationsRun: envConfig.migrate,
-  ssl: isProduction ? { ca: readPEM() } : true,
+  ssl: isProduction ? { ca: readPEM() } : undefined,
   poolErrorHandler: logger.error,
   synchronize: !isProduction,
   logging: false,
