@@ -1,6 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
-import logger from '../services/logger';
-// import fs from 'fs';
+import fs from 'fs';
++import logger from '../services/logger';
 
 // Entity imports
 import SuperHero from '../entity/SuperHero';
@@ -13,10 +13,10 @@ const entities = [
 ];
 
 // SSL PEM
-// const readPEM = () => {
-//   const path = './src/config/certs/rds-ca-2019-root.pem';
-//   return fs.readFileSync(path).toString();
-// };
+const readPEM = () => {
+  const path = './src/config/certs/rds-ca-2019-root.pem';
+  return fs.readFileSync(path).toString();
+};
 
 const ormConfig: ConnectionOptions = {
   entities,
@@ -28,7 +28,7 @@ const ormConfig: ConnectionOptions = {
   database: process.env.POSTGRES_DATABASE,
   logging: false,
   synchronize: true,
-  // ssl: { ca: readPEM() },
+  ssl: { ca: readPEM() },
   poolErrorHandler: logger.error,
 };
 
