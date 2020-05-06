@@ -41,6 +41,9 @@ const createApp = () => {
 
 /** Awaits database connection before proceeding */
 const initApp = async (): Promise<express.Application | null> => {
+  const env = process.env.NODE_ENV || 'development';
+  log(chalk.blue(`Initializing ${env} application...`));
+
   try {
     await connectTypeORM();
     return createApp();

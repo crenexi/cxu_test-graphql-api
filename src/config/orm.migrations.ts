@@ -1,7 +1,3 @@
-import HeroRefactoring from '../migration/HeroRefactoring';
-
-const migrations: Function[] = [
-  HeroRefactoring,
-];
+const migrations: Function[] = [];
 
 export default migrations;

@@ -27,9 +27,8 @@ const envConfig: EnvConfig = {
 // Environment
 const env = process.env.NODE_ENV || 'development';
 const isProduction = env === 'production';
-const baseUrl = isProduction ? './dist' : './src';
 
-// SSL PEM
+// SSL PEM for Amazon RDS
 const readPEM = () => {
   const path = './src/config/certs/rds-ca-2019-root.pem';
   return fs.readFileSync(path).toString();
@@ -46,14 +45,10 @@ const ormConfig: ConnectionOptions = {
   password: envConfig.password,
   database: envConfig.database,
   migrationsRun: envConfig.migrate,
-  ssl: { ca: readPEM() },
+  ssl: isProduction ? { ca: readPEM() } : true,
   poolErrorHandler: logger.error,
   synchronize: !isProduction,
   logging: false,
-  cli: {
-    migrationsDir: `${baseUrl}/migration`,
-    subscribersDir: `${baseUrl}/subscriber`,
-  },
 };
 
-export default ormConfig;
+export = ormConfig;

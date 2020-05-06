@@ -28,7 +28,7 @@ const serveDev = (done) => {
   const nodemonOpts = {
     done,
     env: {
-      NODE_ENV: 'development',
+      // NODE_ENV: 'development',
     },
     watch: ['src'],
     ignore: ['src/**/*.spec.ts'],

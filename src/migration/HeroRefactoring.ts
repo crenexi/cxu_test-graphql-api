@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-class HeroRefactoring1588791757049 implements MigrationInterface {
+class HeroRefactoring1588795003353 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
       `ALTER TABLE "super_hero" RENAME COLUMN "name" TO "identity"`,
@@ -9,9 +9,9 @@ class HeroRefactoring1588791757049 implements MigrationInterface {
 
   async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
-      `ALTER TABLE "super_hero" RENAME COLUMN "identity" TO "name"`,
+      `ALTER TABLE "super_hero" RENAME COLUMN "identity" TO "namez"`,
     );
   }
 }
 
-export default HeroRefactoring1588791757049;
+export default HeroRefactoring1588795003353;
