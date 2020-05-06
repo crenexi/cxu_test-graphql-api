@@ -1,6 +1,6 @@
 import { ConnectionOptions } from 'typeorm';
 import fs from 'fs';
-+import logger from '../services/logger';
+import logger from '../services/logger';
 
 // Entity imports
 import SuperHero from '../entity/SuperHero';
