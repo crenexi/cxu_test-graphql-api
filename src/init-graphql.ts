@@ -27,8 +27,8 @@ const initGraphQL = async (app: express.Application): Promise<void> => {
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({ resolvers }),
-    context: ({ req }) => ({ req, ...loaders }),
-    formatError: handleFormatError,
+    // context: ({ req }) => ({ req, ...loaders }),
+    // formatError: handleFormatError,
   });
 
   // Apply app to apollog server

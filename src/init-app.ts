@@ -30,8 +30,7 @@ const initApp = async (): Promise<express.Application | null> => {
   try {
     // Connect to database before proceeding
     await initConnection();
-    const app = await createApp();
-    return app;
+    return createApp();
   } catch (err) {
     // Database connection error
     logger.critical(new Error(`[TypeORM connection] ${err}`));

@@ -117,25 +117,29 @@ class LoggerService {
 
   /** Transports */
   static transports(): Transport[] {
+    const transportsArr: Transport[] = [];
+
     const fileTransportCommons = {
       maxsize: 5242880, // 5MB
       maxFiles: !isDevelopment ? 30 : 5,
     };
 
     // combined and error logs by default
-    const transportsArr: Transport[] = [
-      new transports.File({
-        level: 'error',
-        handleExceptions: true,
-        filename: loggerConfig.paths.errorLog,
-        ...fileTransportCommons,
-      }),
-      new transports.File({
-        handleExceptions: false,
-        filename: loggerConfig.paths.combinedLog,
-        ...fileTransportCommons,
-      }),
-    ];
+    if (!isDevelopment) {
+      transportsArr.push(
+        new transports.File({
+          level: 'error',
+          handleExceptions: true,
+          filename: loggerConfig.paths.errorLog,
+          ...fileTransportCommons,
+        }),
+        new transports.File({
+          handleExceptions: false,
+          filename: loggerConfig.paths.combinedLog,
+          ...fileTransportCommons,
+        }),
+      );
+    }
 
     // Add Console log transport for development
     if (isDevelopment) {

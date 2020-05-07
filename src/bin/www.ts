@@ -9,6 +9,7 @@ import log from 'fancy-log';
 import chalk from 'chalk';
 import config from '../config';
 import initApp from '../init-app';
+import logger from '../services/logger';
 
 const debug = debugLib('express:server');
 
@@ -75,4 +76,10 @@ const debug = debugLib('express:server');
   server.listen(port);
   server.on('listening', onListening);
   server.on('error', onError);
+
+  // Force an exit upon on unhandled rejection
+  process.on('unhandledRejection', (reason: any) => {
+    const msg = !reason ? 'unknown reason' : reason.stack || reason;
+    logger.critical('Unhandled Rejection at:', msg);
+  });
 })();

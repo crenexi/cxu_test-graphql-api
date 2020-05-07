@@ -1,9 +1,7 @@
-import SuperHero from '../../entity/SuperHero';
-import SuperPower from '../../entity/SuperPower';
+import Ship from '../../entity/Ship';
 
 const entities: Function[] = [
-  SuperHero,
-  SuperPower,
+  Ship,
 ];
 
 export default entities;
