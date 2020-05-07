@@ -7,6 +7,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from 'errorhandler';
 import accessLogger from './middlewares/access-logger';
+// import logger from './services/logger';
 
 // Environment variables
 const env = process.env.NODE_ENV || 'development';
