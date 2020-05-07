@@ -14,9 +14,15 @@ import router from './router';
 const connectTypeORM = async (): Promise<Connection> => {
   const dbName = process.env.POSTGRES_DATABASE;
   const dbUsername = process.env.POSTGRES_USERNAME;
-  log(chalk.blue(`Connecting to ${dbName} as ${dbUsername}...`));
+  const runMigrations = process.env.POSTGRES_MIGRATE === 'true';
 
+  log(chalk.blue(`Connecting to ${dbName} as ${dbUsername}...`));
   const connection = await createConnection(ormConfig);
+
+  // Run migrations if specified in env
+  if (connection && runMigrations) {
+    connection.runMigrations();
+  }
 
   const msg = `Connected to ${dbName} database`.toUpperCase();
   log(chalk.blue.bold(msg));
