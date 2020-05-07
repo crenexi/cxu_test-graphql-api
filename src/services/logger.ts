@@ -1,7 +1,8 @@
 import winston, { createLogger, format, transports, Logger } from 'winston';
 import Transport from 'winston-transport';
+import config from '../config';
 
-const config = {
+const loggerConfig = {
   dateFormat: 'YYYY-MM-DD HH:mm:ss',
   paths: {
     combinedLog: './logs/app.combined.log',
@@ -33,14 +34,10 @@ interface LogOpts {
   meta?: object;
 }
 
-// Environment variables
-const env = process.env.NODE_ENV || 'development';
-const isDevelopment = env === 'development';
-const debugging = !!process.env.DEBUG;
-
 // Make winston aware of level colors
-winston.addColors(config.levels.colors);
+winston.addColors(loggerConfig.levels.colors);
 
+const { isDevelopment, debugging } = config;
 const { combine } = format;
 
 class LoggerService {
@@ -51,7 +48,7 @@ class LoggerService {
     this.logData = null;
 
     this.logger = createLogger({
-      levels: config.levels.map,
+      levels: loggerConfig.levels.map,
       format: LoggerService.jsonFormat(),
       transports: LoggerService.transports(),
       exitOnError: false,
@@ -112,7 +109,7 @@ class LoggerService {
   static jsonFormat() {
     return combine(
       format.colorize(),
-      format.timestamp({ format: config.dateFormat }),
+      format.timestamp({ format: loggerConfig.dateFormat }),
       format.errors({ stack: true }),
       format.json(),
     );
@@ -130,12 +127,12 @@ class LoggerService {
       new transports.File({
         level: 'error',
         handleExceptions: true,
-        filename: config.paths.errorLog,
+        filename: loggerConfig.paths.errorLog,
         ...fileTransportCommons,
       }),
       new transports.File({
         handleExceptions: false,
-        filename: config.paths.combinedLog,
+        filename: loggerConfig.paths.combinedLog,
         ...fileTransportCommons,
       }),
     ];

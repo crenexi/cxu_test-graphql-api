@@ -7,14 +7,13 @@ import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from 'errorhandler';
 import accessLogger from './middlewares/access-logger';
-// import logger from './services/logger';
+import config from './config';
 
 // Environment variables
-const env = process.env.NODE_ENV || 'development';
-const isProduction = env === 'production';
-const debugging = !!process.env.DEBUG;
 
 const initMiddlewares = (app: express.Application): void => {
+  const { isProduction, debugging } = config;
+
   // Error handler if not production
   if (!isProduction) {
     app.use(errorHandler());

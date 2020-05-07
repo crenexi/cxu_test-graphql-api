@@ -1,16 +1,15 @@
 import log from 'fancy-log';
 import chalk from 'chalk';
 import { createConnection, Connection } from 'typeorm';
-import { ormConfig } from './config';
+import config from './config';
+import { typeormConfig } from './config/typeorm';
 
 const initConnection = async (): Promise<Connection> => {
-  const dbName = process.env.POSTGRES_DATABASE;
-  const dbUsername = process.env.POSTGRES_USERNAME;
-  const runMigrations = process.env.POSTGRES_MIGRATE === 'true';
+  const dbName = config.postgres.database;
+  const runMigrations = config.postgres.migrate;
 
   // Make the connection
-  log(chalk.blue(`Connecting to ${dbName} as ${dbUsername}...`));
-  const connection = await createConnection(ormConfig);
+  const connection = await createConnection(typeormConfig);
 
   // Run migrations if specified in env
   if (connection && runMigrations) {
@@ -18,8 +17,8 @@ const initConnection = async (): Promise<Connection> => {
   }
 
   // Success message
-  const msg = `Connected to ${dbName} database`.toUpperCase();
-  log(chalk.blue.bold(msg));
+  const msg = `${'Connected to database'.toUpperCase()}: ${dbName}`;
+  log(chalk.green(msg));
 
   return connection;
 };

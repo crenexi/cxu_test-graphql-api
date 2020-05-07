@@ -7,6 +7,7 @@ import express from 'express';
 import http from 'http';
 import log from 'fancy-log';
 import chalk from 'chalk';
+import config from '../config';
 import initApp from '../init-app';
 
 const debug = debugLib('express:server');
@@ -26,7 +27,7 @@ const debug = debugLib('express:server');
   };
 
   // Port
-  const port = normalizePort(process.env.PORT || 3000);
+  const port = normalizePort(config.port);
   app.set('port', port);
 
   // HTTP server

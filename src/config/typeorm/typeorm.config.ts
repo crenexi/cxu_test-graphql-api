@@ -1,9 +1,10 @@
 import { ConnectionOptions } from 'typeorm';
 import fs from 'fs';
-import logger from '../services/logger';
-import entities from './orm.entities';
-import migrations from './orm.migrations';
-import subscribers from './orm.subscribers';
+import logger from '../../services/logger';
+import entities from './typeorm.entities';
+import migrations from './typeorm.migrations';
+import subscribers from './typeorm.subscribers';
+import config from '../server.config';
 
 // Config from env
 interface EnvConfig {
@@ -15,16 +16,12 @@ interface EnvConfig {
 }
 
 const envConfig: EnvConfig = {
-  host: process.env.POSTGRES_HOST || '',
-  port: parseInt(process.env.POSTGRES_PORT as string, 10),
-  username: process.env.POSTGRES_USERNAME || '',
-  password: process.env.POSTGRES_PASSWORD || '',
-  database: process.env.POSTGRES_DATABASE || '',
+  host: config.postgres.host,
+  port: config.postgres.port,
+  username: config.postgres.username,
+  password: config.postgres.password,
+  database: config.postgres.database,
 };
-
-// Environment
-const env = process.env.NODE_ENV || 'development';
-const isProduction = env === 'production';
 
 // SSL PEM for Amazon RDS
 const readPEM = () => {
@@ -42,9 +39,9 @@ const ormConfig: ConnectionOptions = {
   username: envConfig.username,
   password: envConfig.password,
   database: envConfig.database,
-  ssl: isProduction ? { ca: readPEM() } : undefined,
+  ssl: config.isProduction ? { ca: readPEM() } : undefined,
   poolErrorHandler: logger.error,
-  synchronize: !isProduction,
+  synchronize: !config.isProduction,
   logging: false,
 };
 
