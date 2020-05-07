@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { GraphQLError } from 'graphql';
 import { ApolloServer, ApolloError } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
-import { typeormLoaders } from './config/typeorm';
+import { resolvers, loaders as loaderFns } from './config/orm';
 import logger from './services/logger';
 
 /** Handle Apollo errors */
@@ -19,16 +19,14 @@ const handleFormatError = (err: GraphQLError) => {
 /** Setup the Apollo server */
 const initGraphQL = async (app: express.Application): Promise<void> => {
   // Call all supplied loaders before passing to context
-  const loaders = Object.entries(typeormLoaders)
+  const loaders = Object.entries(loaderFns)
     .reduce((loaders, [key, loaderFn]) => ({
       ...loaders,
       [key]: loaderFn(),
     }), {});
 
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({ resolvers });
-      resolvers:
-    }),
+    schema: await buildSchema({ resolvers }),
     context: ({ req }) => ({ req, ...loaders }),
     formatError: handleFormatError,
   });
@@ -40,12 +38,3 @@ const initGraphQL = async (app: express.Application): Promise<void> => {
 };
 
 export default initGraphQL;
-
-const server = new ApolloServer({
-  schema: await buildSchema({
-    resolvers: [__dirname + "/modules/**/resolver.*"],
-    authChecker: ({ context }) => {
-      return context.req.session && context.req.session.userId; // or false if access denied
-    },
-  }),
-});
