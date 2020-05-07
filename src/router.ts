@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import getSemVer from './helpers/get-sem-ver';
+import { getSemVer } from './helpers';
 
 const apiRouter = (): express.Router => {
   const router = express.Router();
