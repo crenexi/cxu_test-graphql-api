@@ -7,6 +7,7 @@ import { createConnection, Connection } from 'typeorm';
 // import { v4 } from "uuid";
 import { ormConfig } from './config';
 import logger from './services/logger';
+import initSession from './init-session';
 import initMiddlewares from './init-middlewares';
 import router from './router';
 
@@ -14,10 +15,18 @@ import router from './router';
 const connectTypeORM = async (): Promise<Connection> => {
   const dbName = process.env.POSTGRES_DATABASE;
   const dbUsername = process.env.POSTGRES_USERNAME;
-  log(chalk.blue(`Connecting to ${dbName} as ${dbUsername}...`));
+  const runMigrations = process.env.POSTGRES_MIGRATE === 'true';
 
+  // Make the connection
+  log(chalk.blue(`Connecting to ${dbName} as ${dbUsername}...`));
   const connection = await createConnection(ormConfig);
 
+  // Run migrations if specified in env
+  if (connection && runMigrations) {
+    await connection.runMigrations();
+  }
+
+  // Success message
   const msg = `Connected to ${dbName} database`.toUpperCase();
   log(chalk.blue.bold(msg));
 
@@ -31,6 +40,9 @@ const createApp = () => {
 
   const app = express();
 
+  app.set('trust proxy', 1);
+
+  initSession(app);
   initMiddlewares(app);
   app.use(router());
 

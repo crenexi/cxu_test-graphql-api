@@ -12,7 +12,6 @@ interface EnvConfig {
   username: string;
   password: string;
   database: string;
-  migrate: boolean;
 }
 
 const envConfig: EnvConfig = {
@@ -21,7 +20,6 @@ const envConfig: EnvConfig = {
   username: process.env.POSTGRES_USERNAME || '',
   password: process.env.POSTGRES_PASSWORD || '',
   database: process.env.POSTGRES_DATABASE || '',
-  migrate: process.env.POSTGRES_MIGRATE === 'true',
 };
 
 // Environment
@@ -44,7 +42,6 @@ const ormConfig: ConnectionOptions = {
   username: envConfig.username,
   password: envConfig.password,
   database: envConfig.database,
-  migrationsRun: envConfig.migrate,
   ssl: isProduction ? { ca: readPEM() } : undefined,
   poolErrorHandler: logger.error,
   synchronize: !isProduction,
