@@ -2,6 +2,7 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { GraphQLError } from 'graphql';
 import { ApolloServer, ApolloError } from 'apollo-server-express';
+import { buildSchema } from 'type-graphql';
 import { typeormLoaders } from './config/typeorm';
 import logger from './services/logger';
 
@@ -16,7 +17,7 @@ const handleFormatError = (err: GraphQLError) => {
 };
 
 /** Setup the Apollo server */
-const initGraphQL = (app: express.Application): Promise<void> => {
+const initGraphQL = async (app: express.Application): Promise<void> => {
   // Call all supplied loaders before passing to context
   const loaders = Object.entries(typeormLoaders)
     .reduce((loaders, [key, loaderFn]) => ({
@@ -25,9 +26,10 @@ const initGraphQL = (app: express.Application): Promise<void> => {
     }), {});
 
   const apolloServer = new ApolloServer({
-    context: {
-      ...loaders,
-    },
+    schema: await buildSchema({ resolvers });
+      resolvers:
+    }),
+    context: ({ req }) => ({ req, ...loaders }),
     formatError: handleFormatError,
   });
 
@@ -45,10 +47,5 @@ const server = new ApolloServer({
     authChecker: ({ context }) => {
       return context.req.session && context.req.session.userId; // or false if access denied
     },
-  }),
-  context: ({ req }: any) => ({
-    req,
-    userLoader: userLoader(),
-    questionReplyLoader: questionReplyLoader(),
   }),
 });

@@ -2,7 +2,7 @@ import log from 'fancy-log';
 import chalk from 'chalk';
 import { createConnection, Connection } from 'typeorm';
 import config from './config';
-import { typeormConfig } from './config/typeorm';
+import typeormConfig from './config/orm.config';
 
 const initConnection = async (): Promise<Connection> => {
   const dbName = config.postgres.database;
