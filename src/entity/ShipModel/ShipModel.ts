@@ -1,7 +1,23 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { ObjectType, Field, ID, Int, registerEnumType } from 'type-graphql';
 import ShipIdentity from '../ShipIdentity';
+import ShipSpinoff from '../ShipSpinoff';
 
+// Quick note about ship entities:
+// ShipIdentity: a ship's central name (ex. Avenger)
+// ShipModel: an elemental ship design (ex. Avenger Titan)
+// ShipSpinoff: a style-related variant (ex. Avenger Titan Renegade)
+// Ship: an actual ship entry (owned by a society member)
+
+/** The size class of the ship */
 export enum ShipSizeClass {
   VEHICLE = 'vehicle',
   SNUB = 'snub',
@@ -14,6 +30,7 @@ registerEnumType(ShipSizeClass, {
   name: 'Direction',
 });
 
+/** The crew capacity of the ship */
 export enum ShipCrewClass {
   C1_SINGLE = 'single', // 1 person
   C2_SMALL_CREW = 'smallCrew', // 2-3 crew
@@ -24,6 +41,7 @@ registerEnumType(ShipCrewClass, {
   name: 'ShipCrewClass',
 });
 
+/** The length class of the ship */
 export enum ShipLengthClass {
   C1_SMALL = 'small', // under 20m
   C2_MEDIUM = 'medium', // 20m-30m
@@ -36,7 +54,7 @@ registerEnumType(ShipLengthClass, {
 
 @Entity()
 @ObjectType()
-class ShipEntity extends BaseEntity {
+class ShipModel extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -70,14 +88,16 @@ class ShipEntity extends BaseEntity {
   isFlightReady: boolean;
 
   @Field(() => ShipIdentity)
-  @ManyToOne(() => ShipIdentity, (s: ShipIdentity) => s.replies)
+  @ManyToOne(() => ShipIdentity, (si: ShipIdentity) => si.models)
   identity: Promise<ShipIdentity>;
+
+  @Field(() => [ShipSpinoff])
+  @OneToMany(() => ShipSpinoff, (ss: ShipSpinoff) => ss.model)
+  spinoffs: Promise<ShipSpinoff[]>;
 
   @Field()
   @UpdateDateColumn()
   dateUpdated: Date;
 }
 
-export default ShipEntity;
-
-// variants is nullable
+export default ShipModel;

@@ -1,4 +1,11 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, UpdateDateColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  OneToMany,
+} from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 import ShipIdentity from '../ShipIdentity';
 
@@ -17,7 +24,7 @@ class Manufacturer extends BaseEntity {
   @UpdateDateColumn()
   dateUpdated: Date;
 
-  @OneToMany(() => ShipIdentity, (s: ShipIdentity) => s.manufacturer)
+  @OneToMany(() => ShipIdentity, (si: ShipIdentity) => si.manufacturer)
   shipIdentities: Promise<ShipIdentity[]>;
 }
 

@@ -1,11 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
+import {
+  Entity,
+  BaseEntity,
+  Column,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
 import Manufacturer from '../Manufacturer';
-import ShipEntity from '../ShipEntity';
+import ShipModel from '../ShipModel';
 
 @Entity()
 @ObjectType()
-class ShipIdentity {
+class ShipIdentity extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -15,16 +23,16 @@ class ShipIdentity {
   name: string;
 
   @Field()
-  @Column()
+  @Column('text')
   description: string;
 
   @Field(() => Manufacturer)
   @ManyToOne(() => Manufacturer, (m: Manufacturer) => m.shipIdentities)
   manufacturer: Promise<Manufacturer>;
 
-  @Field(() => [ShipEntity])
-  @OneToMany(() => ShipEntity, (s: ShipEntity) => s.identity)
-  variants: Promise<ShipEntity[]>;
+  @Field(() => [ShipModel])
+  @OneToMany(() => ShipModel, (sm: ShipModel) => sm.identity)
+  models: Promise<ShipModel[]>;
 
   @Field()
   @UpdateDateColumn()
