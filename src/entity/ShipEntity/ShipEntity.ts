@@ -1,5 +1,6 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, UpdateDateColumn, ManyToOne } from 'typeorm';
 import { ObjectType, Field, ID, Int, registerEnumType } from 'type-graphql';
+import ShipIdentity from '../ShipIdentity';
 
 export enum ShipSizeClass {
   VEHICLE = 'vehicle',
@@ -41,20 +42,12 @@ class ShipEntity extends BaseEntity {
   id: string;
 
   @Field()
-  @UpdateDateColumn()
-  dateUpdated: Date;
-
-  @Field()
-  @Column({ unique: true })
+  @Column({ type: 'text', unique: true })
   name: string;
 
   @Field()
-  @Column()
+  @Column('text')
   description: string;
-
-  @Field()
-  @Column()
-  manufacturer: string;
 
   @Field(() => ShipSizeClass)
   @Column({ type: 'enum', enum: ShipSizeClass })
@@ -75,6 +68,14 @@ class ShipEntity extends BaseEntity {
   @Field()
   @Column({ default: false })
   isFlightReady: boolean;
+
+  @Field(() => ShipIdentity)
+  @ManyToOne(() => ShipIdentity, (s: ShipIdentity) => s.replies)
+  identity: Promise<ShipIdentity>;
+
+  @Field()
+  @UpdateDateColumn()
+  dateUpdated: Date;
 }
 
 export default ShipEntity;

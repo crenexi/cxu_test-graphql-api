@@ -1,5 +1,6 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, BaseEntity, Column, PrimaryGeneratedColumn, UpdateDateColumn, OneToMany } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
+import ShipIdentity from '../ShipIdentity';
 
 @Entity()
 @ObjectType()
@@ -9,12 +10,15 @@ class Manufacturer extends BaseEntity {
   id: string;
 
   @Field()
+  @Column({ type: 'text', unique: true })
+  name: string;
+
+  @Field()
   @UpdateDateColumn()
   dateUpdated: Date;
 
-  @Field()
-  @Column({ unique: true })
-  name: string;
+  @OneToMany(() => ShipIdentity, (s: ShipIdentity) => s.manufacturer)
+  shipIdentities: Promise<ShipIdentity[]>;
 }
 
 export default Manufacturer;
