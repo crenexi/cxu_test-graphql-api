@@ -4,6 +4,7 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "lib": [
+      "dom",
       "es2018",
       "esnext.asynciterable"
     ],

@@ -2,7 +2,7 @@ import express from 'express';
 import debugLib from 'debug';
 import logger from './services/logger';
 import initConnection from './init-connection';
-import initGraphQL from './init-graphql';
+import initApollo from './init-apollo';
 import initSession from './init-session';
 import initMiddlewares from './init-middlewares';
 import router from './router';
@@ -16,7 +16,7 @@ const createApp = async () => {
 
   app.set('trust proxy', 1);
 
-  await initGraphQL(app);
+  await initApollo(app);
   initSession(app);
   initMiddlewares(app);
   app.use(router());
