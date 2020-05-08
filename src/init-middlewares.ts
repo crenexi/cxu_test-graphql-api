@@ -32,8 +32,10 @@ const initMiddlewares = (app: express.Application): void => {
   app.use(methodOverride('X-HTTP-Method-Override'));
   app.use(cookieParser());
 
-  // CORS middleware
-  app.use(cors());
+  // CORS middleware (specified origins for prod; all origins otherwise)
+  app.use(cors({
+    origin: config.isProduction ? config.prodOrigins : '*',
+  }));
 
   // Helmet middleware
   app.use(helmet());

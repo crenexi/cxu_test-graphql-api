@@ -28,6 +28,8 @@ const initGraphQL = async (app: express.Application): Promise<void> => {
   const apolloServer = new ApolloServer({
     schema: await buildSchema({ resolvers }),
     // context: ({ req }) => ({ req, ...loaders }),
+    // TODO: add to context:  url: request.protocol + "://" + request.get("host"),
+    // TODO: add redis and session: request.session to context
     // formatError: handleFormatError,
   });
 

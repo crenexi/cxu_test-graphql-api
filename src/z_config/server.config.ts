@@ -5,13 +5,17 @@ interface ServerConfig {
   debugging: boolean;
   port: number;
   secret: string;
+  prodOrigins: URL[];
   postgres: {
     host: string;
     port: number;
     database: string;
     username: string;
     password: string;
+  };
+  orm: {
     migrate: boolean;
+    logging: boolean;
   };
   redis: {
     port: number;
@@ -31,13 +35,21 @@ const serverConfig: ServerConfig = {
   debugging: !!process.env.DEBUG,
   port: parseInt(process.env.PORT as string, 10) || 3000,
   secret: process.env.SESSION_SECRET || 'Avengers Assemble',
+  prodOrigins: [
+    new URL('https://www.webbuniverse.com'),
+    new URL('https://dev.webbuniverse.com'),
+    new URL('https://admin.webbuniverse.com'),
+  ],
   postgres: {
     host: process.env.POSTGRES_HOST || '',
     port: parseInt(process.env.POSTGRES_PORT as string, 10),
     database: process.env.POSTGRES_DATABASE || '',
     username: process.env.POSTGRES_USERNAME || '',
     password: process.env.POSTGRES_PASSWORD || '',
-    migrate: process.env.POSTGRES_MIGRATE === 'true',
+  },
+  orm: {
+    migrate: process.env.ORM_MIGRATE === 'true',
+    logging: process.env.ORM_LOGGING === 'true',
   },
   redis: {
     port: parseInt(process.env.REDIS_PORT || '', 10) || 6379,
