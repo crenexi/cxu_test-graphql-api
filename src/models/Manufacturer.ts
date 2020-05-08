@@ -24,7 +24,11 @@ class Manufacturer extends BaseEntity {
   @UpdateDateColumn()
   dateUpdated: Date;
 
-  @OneToMany(() => ShipIdentity, (si: ShipIdentity) => si.manufacturer)
+  @OneToMany(
+    () => ShipIdentity,
+    (si: ShipIdentity) => si.manufacturer,
+    { nullable: true },
+  )
   shipIdentities: Promise<ShipIdentity[]>;
 }
 

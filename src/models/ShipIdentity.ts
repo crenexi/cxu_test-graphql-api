@@ -27,8 +27,12 @@ class ShipIdentity extends BaseEntity {
   description: string;
 
   @Field(() => Manufacturer)
-  @ManyToOne(() => Manufacturer, (m: Manufacturer) => m.shipIdentities)
-  manufacturer: Promise<Manufacturer>;
+  @ManyToOne(
+    () => Manufacturer,
+    (m: Manufacturer) => m.shipIdentities,
+    { eager: true },
+  )
+  manufacturer: Manufacturer;
 
   @Field(() => [ShipModel])
   @OneToMany(() => ShipModel, (sm: ShipModel) => sm.identity)

@@ -92,7 +92,11 @@ class ShipModel extends BaseEntity {
   identity: Promise<ShipIdentity>;
 
   @Field(() => [ShipSpinoff])
-  @OneToMany(() => ShipSpinoff, (ss: ShipSpinoff) => ss.model)
+  @OneToMany(
+    () => ShipSpinoff,
+    (ss: ShipSpinoff) => ss.model,
+    { eager: true, nullable: true },
+  )
   spinoffs: Promise<ShipSpinoff[]>;
 
   @Field()
