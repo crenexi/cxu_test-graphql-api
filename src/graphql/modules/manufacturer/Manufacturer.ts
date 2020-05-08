@@ -7,7 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-import ShipIdentity from './ShipIdentity';
+import { ShipIdentity } from '../ship-identity';
 
 @Entity()
 @ObjectType()

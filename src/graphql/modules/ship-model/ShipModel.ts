@@ -8,8 +8,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID, Int, registerEnumType } from 'type-graphql';
-import ShipIdentity from './ShipIdentity';
-import ShipSpinoff from './ShipSpinoff';
+import { ShipIdentity } from '../ship-identity';
+import { ShipSpinoff } from '../ship-spinoff';
 
 // Quick note about ship entities:
 // ShipIdentity: a ship's central name (ex. Avenger)
