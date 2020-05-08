@@ -1,28 +1,17 @@
-import dataLoader from 'dataloader';
+import DataLoader from 'dataloader';
 import Manufacturer from '../../models/Manufacturer';
 import { orderLoaderRes } from '../../helpers';
 
-type BatchManufacturer = (ids: string[]) => Promise<Manufacturer[]>;
+type BatchManufacturer = (ids: readonly string[]) => Promise<Manufacturer[]>;
 type ManufacturerMap = { [key: string]: Manufacturer };
 
-const batchManufacturers: BatchManufacturer = async (ids) => {
-  // 1. Get data
+const batchManufacturers: BatchManufacturer = async (readOnlyIds) => {
+  const ids = [...readOnlyIds];
+
   const manufacturers = await Manufacturer.findByIds(ids);
-
-  return orderLoaderRes();
-
-  // 2. Create map
-  const manufacturerMap: ManufacturerMap =
-  });
-
-  return ids.map(id => userMap[id]);
+  return orderLoaderRes({ ids, items: manufacturers });
 };
 
-export const userLoader = () => new DataLoader<string, User>(batchUsers);
-
-const userMap: { [key: string]: User } = {};
-users.forEach(u => {
-  userMap[u.id] = u;
-});
-
-return ids.map(id => userMap[id]);
+export default () => (
+  new DataLoader<string, Manufacturer>(batchManufacturers)
+);
