@@ -7,9 +7,9 @@ import express from 'express';
 import http from 'http';
 import log from 'fancy-log';
 import chalk from 'chalk';
-import config from '../config';
-import initApp from '../init-app';
+import config from '../config/server.config';
 import logger from '../services/logger';
+import initApp from '../init-app';
 
 const debug = debugLib('express:server');
 

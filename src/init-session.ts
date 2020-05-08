@@ -7,9 +7,9 @@ import session from 'express-session';
 import connectRedis from 'connect-redis';
 import rateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
+import config from './config/server.config';
 import { alphanumeric } from './helpers';
 import logger from './services/logger';
-import config from './config';
 
 const TEN_MINUTES = 1000 * 60 * 10;
 const ONE_DAY = 86400;

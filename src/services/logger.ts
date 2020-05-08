@@ -1,6 +1,6 @@
 import winston, { createLogger, format, transports, Logger } from 'winston';
 import Transport from 'winston-transport';
-import config from '../config';
+import config from '../config/server.config';
 
 const loggerConfig = {
   dateFormat: 'YYYY-MM-DD HH:mm:ss',

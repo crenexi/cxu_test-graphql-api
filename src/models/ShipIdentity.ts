@@ -8,8 +8,8 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-import Manufacturer from '../Manufacturer';
-import ShipModel from '../ShipModel';
+import Manufacturer from './Manufacturer';
+import ShipModel from './ShipModel';
 
 @Entity()
 @ObjectType()

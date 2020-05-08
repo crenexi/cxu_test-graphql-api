@@ -7,7 +7,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from 'errorhandler';
 import accessLogger from './middlewares/access-logger';
-import config from './config';
+import config from './config/server.config';
 
 // Environment variables
 

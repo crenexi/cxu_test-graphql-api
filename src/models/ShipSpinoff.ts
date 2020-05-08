@@ -6,8 +6,8 @@ import {
   UpdateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { ObjectType, Field, ID, Int } from 'type-graphql';
-import ShipModel from '../ShipModel';
+import { ObjectType, Field, ID } from 'type-graphql';
+import ShipModel from './ShipModel';
 
 @Entity()
 @ObjectType()
