@@ -17,7 +17,7 @@ class Manufacturer extends BaseEntity {
   id: string;
 
   @Field()
-  @Column({ type: 'text', unique: true })
+  @Column({ type: 'text', length: 50, unique: true })
   name: string;
 
   @Field()

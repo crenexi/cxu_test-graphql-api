@@ -60,11 +60,11 @@ class ShipModel extends BaseEntity {
   id: string;
 
   @Field()
-  @Column({ type: 'text', unique: true })
+  @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
 
   @Field()
-  @Column('text')
+  @Column({ type: 'varchar', length: 1000 })
   description: string;
 
   @Field(() => ShipSizeClass)

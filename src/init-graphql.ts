@@ -19,16 +19,12 @@ const handleFormatError = (err: GraphQLError) => {
 
 /** Setup the Apollo server */
 const initGraphQL = async (app: express.Application): Promise<void> => {
-  // Call all supplied loaders before passing to context
-  const dataLoaders = Object.entries(loaders)
-    .reduce((a, [k, v]) => ({ ...a, [k]: v() }));
-
   const apolloServer = new ApolloServer({
     schema: await buildSchema({ resolvers }),
     context: ({ req }) => ({
       req,
       url: `${req.protocol}://${req.get('host')}`,
-      ...dataLoaders,
+      ...loaders,
     }),
     // TODO: add redis and session: request.session to context
     formatError: handleFormatError,

@@ -1,7 +1,7 @@
 import { ConnectionOptions } from 'typeorm';
 import fs from 'fs';
 import logger from '../services/logger';
-import { entities, migrations, subscribers } from './orm';
+import { entities, migrations, subscribers } from '../typeorm';
 import config from './server.config';
 
 // Config from env
