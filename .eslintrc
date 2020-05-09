@@ -51,6 +51,7 @@
       "ExportDeclaration": { "minProperties": 7, "multiline": true, "consistent": true }
     }],
     "no-shadow": 0,
+    "import/prefer-default-export": 0,
     "import/extensions": [2, "never"],
     "import/newline-after-import": 0,
     "lines-between-class-members": [2, "always", { "exceptAfterSingleLine": true }],

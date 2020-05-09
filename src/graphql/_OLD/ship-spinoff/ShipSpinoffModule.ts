@@ -1,12 +1,12 @@
 import { GraphQLModule } from '@graphql-modules/core';
 import { buildSchemaSync } from 'type-graphql';
-import ShipProvider from './ShipProvider';
+import ShipSpinoffProvider from './ShipSpinoffProvider';
+import ShipSpinoffResolver from './ShipSpinoffResolver';
 
 // Types
 import { Chat } from './chat.type';
 
 // Resolvers
-import { ShipModelResolver } from './ship-model';
 
 const resolvers = [
   ShipModelResolver,
