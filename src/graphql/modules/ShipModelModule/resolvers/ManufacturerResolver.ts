@@ -1,20 +1,20 @@
 import { Resolver, Query, Arg } from 'type-graphql';
 import { ShipModelProvider } from '../providers';
-import { ShipModel } from '../../../models';
+import { Manufacturer } from '../../../models';
 
 @Resolver()
-export default class ShipModelResolver {
+export default class ManufacturerResolver {
   constructor(private shipModelProvider: ShipModelProvider) {
     this.shipModelProvider = shipModelProvider;
   }
 
-  @Query(() => [ShipModel])
+  @Query(() => [Manufacturer])
   shipModels() {
-    return this.shipModelProvider.findModels();
+    return this.shipModelProvider.findManufacturers();
   }
 
-  @Query(() => ShipModel)
+  @Query(() => Manufacturer)
   shipModel(@Arg('id') id: string) {
-    return this.shipModelProvider.findModel(id);
+    return this.shipModelProvider.findManufacturer(id);
   }
 }
