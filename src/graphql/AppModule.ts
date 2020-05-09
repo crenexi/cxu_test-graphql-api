@@ -1,9 +1,9 @@
 import { GraphQLModule } from '@graphql-modules/core';
-import { UserModule } from './user-module';
+import { ShipModule } from './modules/ship';
 
 const AppModule = new GraphQLModule({
   imports: [
-    UserModule,
+    ShipModule,
   ],
 });
 
