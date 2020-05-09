@@ -4,19 +4,21 @@ import { ShipModelProvider } from './providers';
 import { ShipModelResolver } from './resolvers';
 
 const resolvers = [
-  // ShipModelResolver,
+  ShipModelResolver,
 ];
 
-const ShipModule = new GraphQLModule({
-  providers: [ShipModelProvider, ...resolvers],
+const ShipModelModule = new GraphQLModule({
+  name: 'ShipModelModule',
+  providers: [
+    ShipModelProvider,
+    ...resolvers,
+  ],
   extraSchemas: [
     buildSchemaSync({
       resolvers,
-      container: ({ context }) => {
-        return ShipModule.injector.getSessionInjector(context);
-      },
+      container: ({ context }) => context.injector,
     }),
   ],
 });
 
-export default ShipModule;
+export default ShipModelModule;

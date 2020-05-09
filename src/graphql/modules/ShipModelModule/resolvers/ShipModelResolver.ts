@@ -3,7 +3,7 @@ import { ShipModelProvider } from '../providers';
 import { ShipModel } from '../../../models';
 
 @Resolver(() => ShipModel)
-export class ShipModelResolver {
+export default class ShipModelResolver {
   constructor(private spinoffProvider: ShipModelProvider) {
     this.spinoffProvider = spinoffProvider;
   }

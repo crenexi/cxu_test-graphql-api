@@ -1,7 +1,7 @@
 import { Injectable } from '@graphql-modules/di';
 
 @Injectable()
-class ShipModelProvider {
+export default class ShipModelProvider {
   find() {
     return [];
   }
@@ -10,5 +10,3 @@ class ShipModelProvider {
     return id;
   }
 }
-
-export default ShipModelProvider;

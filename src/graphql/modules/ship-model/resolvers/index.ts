@@ -1,1 +1,0 @@
-export { ShipModelResolver } from './ShipModelResolver';
