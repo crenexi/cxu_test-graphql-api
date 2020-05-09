@@ -2,9 +2,8 @@ import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { GraphQLError } from 'graphql';
 import { ApolloServer, ApolloError } from 'apollo-server-express';
-import { buildSchema } from 'type-graphql';
-// import resolvers from './graphql/resolvers';
-import buildLoaders from './graphql/loaders';
+import AppModule from './graphql/AppModule';
+// import buildLoaders from './graphql/build-loaders';
 import logger from './services/logger';
 
 /** Handle Apollo errors */
@@ -20,13 +19,13 @@ const handleFormatError = (err: GraphQLError) => {
 /** Setup the Apollo server */
 const initApollo = async (app: express.Application): Promise<void> => {
   const apolloServer = new ApolloServer({
-    schema: await buildSchema({ resolvers }),
-    context: ({ req }) => ({
+    schema: AppModule.schema,
+    context: ({ req, res }) => ({
       req,
+      res,
       url: `${req.protocol}://${req.get('host')}`,
-      ...buildLoaders(),
+      // ...buildLoaders(),
     }),
-    // TODO: add redis and session: request.session to context
     formatError: handleFormatError,
   });
 
@@ -37,3 +36,5 @@ const initApollo = async (app: express.Application): Promise<void> => {
 };
 
 export default initApollo;
+
+// TODO: add redis to context
