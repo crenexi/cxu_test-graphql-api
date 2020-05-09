@@ -54,7 +54,7 @@ registerEnumType(ShipLengthClass, {
 
 @Entity()
 @ObjectType()
-export class ShipModel extends BaseEntity {
+export default class ShipModel extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;

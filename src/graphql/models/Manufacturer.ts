@@ -7,11 +7,11 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-import { ShipIdentity } from '../ship-identity';
+import ShipIdentity from './ShipIdentity';
 
 @Entity()
 @ObjectType()
-class Manufacturer extends BaseEntity {
+export default class Manufacturer extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -31,5 +31,3 @@ class Manufacturer extends BaseEntity {
   )
   shipIdentities: Promise<ShipIdentity[]>;
 }
-
-export default Manufacturer;

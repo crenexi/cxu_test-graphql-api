@@ -5,13 +5,15 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { ObjectType, Field, ID } from 'type-graphql';
-import { ShipModel } from '../ship-model';
+import ShipModel from './ShipModel';
+import Manufacturer from './Manufacturer';
 
 @Entity()
 @ObjectType()
-class ShipSpinoff extends BaseEntity {
+export default class ShipIdentity extends BaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -24,12 +26,19 @@ class ShipSpinoff extends BaseEntity {
   @Column({ type: 'varchar', length: 1000 })
   description: string;
 
-  @ManyToOne(() => ShipModel, (sm: ShipModel) => sm.spinoffs)
-  model: Promise<ShipModel>;
+  @Field(() => Manufacturer)
+  @ManyToOne(
+    () => Manufacturer,
+    (m: Manufacturer) => m.shipIdentities,
+    { eager: true },
+  )
+  manufacturer: Manufacturer;
+
+  @Field(() => [ShipModel])
+  @OneToMany(() => ShipModel, (sm: ShipModel) => sm.identity)
+  models: Promise<ShipModel[]>;
 
   @Field()
   @UpdateDateColumn()
   dateUpdated: Date;
 }
-
-export default ShipSpinoff;
