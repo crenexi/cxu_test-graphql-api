@@ -1,6 +1,6 @@
 import { Resolver, Query, Arg } from 'type-graphql';
 import { ShipModelProvider } from '../providers';
-import { Manufacturer } from '../../../models';
+import { Manufacturer } from '../../../entities';
 
 @Resolver()
 export default class ManufacturerResolver {
@@ -9,12 +9,12 @@ export default class ManufacturerResolver {
   }
 
   @Query(() => [Manufacturer])
-  shipModels() {
-    return this.shipModelProvider.findManufacturers();
+  manufacturers() {
+    return this.shipModelProvider.getManufacturers();
   }
 
   @Query(() => Manufacturer)
-  shipModel(@Arg('id') id: string) {
-    return this.shipModelProvider.findManufacturer(id);
+  manufacturer(@Arg('id') id: string) {
+    return this.shipModelProvider.getManufacturer(id);
   }
 }
