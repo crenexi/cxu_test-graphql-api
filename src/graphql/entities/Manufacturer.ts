@@ -1,28 +1,14 @@
-import {
-  Entity,
-  BaseEntity,
-  Column,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  OneToMany,
-} from 'typeorm';
-import { ObjectType, Field, ID } from 'type-graphql';
+import { Entity, Column, OneToMany } from 'typeorm';
+import { ObjectType, Field } from 'type-graphql';
+import BaseEntity from './BaseEntity';
 import ShipIdentity from './ShipIdentity';
 
 @Entity()
 @ObjectType()
 export default class Manufacturer extends BaseEntity {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
   @Field()
   @Column({ type: 'text', length: 50, unique: true })
   name: string;
-
-  @Field()
-  @UpdateDateColumn()
-  dateUpdated: Date;
 
   @OneToMany(
     () => ShipIdentity,

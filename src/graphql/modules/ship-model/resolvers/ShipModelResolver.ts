@@ -10,11 +10,11 @@ export default class ShipModelResolver {
 
   @Query(() => [ShipModel])
   shipModels() {
-    return this.shipModelProvider.findModels();
+    return this.shipModelProvider.getModel();
   }
 
   @Query(() => ShipModel)
   shipModel(@Arg('id') id: string) {
-    return this.shipModelProvider.findModel(id);
+    return this.shipModelProvider.getModel(id);
   }
 }

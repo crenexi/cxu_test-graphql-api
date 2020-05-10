@@ -1,13 +1,6 @@
-import {
-  Entity,
-  BaseEntity,
-  Column,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
-import { ObjectType, Field, ID, Int, registerEnumType } from 'type-graphql';
+import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
+import { ObjectType, Field, Int, registerEnumType } from 'type-graphql';
+import BaseEntity from './BaseEntity';
 import ShipIdentity from './ShipIdentity';
 import ShipSpinoff from './ShipSpinoff';
 
@@ -55,10 +48,6 @@ registerEnumType(ShipLengthClass, {
 @Entity()
 @ObjectType()
 export default class ShipModel extends BaseEntity {
-  @Field(() => ID)
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -98,8 +87,4 @@ export default class ShipModel extends BaseEntity {
     { eager: true, nullable: true },
   )
   spinoffs: Promise<ShipSpinoff[]>;
-
-  @Field()
-  @UpdateDateColumn()
-  dateUpdated: Date;
 }

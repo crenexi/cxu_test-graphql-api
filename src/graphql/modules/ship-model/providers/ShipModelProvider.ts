@@ -9,11 +9,11 @@ import {
 
 @Injectable()
 export default class ShipModelProvider {
-  findModels(): ShipModel[] {
+  getModels(): ShipModel[] {
     return [];
   }
 
-  findModel(id: string): ShipModel | Error {
+  getModel(id: string): ShipModel | Error {
     return id;
   }
 }
