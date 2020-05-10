@@ -1,6 +1,6 @@
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { ObjectType, Field, Int, registerEnumType } from 'type-graphql';
-import BaseEntity from './BaseEntity';
+import BaseEntity from './_BaseEntity';
 import ShipIdentity from './ShipIdentity';
 import ShipSpinoff from './ShipSpinoff';
 

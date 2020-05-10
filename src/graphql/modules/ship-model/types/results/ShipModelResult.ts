@@ -10,6 +10,11 @@ class IsDeleted {
 const ShipModelResult = createUnionType({
   name: 'ShipModelResult',
   types: () => [ShipModel, IsDeleted],
+  resolveType: (value) => {
+    if (value instanceof ShipModel) return ShipModel;
+    if (value instanceof IsDeleted) return IsDeleted;
+    return undefined;
+  },
 });
 
 export default ShipModelResult;

@@ -13,7 +13,9 @@ export default class ShipModelProvider {
     return [];
   }
 
-  getModel(id: string): ShipModel | Error {
-    return id;
+  async getModel(id: string): Promise<typeof ShipModelResult> {
+    return {
+      message: `Ship model deleted | id: ${id} `,
+    };
   }
 }
