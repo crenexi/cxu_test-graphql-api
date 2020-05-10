@@ -1,3 +1,1 @@
-type {
-
-}
+export { default as ShipModelResult } from './ShipModelResult';

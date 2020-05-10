@@ -18,31 +18,3 @@ export default class ManufacturerResolver {
     return this.shipModelProvider.findManufacturer(id);
   }
 }
-
-/types/exceptions/ShipResponse
-
-/modules/ships/types/inputs/
-/modules/ships/types/responses/
-/modules/ships/types/args/
-
-User {
-  ships: {
-
-  }
-}
-
-
-
-
-
-
-import { ShipModelResponse } from '@types/responses'
-import { ShipModelResponse } from '../../../ship-model/responses';
-
-User {
-  ship: ShipModelResponse[]
-}
-
-Event {
-  needs: ShipModelResponse[]
-}
