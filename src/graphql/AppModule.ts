@@ -1,5 +1,6 @@
 import { GraphQLModule } from '@graphql-modules/core';
-import ShipModelModule from './modules/ShipModelModule';
+import { ShipModelModule } from './modules/ship-model';
+import { emitSchemaDefinition } from './helpers';
 
 const AppModule = new GraphQLModule({
   name: 'AppModule',
@@ -7,5 +8,7 @@ const AppModule = new GraphQLModule({
     ShipModelModule,
   ],
 });
+
+emitSchemaDefinition(AppModule.schema);
 
 export default AppModule;
