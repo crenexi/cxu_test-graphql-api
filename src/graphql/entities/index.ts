@@ -1,20 +1,23 @@
-import Manufacturer from './Manufacturer';
-import ShipIdentity from './ShipIdentity';
+import User from './User';
 import ShipModel from './ShipModel';
+import ShipIdentity from './ShipIdentity';
 import ShipSpinoff from './ShipSpinoff';
+import Manufacturer from './Manufacturer';
 
 // Entites for Postgres
 export const entities = [
-  Manufacturer,
-  ShipIdentity,
+  User,
   ShipModel,
+  ShipIdentity,
   ShipSpinoff,
+  Manufacturer,
 ];
 
 // Schemas for GraphQL
 export {
-  Manufacturer,
-  ShipIdentity,
+  User,
   ShipModel,
+  ShipIdentity,
   ShipSpinoff,
+  Manufacturer,
 };

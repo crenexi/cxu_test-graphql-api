@@ -7,7 +7,7 @@ import ShipIdentity from './ShipIdentity';
 @ObjectType()
 export default class Manufacturer extends BaseEntity {
   @Field()
-  @Column({ type: 'text', length: 50, unique: true })
+  @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
 
   @OneToMany(

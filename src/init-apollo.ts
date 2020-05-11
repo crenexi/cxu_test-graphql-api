@@ -1,7 +1,7 @@
-import express from 'express';
 import { v4 as uuidv4 } from 'uuid';
 import { GraphQLError } from 'graphql';
 import { ApolloServer, ApolloError } from 'apollo-server-express';
+import { InitApollo } from './types/apollo';
 import AppModule from './graphql/AppModule';
 // import buildLoaders from './graphql/build-loaders';
 import logger from './services/logger';
@@ -16,8 +16,11 @@ const handleFormatError = (err: GraphQLError) => {
   return new GraphQLError(`Internal Error: ${errId}`);
 };
 
+
+const { schema, context, subscriptions } = AppModule.forRoot({ app, connection })
+
 /** Setup the Apollo server */
-const initApollo = async (app: express.Application): Promise<void> => {
+const initApollo: InitApollo = async ({ app }) => {
   const apolloServer = new ApolloServer({
     schema: AppModule.schema,
     context: ({ req, res }) => ({

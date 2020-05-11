@@ -5,12 +5,6 @@ import { ShipModelResult, ShipIdentityResult } from '../types/results';
 
 @Injectable()
 export default class ShipModelProvider {
-  constructor() {
-    this.shipRepository
-  }
-
-  const userRepository = getRepository(User);
-
   /** Get ship models */
   async getModels(): Promise<ShipModel[]> {
     return [];

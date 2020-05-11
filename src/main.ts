@@ -1,6 +1,7 @@
 import express from 'express';
 import debugLib from 'debug';
 import logger from './services/logger';
+import { Main, Bootstrap } from './types/app-types';
 import initConnection from './init-connection';
 import initApollo from './init-apollo';
 import initSession from './init-session';
@@ -8,7 +9,7 @@ import initMiddlewares from './init-middlewares';
 import router from './router';
 
 /** Express application */
-const createApp = async () => {
+const bootstrap: Bootstrap = async (conn) => {
   const debug = debugLib('express:app');
   debug('Bootstrapping app...');
 
@@ -26,11 +27,11 @@ const createApp = async () => {
 };
 
 /** Awaits database connection before proceeding */
-const initApp = async (): Promise<express.Application | null> => {
+const main: Main = async () => {
   try {
     // Connect to database before proceeding
-    await initConnection();
-    return createApp();
+    const conn = await initConnection();
+    return bootstrap(conn);
   } catch (err) {
     // Database connection error
     logger.critical(new Error(`[TypeORM connection] ${err}`));
@@ -38,4 +39,4 @@ const initApp = async (): Promise<express.Application | null> => {
   }
 };
 
-export default initApp;
+export default main;
