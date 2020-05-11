@@ -3,11 +3,10 @@ import { GraphQLError } from 'graphql';
 import { ApolloServer, ApolloError } from 'apollo-server-express';
 import { InitApollo } from './types';
 import AppModule from './graphql/AppModule';
-// import buildLoaders from './graphql/build-loaders';
 import logger from './services/logger';
 
 /** Handle Apollo errors */
-const handleFormatError = (err: GraphQLError) => {
+const formatError = (err: GraphQLError) => {
   if (err.originalError instanceof ApolloError) return err;
   const errId = uuidv4();
 
@@ -21,17 +20,12 @@ const initApollo: InitApollo = async ({ conn, app }) => {
   const { schema, context } = AppModule.forRoot({ conn });
 
   const apolloServer = new ApolloServer({
-    schema: AppModule.schema,
-    context: ({ req, res }) => ({
-      req,
-      res,
-      url: `${req.protocol}://${req.get('host')}`,
-      // ...buildLoaders(),
-    }),
-    formatError: handleFormatError,
+    schema,
+    context,
+    formatError,
   });
 
-  // Apply app to apollog server
+  // Apply app to apollo server
   // Note: app has cors, so we don't need it here
   apolloServer.applyMiddleware({
     app,
@@ -43,5 +37,3 @@ const initApollo: InitApollo = async ({ conn, app }) => {
 };
 
 export default initApollo;
-
-// TODO: add redis to context

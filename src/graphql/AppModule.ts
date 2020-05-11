@@ -1,30 +1,38 @@
-import { Connection } from 'typeorm';
 import { GraphQLModule } from '@graphql-modules/core';
+import {
+  Session,
+  AppModuleConfig as Config,
+  AppModuleContext as Context,
+} from '../types';
 import { AuthorizationModule } from './modules/authorization';
 import { ShipModelModule } from './modules/ship-model';
-import { emitSchemaDefinition } from './helpers';
+// import { emitSchemaDefinition } from './helpers';
 
-const generalModules = [
+const featureModules = [
   ShipModelModule,
 ];
 
-export interface AppModuleConfig {
-  conn: Connection;
-}
-
-const AppModule = new GraphQLModule<AppModuleConfig>({
+const AppModule = new GraphQLModule<Config, Session, Context>({
   name: 'AppModule',
   configRequired: true,
-  imports: ({ config }) => {
-    const { conn } = config;
-
-    return [
-      AuthorizationModule.forRoot({ conn }),
-      ...generalModules,
-    ];
-  },
+  imports: ({ config: { conn } }) => [
+    AuthorizationModule.forRoot({ conn }),
+    ...featureModules,
+  ],
+  context: ({ req }) => ({
+    url: `${req.protocol}://${req.get('host')}`,
+  }),
 });
 
-emitSchemaDefinition(AppModule.schema);
+// Emits schema via helper
+// emitSchemaDefinition(AppModule.schema);
 
 export default AppModule;
+
+// import buildLoaders from './graphql/build-loaders';
+// context: ({ req, res }): Context => ({
+//   req,
+//   res,
+//   // ...buildLoaders(),
+// }),
+// redis in context
