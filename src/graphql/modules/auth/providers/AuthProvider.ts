@@ -79,14 +79,14 @@ export default class AuthProvider implements OnRequest {
       throw new AuthError(messages.noIdentifier);
     })();
 
-    // User exists
+    // User doesn't exists
     if (!user) {
-      throw new AuthError(messages.wrongUser);
+      throw new AuthError(messages.undefinedUser);
     }
 
-    // User is deleted
+    // User is archived
     if (user.isArchived) {
-      throw new AuthError(messages.deletedUser);
+      throw new AuthError(messages.archivedUser);
     }
 
     // User is suspended

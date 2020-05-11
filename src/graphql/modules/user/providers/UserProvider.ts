@@ -2,6 +2,8 @@ import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { AuthProvider } from '../../auth/providers';
 import { User } from '../../../entities';
+import { messages } from '../constants';
+import { UserResult } from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })
 export default class UserProvider {
@@ -29,12 +31,24 @@ export default class UserProvider {
   }
 
   /** Get user */
-  async getUser(id: string): Promise<User | false> {
+  async getUser(id: string): Promise<typeof UserResult> {
     const user = await this.userRepo.findOne(id);
 
     // User not found
-    if (!user) return false;
+    if (!user) {
+      return { message: 'User does not exist' };
+    }
 
+    // User is archived
+    if (user.isArchived) {
+      return { archivalReason: user.archivalReason || 'Unknown' };
+    }
 
+    // User is suspended
+    if (user.isSuspended) {
+      return { suspensionReason: user.suspensionReason || 'Unknown' };
+    }
+
+    return user;
   }
 }

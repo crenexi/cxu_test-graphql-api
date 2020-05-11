@@ -10,16 +10,12 @@ export default class UserResolver {
   }
 
   @Query(() => [User])
-  users() {
+  users(): Promise<User[]> {
     return this.userProvider.getUsers();
   }
 
   @Query(() => UserResult)
-  user(@Arg('id') id: string): Promise<typeof UserResult | false> {
-    const user = this.userProvider.getUser(id);
-
-    if (!user) return false;
-
-    return 'test';
+  user(@Arg('id') id: string): Promise<typeof UserResult> {
+    return this.userProvider.getUser(id);
   }
 }
