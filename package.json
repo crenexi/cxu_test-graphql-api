@@ -20,6 +20,7 @@
     "pm2:logs": "pm2 logs pm2.config.js"
   },
   "devDependencies": {
+    "@types/bcrypt-nodejs": "0.0.31",
     "@types/connect-redis": "0.0.13",
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.6",

@@ -13,7 +13,7 @@ const featureModules = [
 ];
 
 const AppModule = new GraphQLModule<Config, Session, Context>({
-  name: 'AppModule',
+  name: 'App',
   configRequired: true,
   imports: ({ config: { conn } }) => [
     AuthorizationModule.forRoot({ conn }),
