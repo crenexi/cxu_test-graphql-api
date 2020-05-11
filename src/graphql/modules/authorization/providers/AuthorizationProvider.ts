@@ -3,7 +3,6 @@ import { AuthenticationError } from 'apollo-server-express';
 import { OnRequest, OnConnect, ModuleSessionInfo } from '@graphql-modules/core';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { genSalt, hash, compare } from 'bcrypt-nodejs';
-import { sign } from 'jsonwebtoken';
 import config from '../../../../config/server.config';
 import { createToken } from '../../../../helpers';
 import logger from '../../../../services/logger';
@@ -166,12 +165,9 @@ export default class AuthProvider implements OnRequest, OnConnect {
 
   /** Helper to configure the refresh token */
   private configureRefreshToken(user: User): void {
-    const refreshToken = createToken({ type: 'refresh', userId: user.id });
+    const { cookieName, cookieOpts } = config.auth;
 
-    this.session.res.cookie('avengersAssemble', refreshToken, {
-      path: '/',
-      httpOnly: true,
-      secure: config.isProduction,
-    });
+    const refreshToken = createToken({ type: 'refresh', userId: user.id });
+    this.session.res.cookie(cookieName, refreshToken, cookieOpts);
   }
 }

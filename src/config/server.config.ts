@@ -1,3 +1,5 @@
+import { CookieOptions } from 'express';
+
 interface ServerConfig {
   env: string;
   isProduction: boolean;
@@ -5,8 +7,12 @@ interface ServerConfig {
   debugging: boolean;
   port: number;
   secret: string;
-  accessTokenSecret: string;
-  refreshTokenSecret: string;
+  auth: {
+    cookieName: string;
+    cookieOpts: CookieOptions;
+    accessSecret: string;
+    refreshSecret: string;
+  };
   prodOrigins: string[];
   postgres: {
     host: string;
@@ -37,8 +43,16 @@ const serverConfig: ServerConfig = {
   debugging: !!process.env.DEBUG,
   port: parseInt(process.env.PORT as string, 10) || 3000,
   secret: process.env.SESSION_SECRET || 'Avengers Assemble',
-  accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || 'Avengers Assemble',
-  refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET || 'Avengers Assemble',
+  auth: {
+    cookieName: 'avengersAssemble',
+    cookieOpts: {
+      path: '/',
+      httpOnly: true,
+      secure: nodeEnv === 'production',
+    },
+    accessSecret: process.env.ACCESS_TOKEN_SECRET || 'Avengers Assemble',
+    refreshSecret: process.env.REFRESH_TOKEN_SECRET || 'Avengers Assemble',
+  },
   prodOrigins: [
     'https://www.webbuniverse.com',
     'https://dev.webbuniverse.com',

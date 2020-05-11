@@ -11,6 +11,7 @@ type AccessTokenPayload = {
 }
 
 const refreshTokenController = async (req: Request, res: Response) => {
+  const { cookieName, cookieOpts } = config.auth;
   const sendNoToken = () => res.send({ ok: false, accessToken: '' });
 
   const refresh = async ({ userId }: AccessTokenPayload) => {
@@ -19,18 +20,22 @@ const refreshTokenController = async (req: Request, res: Response) => {
 
     if (!user) sendNoToken();
 
-    // Send new token
+    // Setup refresh token
     const accessToken = createToken({ type: 'access', userId });
+    const refreshToken = createToken({ type: 'refresh', userId });
+
+    // Configure refresh token, and send access token
+    res.cookie(cookieName, refreshToken, cookieOpts);
     res.send({ ok: true, accessToken });
   };
 
   // Get the token
-  const token = req.cookies.avengersAssemble;
+  const token = req.cookies[cookieName];
   if (!token) sendNoToken();
 
   try {
     // Token verification; refresh if verified
-    const payload = verify(token, config.refreshTokenSecret);
+    const payload = verify(token, config.auth.refreshSecret);
     refresh(payload as AccessTokenPayload);
   } catch (err) {
     logger.error(err);

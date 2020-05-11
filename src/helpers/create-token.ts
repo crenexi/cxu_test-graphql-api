@@ -11,8 +11,8 @@ const createToken = ({ type, userId }: CreateTokenOpts) => {
   const expiresIn = isRefresh ? '7d' : '10m';
 
   const secret = isRefresh
-    ? config.refreshTokenSecret
-    : config.accessTokenSecret;
+    ? config.auth.refreshSecret
+    : config.auth.accessSecret;
 
   return sign({ userId }, secret, { expiresIn });
 };
