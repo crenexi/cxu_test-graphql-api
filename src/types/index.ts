@@ -42,6 +42,10 @@ export type Session = {
   res: express.Response;
 }
 
+export type ConnectionParams = {
+  authToken?: string;
+};
+
 // ###########################
 // ### AppModule #############
 // ###########################

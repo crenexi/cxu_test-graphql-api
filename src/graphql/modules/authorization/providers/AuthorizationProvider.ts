@@ -2,8 +2,10 @@ import { Connection, Repository } from 'typeorm';
 import { AuthenticationError } from 'apollo-server-express';
 import { OnRequest, OnConnect, ModuleSessionInfo } from '@graphql-modules/core';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-import bcrypt from 'bcrypt-nodejs';
+import { genSalt, hash, compare } from 'bcrypt-nodejs';
+import { ConnectionParams } from '../../../../types';
 import { User } from '../../../entities';
+import { messages } from '../constants';
 
 type Credentials = {
   password: string;
@@ -14,19 +16,41 @@ type Credentials = {
 @Injectable({ scope: ProviderScope.Session })
 export default class AuthProvider implements OnRequest, OnConnect {
   userRepo: Repository<User>;
-  currentUser: User;
+  currentUser: User | null;
 
   constructor(private conn: Connection) {
     this.userRepo = conn.getRepository(User);
   }
 
-  /** Login */
-  async login(credentials: Credentials): Promise<User | false> {
+  /** On request */
+  async onRequest({ session }: ModuleSessionInfo): Promise<void> {
+    this.currentUser = !session.req ? null : session.req.user;
+  }
+
+  /** On connect */
+  async onConnect(connParams: ConnectionParams): Promise<void> {
+    const { authToken } = connParams;
+
+    if (!authToken) {
+      throw new AuthenticationError(messages.noToken);
+    }
+
+    // continue...
+  }
+
+  /** Join */
+  async join(credentials: Credentials): Promise<User | false> {
+    this.ensureIdentifier(credentials);
+
     const { handle, email, password } = credentials;
 
-    if (!handle && !email) {
-      throw new AuthenticationError('Must supply handle or email');
-    }
+  }
+
+  /** Login */
+  async login(credentials: Credentials): Promise<User | false> {
+    this.ensureIdentifier(credentials);
+
+    const { handle, email, password } = credentials;
 
     const user = await (() => {
       if (handle) return this.getUserByHandle(handle);
@@ -47,13 +71,37 @@ export default class AuthProvider implements OnRequest, OnConnect {
     return this.userRepo.findOne({ where: { email } });
   }
 
+  /** Ensures handle or email is supplied */
+  ensureIdentifier({ handle, email }: Credentials): void {
+    if (!handle && !email) {
+      throw new AuthenticationError(messages.noIdentifier);
+    }
+  }
+
   /** Create hash */
-  generateHash(password: string) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8))
+  async genHash(password: string): Promise<string> {
+    return new Promise((resolve) => {
+      genSalt(12, (err: Error, salt: string) => {
+        if (err) throw err;
+
+        hash(password, salt, (err: Error, hash: string) => {
+          if (err) throw err;
+          resolve(hash);
+        });
+      });
+    });
   }
 
   /** Validate password */
-  isValidPassword(user: User, suppliedPassword: string) {
-    return bcrypt.compareSync(user.password, suppliedPassword);
+  async isValidPassword(user: User, password: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      compare(password, user.password, (err: Error, matches: boolean) => {
+        if (!matches) {
+          throw new AuthenticationError(messages.wrongPassword);
+        }
+
+        resolve(true);
+      });
+    });
   }
 }
