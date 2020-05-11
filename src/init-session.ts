@@ -1,6 +1,5 @@
 import log from 'fancy-log';
 import chalk from 'chalk';
-import { v4 as uuidv4 } from 'uuid';
 import IORedis from 'ioredis';
 import connectRedis from 'connect-redis';
 import session from 'express-session';
@@ -8,7 +7,6 @@ import rateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
 import { InitRedis, InitSession } from './types';
 import config from './config/server.config';
-import { alphanumeric } from './helpers';
 import logger from './services/logger';
 
 const TEN_MINUTES = 1000 * 60 * 10;
@@ -62,7 +60,7 @@ const initSession: InitSession = (app) => {
   // Session
   app.use(session({
     store,
-    name: alphanumeric(uuidv4()),
+    name: 'avengersAssemble',
     secret: config.secret,
     resave: false,
     saveUninitialized: true,

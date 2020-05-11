@@ -3,7 +3,10 @@ import { AuthenticationError } from 'apollo-server-express';
 import { OnRequest, OnConnect, ModuleSessionInfo } from '@graphql-modules/core';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { genSalt, hash, compare } from 'bcrypt-nodejs';
-import { ConnectionParams } from '../../../../types';
+import { sign } from 'jsonwebtoken';
+import config from '../../../../config/server.config';
+import logger from '../../../../services/logger';
+import { ConnectionParams, Session } from '../../../../types';
 import { User } from '../../../entities';
 import { messages } from '../constants';
 
@@ -13,13 +16,13 @@ type Credentials = {
   email?: string;
 }
 
-type UserIdentifier = {
-  idType: 'handle' | 'email';
-  idValue: string;
+type AuthResult = {
+  accessToken: string;
 }
 
 @Injectable({ scope: ProviderScope.Session })
 export default class AuthProvider implements OnRequest, OnConnect {
+  session: Session;
   userRepo: Repository<User>;
   currentUser: User | null;
 
@@ -29,6 +32,7 @@ export default class AuthProvider implements OnRequest, OnConnect {
 
   /** On request */
   async onRequest({ session }: ModuleSessionInfo): Promise<void> {
+    this.session = session;
     this.currentUser = !session.req ? null : session.req.user;
   }
 
@@ -44,7 +48,7 @@ export default class AuthProvider implements OnRequest, OnConnect {
   }
 
   /** Join */
-  async join(credentials: Credentials): Promise<User | false> {
+  async join(credentials: Credentials): Promise<AuthResult | false> {
     const password = await this.genHash(credentials.password);
     const { handle, email } = credentials;
 
@@ -66,12 +70,17 @@ export default class AuthProvider implements OnRequest, OnConnect {
     }
 
     // Create user and login
-    await this.userRepo.insert({ handle, email, password });
-    return this.login(credentials);
+    try {
+      await this.userRepo.insert({ handle, email, password });
+      return this.login(credentials);
+    } catch (err) {
+      logger.critical(err);
+      return false;
+    }
   }
 
   /** Login */
-  async login(credentials: Credentials): Promise<User> {
+  async login(credentials: Credentials): Promise<AuthResult | false> {
     const { handle, email, password } = credentials;
 
     // Get user by supplied handle/email
@@ -101,21 +110,40 @@ export default class AuthProvider implements OnRequest, OnConnect {
       throw new AuthenticationError(messages.wrongPassword);
     }
 
-    return user;
+    // Configure refresh token
+    this.session.res.cookie('avengersAssemble', this.refreshToken(user), {
+      path: '/',
+      httpOnly: true,
+      secure: config.isProduction,
+    });
+
+    return {
+      accessToken: createToken({ type userId: user.id }) this.accessToken(user),
+    };
   }
 
   /** Get user by handle */
   async getUserByHandle(handle: string): Promise<User | false> {
-    return await this.userRepo.findOne({ where: { handle } }) || false;
+    return this.getUserWhere({ handle });
   }
 
   /** Get user by email */
   async getUserByEmail(email: string): Promise<User | false> {
-    return await this.userRepo.findOne({ where: { email } }) || false;
+    return this.getUserWhere({ email });
+  }
+
+  /** Gets user via where query */
+  private async getUserWhere(where: object): Promise<User | false> {
+    try {
+      return await this.userRepo.findOne(where) || false;
+    } catch (err) {
+      logger.critical(err);
+      return false;
+    }
   }
 
   /** Create hash */
-  async genHash(password: string): Promise<string> {
+  private async genHash(password: string): Promise<string> {
     return new Promise((resolve) => {
       genSalt(12, (err: Error, salt: string) => {
         if (err) throw err;
@@ -129,7 +157,10 @@ export default class AuthProvider implements OnRequest, OnConnect {
   }
 
   /** Validate password */
-  async isValidPassword(user: User, password: string): Promise<boolean> {
+  private async isValidPassword(
+    user: User,
+    password: string,
+  ): Promise<boolean> {
     return new Promise((resolve) => {
       compare(password, user.password, (err: Error, matches: boolean) => {
         resolve(matches);

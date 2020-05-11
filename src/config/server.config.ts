@@ -5,6 +5,8 @@ interface ServerConfig {
   debugging: boolean;
   port: number;
   secret: string;
+  accessTokenSecret: string;
+  refreshTokenSecret: string;
   prodOrigins: string[];
   postgres: {
     host: string;
@@ -35,6 +37,8 @@ const serverConfig: ServerConfig = {
   debugging: !!process.env.DEBUG,
   port: parseInt(process.env.PORT as string, 10) || 3000,
   secret: process.env.SESSION_SECRET || 'Avengers Assemble',
+  accessTokenSecret: process.env.ACCESS_TOKEN_SECRET || 'Avengers Assemble',
+  refreshTokenSecret: process.env.REFRESH_TOKEN_SECRET || 'Avengers Assemble',
   prodOrigins: [
     'https://www.webbuniverse.com',
     'https://dev.webbuniverse.com',

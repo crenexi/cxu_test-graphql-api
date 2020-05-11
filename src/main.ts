@@ -27,7 +27,7 @@ const bootstrap: Bootstrap = async (conn) => {
   await initApollo({ conn, app });
 
   // 4. Other endpoints
-  app.use(router());
+  app.use(router);
 
   debug('App boostrap complete');
   return app;
