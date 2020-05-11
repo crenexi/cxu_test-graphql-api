@@ -5,14 +5,8 @@ import BaseEntity from './_BaseEntity';
 @Entity()
 @ObjectType()
 export default class User extends BaseEntity {
-  @Field()
-  @Column({
-    type: 'varchar',
-    length: 50,
-    unique: true,
-    nullable: true,
-  })
-  handle?: string
+  @Column()
+  password: string;
 
   @Field()
   @Column({
@@ -21,12 +15,22 @@ export default class User extends BaseEntity {
     unique: true,
     nullable: true,
   })
-  email?: string
+  handle?: string;
+
+  @Field()
+  @Column({
+    type: 'varchar',
+    length: 50,
+    unique: true,
+    nullable: true,
+  })
+  email?: string;
+
+  @Field()
+  @Column({ type: 'varchar', length: 75, nullable: true })
+  signature?: string;
 
   @Field()
   @Column({ default: false })
   isSuspended: boolean;
-
-  @Column()
-  password: string
 }

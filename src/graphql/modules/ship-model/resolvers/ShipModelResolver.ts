@@ -10,12 +10,12 @@ export default class ShipModelResolver {
   }
 
   @Query(() => [ShipModel])
-  shipModels() {
+  shipModels(): Promise<ShipModel[]> {
     return this.shipModelProvider.getModels();
   }
 
   @Query(() => ShipModelResult)
-  shipModel(@Arg('id') id: string) {
+  shipModel(@Arg('id') id: string): Promise<typeof ShipModelResult> {
     return this.shipModelProvider.getModel(id);
   }
 }

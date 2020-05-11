@@ -1,8 +1,8 @@
 import { ObjectType, Field, createUnionType } from 'type-graphql';
-import { User } from '../../../entities';
+import { User } from '../../../../entities';
 
 @ObjectType()
-class IsDeleted {
+class IsArchived {
   @Field()
   message: string;
 }
@@ -15,10 +15,10 @@ class IsSuspended {
 
 const UserResult = createUnionType({
   name: 'UserResult',
-  types: () => [User, IsDeleted, IsSuspended],
+  types: () => [User, IsArchived, IsSuspended],
   resolveType: (value) => {
     if (value instanceof User) return User;
-    if (value instanceof IsDeleted) return IsDeleted;
+    if (value instanceof IsArchived) return IsArchived;
     if (value instanceof IsSuspended) return IsSuspended;
     return undefined;
   },

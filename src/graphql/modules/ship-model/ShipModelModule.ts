@@ -8,7 +8,7 @@ const resolvers = [
 ];
 
 const ShipModelModule = new GraphQLModule({
-  name: 'ShipModelModule',
+  name: 'ShipModel',
   providers: [
     ShipModelProvider,
     ...resolvers,

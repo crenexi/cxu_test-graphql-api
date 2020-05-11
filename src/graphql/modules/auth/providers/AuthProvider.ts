@@ -1,12 +1,12 @@
 import { Connection, Repository } from 'typeorm';
-import { AuthenticationError } from 'apollo-server-express';
-import { OnRequest, OnConnect, ModuleSessionInfo } from '@graphql-modules/core';
+import { AuthenticationError as AuthError } from 'apollo-server-express';
+import { OnRequest, ModuleSessionInfo } from '@graphql-modules/core';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { genSalt, hash, compare } from 'bcrypt-nodejs';
 import config from '../../../../config/server.config';
 import { createToken } from '../../../../helpers';
 import logger from '../../../../services/logger';
-import { ConnectionParams, Session } from '../../../../types';
+import { Session } from '../../../../types';
 import { User } from '../../../entities';
 import { messages } from '../constants';
 
@@ -21,7 +21,7 @@ type AuthResult = {
 }
 
 @Injectable({ scope: ProviderScope.Session })
-export default class AuthProvider implements OnRequest, OnConnect {
+export default class AuthProvider implements OnRequest {
   session: Session;
   userRepo: Repository<User>;
   currentUser: User | null;
@@ -33,18 +33,7 @@ export default class AuthProvider implements OnRequest, OnConnect {
   /** On request */
   async onRequest({ session }: ModuleSessionInfo): Promise<void> {
     this.session = session;
-    this.currentUser = !session.req ? null : session.req.user;
-  }
-
-  /** On connect */
-  async onConnect(connParams: ConnectionParams): Promise<void> {
-    const { authToken } = connParams;
-
-    if (!authToken) {
-      throw new AuthenticationError(messages.noToken);
-    }
-
-    // continue...
+    this.currentUser = !session.req ? null : session.req.user || null;
   }
 
   /** Join */
@@ -60,13 +49,13 @@ export default class AuthProvider implements OnRequest, OnConnect {
     // Check handle availability
     if (handle) {
       const user = await this.getUserByHandle(handle);
-      if (user) throw new AuthenticationError(messages.handleTaken);
+      if (user) throw new AuthError(messages.handleTaken);
     }
 
     // Check email availability
     if (email) {
       const user = await this.getUserByEmail(email);
-      if (user) throw new AuthenticationError(messages.emailTaken);
+      if (user) throw new AuthError(messages.emailTaken);
     }
 
     // Create user and login
@@ -87,27 +76,27 @@ export default class AuthProvider implements OnRequest, OnConnect {
     const user = await (() => {
       if (handle) return this.getUserByHandle(handle);
       if (email) return this.getUserByEmail(email);
-      throw new AuthenticationError(messages.noIdentifier);
+      throw new AuthError(messages.noIdentifier);
     })();
 
     // User exists
     if (!user) {
-      throw new AuthenticationError(messages.wrongUser);
+      throw new AuthError(messages.wrongUser);
     }
 
     // User is deleted
     if (user.isArchived) {
-      throw new AuthenticationError(messages.deletedUser);
+      throw new AuthError(messages.deletedUser);
     }
 
     // User is suspended
     if (user.isSuspended) {
-      throw new AuthenticationError(messages.suspendedUser);
+      throw new AuthError(messages.suspendedUser);
     }
 
     // Password checks out
     if (!this.isValidPassword(user, password)) {
-      throw new AuthenticationError(messages.wrongPassword);
+      throw new AuthError(messages.wrongPassword);
     }
 
     // Create refresh and access tokens

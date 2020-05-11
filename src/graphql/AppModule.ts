@@ -4,7 +4,7 @@ import {
   AppModuleConfig as Config,
   AppModuleContext as Context,
 } from '../types';
-import { AuthorizationModule } from './modules/authorization';
+import { AuthModule } from './modules/auth';
 import { ShipModelModule } from './modules/ship-model';
 // import { emitSchemaDefinition } from './helpers';
 
@@ -16,7 +16,7 @@ const AppModule = new GraphQLModule<Config, Session, Context>({
   name: 'App',
   configRequired: true,
   imports: ({ config: { conn } }) => [
-    AuthorizationModule.forRoot({ conn }),
+    AuthModule.forRoot({ conn }),
     ...featureModules,
   ],
   context: ({ req }) => ({

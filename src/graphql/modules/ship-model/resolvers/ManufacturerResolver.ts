@@ -9,12 +9,12 @@ export default class ManufacturerResolver {
   }
 
   @Query(() => [Manufacturer])
-  manufacturers() {
+  manufacturers(): Manufacturer[] {
     return this.shipModelProvider.getManufacturers();
   }
 
   @Query(() => Manufacturer)
-  manufacturer(@Arg('id') id: string) {
+  manufacturer(@Arg('id') id: string): Promise<typeof Manufacturer> {
     return this.shipModelProvider.getManufacturer(id);
   }
 }

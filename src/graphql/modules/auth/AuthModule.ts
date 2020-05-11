@@ -1,15 +1,15 @@
 import { GraphQLModule } from '@graphql-modules/core';
 import { Connection } from 'typeorm';
 import { AppModuleConfig as Config } from '../../../types';
-import { AuthorizationProvider } from './providers';
+import { AuthProvider } from './providers';
 
-const AuthorizationModule = new GraphQLModule<Config>({
-  name: 'Authorization',
+const AuthModule = new GraphQLModule<Config>({
+  name: 'Auth',
   configRequired: true,
   providers: ({ config: { conn } }) => [
     { provide: Connection, useValue: conn },
+    AuthProvider,
   ],
-  AuthorizationProvider,
 });
 
-export default AuthorizationModule;
+export default AuthModule;
