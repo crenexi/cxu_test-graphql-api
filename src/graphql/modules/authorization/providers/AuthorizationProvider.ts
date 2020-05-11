@@ -5,6 +5,7 @@ import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { genSalt, hash, compare } from 'bcrypt-nodejs';
 import { sign } from 'jsonwebtoken';
 import config from '../../../../config/server.config';
+import { createToken } from '../../../../helpers';
 import logger from '../../../../services/logger';
 import { ConnectionParams, Session } from '../../../../types';
 import { User } from '../../../entities';
@@ -110,16 +111,11 @@ export default class AuthProvider implements OnRequest, OnConnect {
       throw new AuthenticationError(messages.wrongPassword);
     }
 
-    // Configure refresh token
-    this.session.res.cookie('avengersAssemble', this.refreshToken(user), {
-      path: '/',
-      httpOnly: true,
-      secure: config.isProduction,
-    });
+    // Create refresh and access tokens
+    this.configureRefreshToken(user);
+    const accessToken = createToken({ type: 'access', userId: user.id });
 
-    return {
-      accessToken: createToken({ type userId: user.id }) this.accessToken(user),
-    };
+    return { accessToken };
   }
 
   /** Get user by handle */
@@ -165,6 +161,17 @@ export default class AuthProvider implements OnRequest, OnConnect {
       compare(password, user.password, (err: Error, matches: boolean) => {
         resolve(matches);
       });
+    });
+  }
+
+  /** Helper to configure the refresh token */
+  private configureRefreshToken(user: User): void {
+    const refreshToken = createToken({ type: 'refresh', userId: user.id });
+
+    this.session.res.cookie('avengersAssemble', refreshToken, {
+      path: '/',
+      httpOnly: true,
+      secure: config.isProduction,
     });
   }
 }

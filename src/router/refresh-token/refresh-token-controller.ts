@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
+import { createToken } from '../../helpers';
 import { User } from '../../graphql/entities';
 import config from '../../config/server.config';
 import logger from '../../services/logger';
@@ -17,6 +18,10 @@ const refreshTokenController = async (req: Request, res: Response) => {
     const user = await userRepo.findOne({ id: userId });
 
     if (!user) sendNoToken();
+
+    // Send new token
+    const accessToken = createToken({ type: 'access', userId });
+    res.send({ ok: true, accessToken });
   };
 
   // Get the token
@@ -24,6 +29,7 @@ const refreshTokenController = async (req: Request, res: Response) => {
   if (!token) sendNoToken();
 
   try {
+    // Token verification; refresh if verified
     const payload = verify(token, config.refreshTokenSecret);
     refresh(payload as AccessTokenPayload);
   } catch (err) {
