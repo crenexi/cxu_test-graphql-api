@@ -1,7 +1,7 @@
 import express from 'express';
 import debugLib from 'debug';
 import logger from './services/logger';
-import { Main, Bootstrap } from './types/app-types';
+import { Main, Bootstrap } from './types';
 import initConnection from './init-connection';
 import initApollo from './init-apollo';
 import initSession from './init-session';
@@ -17,9 +17,16 @@ const bootstrap: Bootstrap = async (conn) => {
 
   app.set('trust proxy', 1);
 
-  await initApollo(app);
+  // 1. Session middleware
   initSession(app);
+
+  // 2. Misc middlewares
   initMiddlewares(app);
+
+  // 3. GraphQL endpoint
+  await initApollo({ conn, app });
+
+  // 4. Other endpoints
   app.use(router());
 
   debug('App boostrap complete');

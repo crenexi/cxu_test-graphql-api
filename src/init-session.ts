@@ -1,12 +1,12 @@
-import express from 'express';
 import log from 'fancy-log';
 import chalk from 'chalk';
 import { v4 as uuidv4 } from 'uuid';
 import IORedis from 'ioredis';
-import session from 'express-session';
 import connectRedis from 'connect-redis';
+import session from 'express-session';
 import rateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
+import { InitRedis, InitSession } from './types';
 import config from './config/server.config';
 import { alphanumeric } from './helpers';
 import logger from './services/logger';
@@ -14,13 +14,8 @@ import logger from './services/logger';
 const TEN_MINUTES = 1000 * 60 * 10;
 const ONE_DAY = 86400;
 
-interface RedisState {
-  store: connectRedis.RedisStore;
-  client: IORedis.Redis;
-}
-
 /** Setup Redis store, rate limiter, and handlers */
-const initRedis = (): RedisState => {
+const initRedis: InitRedis = () => {
   // High-performance Redis client
   const client = new IORedis({
     showFriendlyErrorStack: true,
@@ -53,7 +48,7 @@ const initRedis = (): RedisState => {
 };
 
 /** Session middleware */
-const initSession = (app: express.Application): void => {
+const initSession: InitSession = (app) => {
   const { store, client } = initRedis();
 
   // Rate limiter

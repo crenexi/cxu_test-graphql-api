@@ -5,7 +5,7 @@ interface ServerConfig {
   debugging: boolean;
   port: number;
   secret: string;
-  prodOrigins: URL[];
+  prodOrigins: string[];
   postgres: {
     host: string;
     port: number;
@@ -36,9 +36,9 @@ const serverConfig: ServerConfig = {
   port: parseInt(process.env.PORT as string, 10) || 3000,
   secret: process.env.SESSION_SECRET || 'Avengers Assemble',
   prodOrigins: [
-    new URL('https://www.webbuniverse.com'),
-    new URL('https://dev.webbuniverse.com'),
-    new URL('https://admin.webbuniverse.com'),
+    'https://www.webbuniverse.com',
+    'https://dev.webbuniverse.com',
+    'https://admin.webbuniverse.com',
   ],
   postgres: {
     host: process.env.POSTGRES_HOST || '',
