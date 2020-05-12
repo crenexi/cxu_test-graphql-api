@@ -19,8 +19,6 @@ class NotFound {
   message: string;
 }
 
-type ExtraTypes = 'IsSuspended' | 'IsArchived' | 'NotFound';
-
 const UserResult = createUnionType({
   name: 'UserResult',
   types: () => [User, IsSuspended, IsArchived, NotFound],

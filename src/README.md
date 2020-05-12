@@ -21,7 +21,7 @@ The logger implements custom levels. Levels 0-4 can receive a string or Error (t
 - **Severity 4 - Info**
 - **Severity 5 - Debug**
 
-```
+```javascript
 logger.emergency(throw Error('Thanos snapped the gauntlet'));
 logger.critical(throw Error('Infinity stones are missing'));
 logger.error(throw Error('Stark and Rogers are incompatible'));
