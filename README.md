@@ -10,10 +10,10 @@ This project is within the context of the WU project ([repository here](https://
 Simply put:
 
 ```
-bash start.sh
+npm run start
 ```
 
-*This checks if both Postgres and Redis are running before proceeding.*
+*This runs ./bin/start.sh checks if both Postgres and Redis are running before proceeding.*
 
 ### Method 2: Standard
 
@@ -64,6 +64,14 @@ These modules reflect a plan to build a comprehensive web application to serve a
 ## Versioning
 
 We use [SemVer](http://semver.org/) for versioning. [View releases here](https://github.com/crenexi/webb-universe-api/releases).
+
+### Note-to-self about releasing
+
+1. Ensure git-flow is initialized
+1. **npm run release:start**
+1. QA, test, lint, wrap-up, etc.
+1. Update/commit changelog
+1. **npm run release:finish**
 
 ## Authors & Contributing
 
