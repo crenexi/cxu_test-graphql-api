@@ -1,7 +1,7 @@
 import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { AuthProvider } from '../../auth/providers';
-import { User } from '../../../entities';
+import { User } from '../../../../entities';
 import { UserResult } from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })

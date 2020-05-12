@@ -1,7 +1,7 @@
-import logger from './services/logger';
+import logger from '../services/logger';
 import connect from './connect';
-import { bootstrap } from './app';
-import { Main } from './types';
+import bootstrap from './bootstrap';
+import { Main } from '../types';
 
 /** Awaits database connection before proceeding */
 const main: Main = async () => {

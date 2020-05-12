@@ -1,9 +1,9 @@
 import log from 'fancy-log';
 import chalk from 'chalk';
 import { createConnection } from 'typeorm';
-import { Connect } from './types';
-import config from './config/server.config';
-import typeormConfig from './config/orm.config';
+import { Connect } from '../types';
+import config from '../config/server.config';
+import typeormConfig from '../config/orm.config';
 
 const connect: Connect = async () => {
   const dbName = config.postgres.database;

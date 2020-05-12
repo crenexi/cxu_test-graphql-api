@@ -7,7 +7,7 @@ import config from '../../../../config/server.config';
 import { createToken } from '../../../../helpers';
 import logger from '../../../../services/logger';
 import { Session } from '../../../../types';
-import { User } from '../../../entities';
+import { User } from '../../../../entities';
 import { messages } from '../constants';
 
 type Credentials = {

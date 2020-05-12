@@ -4,7 +4,7 @@ import { Bootstrap } from '../../types';
 import initApollo from './init-apollo';
 import initSession from './init-session';
 import initMiddlewares from './init-middlewares';
-import appRouter from '../app-router';
+import appRouter from '../router';
 
 /** Express application */
 const bootstrap: Bootstrap = async (conn) => {

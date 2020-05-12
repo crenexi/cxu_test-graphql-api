@@ -5,9 +5,9 @@ import connectRedis from 'connect-redis';
 import session from 'express-session';
 import rateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
-import { InitRedis, InitSession } from './types';
-import config from './config/server.config';
-import logger from './services/logger';
+import { InitRedis, InitSession } from '../../types';
+import config from '../../config/server.config';
+import logger from '../../services/logger';
 
 const TEN_MINUTES = 1000 * 60 * 10;
 const ONE_DAY = 86400;
