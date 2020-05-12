@@ -7,7 +7,7 @@ import connectRedis from 'connect-redis';
 // ### Main ##################
 // ###########################
 
-export type InitConnection = () => Promise<Connection>;
+export type Connect = () => Promise<Connection>;
 
 export type Main = () => Promise<express.Application | null>;
 

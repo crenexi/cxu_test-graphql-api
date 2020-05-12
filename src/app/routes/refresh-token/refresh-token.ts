@@ -10,7 +10,7 @@ type AccessTokenPayload = {
   userId: string;
 }
 
-const refreshTokenController = async (req: Request, res: Response) => {
+export default (async (req: Request, res: Response) => {
   const { cookieName, cookieOpts } = config.auth;
   const sendNoToken = () => res.send({ ok: false, accessToken: '' });
 
@@ -41,6 +41,4 @@ const refreshTokenController = async (req: Request, res: Response) => {
     logger.error(err);
     sendNoToken();
   }
-};
-
-export default refreshTokenController;
+});

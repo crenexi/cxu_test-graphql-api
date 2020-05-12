@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { getSemVer } from '../helpers';
-// import { refreshTokenController } from './refresh-token';
+import refreshToken from './routes/refresh-token';
 
 const router = express.Router();
 
@@ -11,6 +11,6 @@ router.get('/', (_: Request, res: Response) => {
 });
 
 // Refresh token
-// router.get('/refresh_token', refreshTokenController);
+router.get('/refresh-token', refreshToken);
 
 export default router;

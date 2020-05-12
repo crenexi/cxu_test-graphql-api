@@ -1,7 +1,7 @@
 import { ConnectionOptions } from 'typeorm';
 import fs from 'fs';
 import logger from '../services/logger';
-import { entities } from '../graphql/entities';
+import { entities } from '../entities';
 import { migrations, subscribers } from '../typeorm';
 import config from './server.config';
 
