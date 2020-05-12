@@ -7,7 +7,7 @@ import typeormConfig from '../config/orm.config';
 
 const connect: Connect = async () => {
   const dbName = config.postgres.database;
-  const runMigrations = config.orm.migrate;
+  const runMigrations = config.orm.autoMigrate;
 
   // Make the connection
   const connection = await createConnection(typeormConfig);

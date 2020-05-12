@@ -22,7 +22,7 @@ export interface AppConfig {
     password: string;
   };
   orm: {
-    migrate: boolean;
+    autoMigrate: boolean;
     logging: boolean;
   };
   redis: {
@@ -66,7 +66,7 @@ const appConfig: AppConfig = {
     password: process.env.POSTGRES_PASSWORD || '',
   },
   orm: {
-    migrate: process.env.ORM_MIGRATE === 'true',
+    autoMigrate: process.env.ORM_MIGRATE === 'true',
     logging: process.env.ORM_LOGGING === 'true',
   },
   redis: {
