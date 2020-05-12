@@ -53,7 +53,7 @@ Alternatively, ensure Postgres and Redis are running, then `npm start`. Note env
 
 ### What is this?
 
-These modules reflect a plan to build a comprehensive web application to serve a gaming society related to [Star Citizen](https://robertsspaceindustries.com/star-citizen/universe). *Note: this is currently a side project of theory, and the Webb Universe society does not exist at this time. The expectation is to launch the society by 2025.*
+These modules reflect a plan to build a web application to serve various functions of a simple gaming society related to [Star Citizen](https://robertsspaceindustries.com/star-citizen/universe). *Note: Webb Universe does not exist at this time. The expectation is to launch the society by 2025.*
 
 ## Documentation
 
