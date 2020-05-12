@@ -3,7 +3,7 @@ import { verify } from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
 import { createToken } from '../../../helpers';
 import { User } from '../../../entities';
-import config from '../../../config/server.config';
+import config from '../../../config/app.config';
 import logger from '../../../services/logger';
 
 type AccessTokenPayload = {

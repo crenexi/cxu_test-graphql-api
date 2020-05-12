@@ -6,7 +6,7 @@ import session from 'express-session';
 import rateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
 import { InitRedis, InitSession } from '../../types';
-import config from '../../config/server.config';
+import config from '../../config/app.config';
 import logger from '../../services/logger';
 
 const TEN_MINUTES = 1000 * 60 * 10;

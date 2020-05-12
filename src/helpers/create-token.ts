@@ -1,5 +1,5 @@
 import { sign } from 'jsonwebtoken';
-import config from '../config/server.config';
+import config from '../config/app.config';
 
 type CreateTokenOpts = {
   type: 'access' | 'refresh';
