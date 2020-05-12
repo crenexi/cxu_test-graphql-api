@@ -86,5 +86,5 @@ This project is licensed under the MIT License - [LICENSE](LICENSE)
 ## Acknowledgments
 
 * **GraphQL & TypeScript ecosystem** - [Apollo](https://www.apollographql.com/), [TypeGraphQL](https://typegraphql.com), [GraphQL-Modules](https://graphql-modules.com/), and [TypeORM](https://typeorm.io) are the veins of this project. Thanks to all related contributors.
-* **Ben Awad** - [YouTuber](https://www.youtube.com/user/99baddawg) who's tutorials on GraphQL, TypeGraphQL, React and other topics helped jump-start the architecture of this project.
+* **Ben Awad** - [YouTuber](https://www.youtube.com/user/99baddawg) who's tutorials on GraphQL, TypeGraphQL, React and other topics helped bootstrap this project.
 * **Philz Coffee** - the most under-valued contributor
