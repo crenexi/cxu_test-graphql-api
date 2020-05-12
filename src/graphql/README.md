@@ -5,13 +5,19 @@
 The overall setup looks as follows:
 
 ```
+/entities
+#### _BaseEntity.ts
+#### ShipIdentity.ts
 /graphql
-#### /entities
-######## _BaseEntity.ts
-######## ShipIdentity.ts
 #### /modules
 #### /helpers
 ```
+GraphQL and TypeORM types are defined in the same place dubbed **entities**. An entities can extend a BaseEntity type, which adds the following columns:
+
+- **id** - PrimaryGeneratedColumn - string
+- **isArchived** - Column - boolean that defaults to false
+- **createdAt** - CreateDateColumn - Date of the 'timestamp' type
+- **updatedAt** - UpdateDateColumn - Date of the 'timestamp' type
 
 Each GraphQL module has a folder structure as follows:
 
