@@ -41,7 +41,7 @@ const ormConfig: ConnectionOptions = {
   ssl: config.isProduction ? { ca: readPEM() } : undefined,
   poolErrorHandler: logger.error,
   synchronize: !config.isProduction,
-  logging: config.orm.logging,
+  logging: config.orm.logging || ['error'],
 };
 
 export = ormConfig;

@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export default class RemoveHeroTable1589323200704 implements MigrationInterface {
+export class RemoveHeroTable1589323200704 implements MigrationInterface {
   async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`DROP TABLE "super_power"`);
     await queryRunner.query(`DROP TABLE "super_hero"`);
