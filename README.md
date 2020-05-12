@@ -13,7 +13,7 @@ Simply put:
 bash start.sh
 ```
 
-*This checks if both Postgres and Redis are running. If Postgres is not running, it stops and prompts you to start it. If Redis is not running, it starts it in a new terminal and proceeds.*
+*This checks if both Postgres and Redis are running before proceeding.*
 
 ### Method 2: Standard
 
