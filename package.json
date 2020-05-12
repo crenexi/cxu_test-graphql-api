@@ -8,7 +8,7 @@
     "clean": "rm -rf ./dist",
     "lint": "gulp lint",
     "prestart": "npm run lint",
-    "start": "gulp default",
+    "start": "./bin/start.sh",
     "prebuild": "npm run clean && npm run lint && npm run test",
     "build": "tsc -b",
     "test": "echo \"Error: no test specified\"",
@@ -17,7 +17,9 @@
     "pm2:restart": "pm2 restart pm2.config.js",
     "pm2:stop": "pm2 stop pm2.config.js",
     "pm2:delete": "pm2 delete pm2.config.js",
-    "pm2:logs": "pm2 logs pm2.config.js"
+    "pm2:logs": "pm2 logs pm2.config.js",
+    "release:start": "./bin/release-start.sh",
+    "release:finish": "./bin/release-finish.sh"
   },
   "devDependencies": {
     "@types/bcrypt-nodejs": "0.0.31",
