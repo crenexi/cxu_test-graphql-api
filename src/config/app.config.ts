@@ -1,6 +1,6 @@
 import { CookieOptions } from 'express';
 
-interface ServerConfig {
+export interface AppConfig {
   env: string;
   isProduction: boolean;
   isDevelopment: boolean;
@@ -36,7 +36,7 @@ interface ServerConfig {
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
-const serverConfig: ServerConfig = {
+const appConfig: AppConfig = {
   env: nodeEnv,
   isDevelopment: nodeEnv === 'development',
   isProduction: nodeEnv === 'production',
@@ -78,4 +78,4 @@ const serverConfig: ServerConfig = {
   },
 };
 
-export default serverConfig;
+export default appConfig;

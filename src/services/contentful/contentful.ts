@@ -26,8 +26,6 @@ const fetchEntries = async (opts: FetchEntriesOpts) => {
   }
 };
 
-const contentfulService = () => ({
+export default () => ({
   fetchEntries,
 });
-
-export default contentfulService;

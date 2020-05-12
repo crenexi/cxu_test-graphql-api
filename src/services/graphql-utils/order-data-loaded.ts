@@ -7,7 +7,7 @@ interface Opts<T> {
 }
 
 /** Helper order dataloader response based on IDs */
-function orderLoaderData<T extends Item>(opts: Opts<T>): T[] {
+function orderDataLoaded<T extends Item>(opts: Opts<T>): T[] {
   const { ids, items } = opts;
 
   // Given list of items, create map in format { id: item }
@@ -20,4 +20,4 @@ function orderLoaderData<T extends Item>(opts: Opts<T>): T[] {
   return ids.map(id => itemMap[id]);
 }
 
-export default orderLoaderData;
+export default orderDataLoaded;

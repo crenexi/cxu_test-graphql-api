@@ -3,7 +3,7 @@ import fs from 'fs';
 import logger from '../services/logger';
 import { entities } from '../entities';
 import { migrations, subscribers } from '../typeorm';
-import config from './server.config';
+import config from './app.config';
 
 // Config from env
 interface EnvConfig {
