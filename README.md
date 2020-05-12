@@ -13,18 +13,18 @@ Simply put:
 npm run start
 ```
 
-*This runs ./bin/start.sh checks if both Postgres and Redis are running before proceeding.*
+*This runs ./bin/start.sh and checks if both Postgres and Redis are running before proceeding.*
 
 ### Method 2: Standard
 
 Alternatively, ensure Postgres and Redis are running, then `npm start`. Note environment variables in `.env.example` are required to start.
 
-## Basic Roadmap
+## Roadmap
 
 ### Basic Setup
 
 - [ ] **HTTP Server** - [www.ts](src/bin/www.ts) - serves Express app
-- [ ] **TypeORM Connection** - [init-connection.ts](src/../dist/app/connect.js) - connects to Postgres
+- [ ] **TypeORM Connection** - [init-connection.ts](src/app/connect.js) - connects to Postgres
 - [ ] **Session Middleware** - [init-session.ts](src/app/bootstrap/init-session.ts) - session, Redis store, and rate limiter
 - [ ] **Access Logger** [access-logger.ts](src/app/middlewares/access-logger.ts) - Morgan-based access logger with rotations
 - [ ] **Logger** - [logger.ts](src/services/logger/logger.ts) - Winston-based logger with custom levels
