@@ -5,10 +5,12 @@ import {
   AppModuleContext as Context,
 } from '../types';
 import { AuthModule } from './modules/auth';
+import { UserModule } from './modules/user';
 import { ShipModelModule } from './modules/ship-model';
 // import { emitSchemaDefinition } from './helpers';
 
 const featureModules = [
+  UserModule,
   ShipModelModule,
 ];
 

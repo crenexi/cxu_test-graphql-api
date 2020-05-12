@@ -1,29 +1,34 @@
-import { getRepository } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { Injectable } from '@graphql-modules/di';
-import { ShipModel, ShipIdentity, Manufacturer } from '../../../entities';
-import { ShipModelResult, ShipIdentityResult } from '../types/results';
+import { ShipModel, Manufacturer } from '../../../entities';
 
 @Injectable()
 export default class ShipModelProvider {
+  private shipModelRepo: Repository<ShipModel>;
+  private manufacturerRepo: Repository<Manufacturer>;
+
+  constructor(private conn: Connection) {
+    this.shipModelRepo = conn.getRepository(ShipModel);
+    this.manufacturerRepo = conn.getRepository(Manufacturer);
+  }
+
   /** Get ship models */
   async getModels(): Promise<ShipModel[]> {
-    return [];
+    return this.shipModelRepo.find();
   }
 
   /** Get ship model */
-  async getModel(id: string): Promise<typeof ShipModelResult> {
-    return {
-      message: `Ship model deleted | id: ${id} `,
-    };
+  async getModel(id: string): Promise<ShipModel | false> {
+    return await this.shipModelRepo.findOne(id) || false;
   }
 
   /** Get manufacturers */
   async getManufacturers(): Promise<Manufacturer[]> {
-    return [];
+    return this.manufacturerRepo.find();
   }
 
   /** Get manufacturer */
-  async getManufacturer(id: string): Promise<Manufacturer | undefined> {
-    return undefined;
+  async getManufacturer(id: string): Promise<Manufacturer | false> {
+    return await this.manufacturerRepo.findOne(id) || false;
   }
 }

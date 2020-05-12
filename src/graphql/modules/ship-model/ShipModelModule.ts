@@ -3,9 +3,7 @@ import { buildSchemaSync } from 'type-graphql';
 import { ShipModelProvider } from './providers';
 import { ShipModelResolver } from './resolvers';
 
-const resolvers = [
-  ShipModelResolver,
-];
+const resolvers = [ShipModelResolver];
 
 const ShipModelModule = new GraphQLModule({
   name: 'ShipModel',
