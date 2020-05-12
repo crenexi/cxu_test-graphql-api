@@ -21,16 +21,16 @@ Alternatively, ensure Postgres and Redis are running, then `npm start`. Note env
 
 ## Basic Roadmap
 
-### Setup
+### Basic Setup
 
 - [ ] **HTTP Server** - [www.ts](src/bin/www.ts) - serves Express app
-- [ ] **TypeORM Connection** - [init-connection.ts](src/init-connection.ts) - connects to Postgres
-- [ ] **Session Middleware** - [init-session.ts](src/init-session.ts) - session, Redis store, and rate limiter
-- [ ] **Access Logger** [access-logger.ts](src/middlewares/access-logger.ts) - Morgan-based access logger with rotations
-- [ ] **Logger** - [logger.ts](src/services/logger.ts) - Winston-based logger with custom levels
-- [ ] **TypeORM Config** - [orm.config.ts](src/config) - TypeORM configuration
-- [ ] **PM2 Config** - [pm2.config.ts](pm2.config.ts) - PM2 configuration
-- [ ] **BaseEntity** - [BaseEntity](src/graphql/entities/_BaseEntity.ts) - base entity to extend
+- [ ] **TypeORM Connection** - [init-connection.ts](src/../dist/app/connect.js) - connects to Postgres
+- [ ] **Session Middleware** - [init-session.ts](src/app/bootstrap/init-session.ts) - session, Redis store, and rate limiter
+- [ ] **Access Logger** [access-logger.ts](src/app/middlewares/access-logger.ts) - Morgan-based access logger with rotations
+- [ ] **Logger** - [logger.ts](src/services/logger/logger.ts) - Winston-based logger with custom levels
+- [ ] **TypeORM Config** - [orm.config.ts](src/config/orm.config.ts) - TypeORM configuration
+- [ ] **PM2 Config** - [pm2.config.ts](src/config/pm2.config.ts) - PM2 configuration
+- [ ] **BaseEntity** - [BaseEntity](src/entities/_BaseEntity.ts) - base entity to extend
 - [ ] **GraphQL AppModule** - [AppModule.ts](src/graphql/AppModule.ts) - root module
 
 ### Modules
