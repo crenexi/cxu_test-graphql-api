@@ -9,12 +9,12 @@ import log from 'fancy-log';
 import chalk from 'chalk';
 import config from '../config/server.config';
 import logger from '../services/logger';
-import initApp from '../init-app';
+import main from '../main';
 
 const debug = debugLib('express:server');
 
 (async (): Promise<void> => {
-  const app: express.Application | null = await initApp();
+  const app: express.Application | null = await main();
   if (!app) return;
 
   /** Normalize port */

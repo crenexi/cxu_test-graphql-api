@@ -3,9 +3,22 @@
 
 This project is within the context of the WU project ([repository here](https://github.com/crenexi/webb-universe)). WU is a personal side project to serve a gaming society. The API is a GraphQL-powered, Apollo-based endpoint.
 
-## Roadmap
+## Basic Roadmap
 
-* [ ] [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+- [ ] **Setup - HTTP Server** - [www.ts](src/bin/www.ts) - serves Express app
+- [ ] **Setup - TypeORM Connection** - [init-connection.ts](src/init-connection.ts) - connects to Postgres
+- [ ] **Setup - Session Middleware** - [init-session.ts](src/init-session.ts) - session, Redis store, and rate limiter
+- [ ] **Setup - Access Logger** [access-logger.ts](src/middlewares/access-logger.ts) - Morgan-based access logger with rotations
+- [ ] **Setup - Logger** - [logger.ts](src/services/logger.ts) - Winston-based logger with custom levels
+- [ ] **Setup - TypeORM Config** - [orm.config.ts](src/config) - TypeORM configuration
+- [ ] **Setup - PM2 Config** - [pm2.config.ts](pm2.config.ts) - PM2 configuration
+- [ ] **Setup ** - []() - T
+- [ ] **Setup ** - []() - T
+
+## Documentation
+
+- **[Application Overview](src/README.md)**
+- **[TypeORM Usage](src/typeorm/README.md)**
 
 ## Versioning
 
