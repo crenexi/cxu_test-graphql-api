@@ -3,6 +3,22 @@
 
 This project is within the context of the WU project ([repository here](https://github.com/crenexi/webb-universe)). WU is a personal side project to serve a gaming society. The API is a GraphQL-powered, Apollo-based endpoint.
 
+## Start
+
+### Method 1: Script
+
+Simply put:
+
+```
+bash start.sh
+```
+
+*This checks if both Postgres and Redis are running. If Postgres is not running, it stops and prompts you to start it. If Redis is not running, it starts it in a new terminal and proceeds.*
+
+### Method 2: Standard
+
+Alternatively, ensure Postgres and Redis are running, then `npm start`. Note environment variables in `.env.example` are required to start.
+
 ## Basic Roadmap
 
 ### Setup
