@@ -1,6 +1,6 @@
 import { Resolver, Query, Arg } from 'type-graphql';
+import { Manufacturer } from '@root/entities';
 import { ShipModelProvider } from '../providers';
-import { Manufacturer } from '../../../../entities';
 
 @Resolver(() => Manufacturer)
 export default class ManufacturerResolver {

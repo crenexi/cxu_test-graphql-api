@@ -3,11 +3,11 @@ import { AuthenticationError as AuthError } from 'apollo-server-express';
 import { OnRequest, ModuleSessionInfo } from '@graphql-modules/core';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { genSalt, hash, compare } from 'bcrypt-nodejs';
-import config from '../../../../config/app.config';
-import { createToken } from '../../../../helpers';
-import logger from '../../../../services/logger';
-import { Session } from '../../../../types';
-import { User } from '../../../../entities';
+import config from '@config/app.config';
+import logger from '@services/logger';
+import { createToken } from '@root/helpers';
+import { Session } from '@root/types';
+import { User } from '@root/entities';
 import { messages } from '../constants';
 
 type Credentials = {

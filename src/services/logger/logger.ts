@@ -1,5 +1,5 @@
 import winston, { createLogger, format, Logger } from 'winston';
-import config from '../../config/app.config';
+import config from '@config/app.config';
 import loggerConfig from './logger-config';
 import loggerTransports from './logger-transports';
 

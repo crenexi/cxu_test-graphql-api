@@ -1,10 +1,10 @@
 import { v4 as uuidv4 } from 'uuid';
 import { GraphQLError } from 'graphql';
 import { ApolloServer, ApolloError } from 'apollo-server-express';
-import { InitApollo } from '../../types';
-import AppModule from '../../graphql/AppModule';
-import logger from '../../services/logger';
-import { emitSchemaSnap } from '../../services/graphql-utils';
+import logger from '@services/logger';
+import { emitSchemaSnap } from '@services/graphql-utils';
+import AppModule from '@graphql/AppModule';
+import { InitApollo } from '@root/types';
 
 /** Handle Apollo errors */
 const formatError = (err: GraphQLError) => {

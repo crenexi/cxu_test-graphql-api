@@ -4,7 +4,7 @@ import {
   Session,
   AppModuleConfig as Config,
   AppModuleContext as Context,
-} from '../types';
+} from '@root/types';
 import { AuthModule } from './modules/auth';
 import { UserModule } from './modules/user';
 import { ShipModelModule } from './modules/ship-model';

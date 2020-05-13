@@ -2,7 +2,7 @@ import moduleAlias from 'module-alias';
 import path from 'path';
 
 const pathsConfig: any = {
-  "root": ".",
+  "@root": ".",
   "@config": "./config",
   "@typeorm": "./typeorm",
   "@app": "./app",

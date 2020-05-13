@@ -1,6 +1,6 @@
 import { GraphQLModule } from '@graphql-modules/core';
 import { buildSchemaSync } from 'type-graphql';
-import { AuthModule } from '../auth';
+import { AuthModule } from '@modules/auth';
 import { UserProvider } from './providers';
 import { UserResolver } from './resolvers';
 

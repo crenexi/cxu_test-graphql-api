@@ -1,6 +1,6 @@
 import { Connection, Repository } from 'typeorm';
+import { ShipModel, Manufacturer } from '@root/entities';
 import { Injectable } from '@graphql-modules/di';
-import { ShipModel, Manufacturer } from '../../../../entities';
 
 @Injectable()
 export default class ShipModelProvider {

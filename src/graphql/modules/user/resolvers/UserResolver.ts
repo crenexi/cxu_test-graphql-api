@@ -1,6 +1,6 @@
 import { Resolver, Query, Arg } from 'type-graphql';
+import { User } from '@root/entities';
 import { UserProvider } from '../providers';
-import { User } from '../../../../entities';
 import { UserResult } from '../types/results';
 
 @Resolver(() => User)

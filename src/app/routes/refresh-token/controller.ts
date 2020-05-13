@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 import { getRepository } from 'typeorm';
-import { createToken } from '../../../helpers';
-import { User } from '../../../entities';
-import config from '../../../config/app.config';
-import logger from '../../../services/logger';
+import config from '@config/app.config';
+import logger from '@services/logger';
+import { User } from '@root/entities';
+import { createToken } from '@root/helpers';
 
 type AccessTokenPayload = {
   userId: string;

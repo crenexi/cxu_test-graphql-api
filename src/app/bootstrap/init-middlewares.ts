@@ -6,9 +6,9 @@ import methodOverride from 'method-override';
 import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from 'errorhandler';
-import { InitMiddlewares } from '../../types';
+import config from '@config/app.config';
+import { InitMiddlewares } from '@root/types';
 import accessLogger from '../middlewares/access-logger';
-import config from '../../config/app.config';
 
 const initMiddlewares: InitMiddlewares = (app) => {
   const { isProduction, debugging } = config;

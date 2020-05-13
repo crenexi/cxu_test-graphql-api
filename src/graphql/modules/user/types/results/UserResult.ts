@@ -1,5 +1,5 @@
 import { ObjectType, Field, createUnionType } from 'type-graphql';
-import { User } from '../../../../../entities';
+import { User } from '@root/entities';
 
 @ObjectType()
 class IsSuspended {
