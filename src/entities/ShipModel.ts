@@ -47,7 +47,7 @@ registerEnumType(ShipLengthClass, {
 
 @Entity()
 @ObjectType()
-export default class ShipModel extends BaseEntity {
+class ShipModel extends BaseEntity {
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -88,3 +88,5 @@ export default class ShipModel extends BaseEntity {
   )
   spinoffs: Promise<ShipSpinoff[]>;
 }
+
+export default ShipModel;

@@ -3,7 +3,7 @@ import { ShipModel, Manufacturer } from '@root/entities';
 import { Injectable } from '@graphql-modules/di';
 
 @Injectable()
-export default class ShipModelProvider {
+class ShipModelProvider {
   private shipModelRepo: Repository<ShipModel>;
   private manufacturerRepo: Repository<Manufacturer>;
 
@@ -32,3 +32,5 @@ export default class ShipModelProvider {
     return await this.manufacturerRepo.findOne(id) || false;
   }
 }
+
+export default ShipModelProvider;

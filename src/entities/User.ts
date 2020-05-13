@@ -4,7 +4,7 @@ import BaseEntity from './_BaseEntity';
 
 @Entity()
 @ObjectType()
-export default class User extends BaseEntity {
+class User extends BaseEntity {
   @Column()
   password: string;
 
@@ -42,3 +42,5 @@ export default class User extends BaseEntity {
   @Column({ nullable: true })
   archivalReason?: string;
 }
+
+export default User;

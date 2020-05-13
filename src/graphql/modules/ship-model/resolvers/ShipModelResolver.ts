@@ -3,7 +3,7 @@ import { ShipModel } from '@root/entities';
 import { ShipModelProvider } from '../providers';
 
 @Resolver(() => ShipModel)
-export default class ShipModelResolver {
+class ShipModelResolver {
   constructor(private shipModelProvider: ShipModelProvider) {
     this.shipModelProvider = shipModelProvider;
   }
@@ -18,3 +18,5 @@ export default class ShipModelResolver {
     return this.shipModelProvider.getModel(id);
   }
 }
+
+export default ShipModelResolver;

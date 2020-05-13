@@ -5,7 +5,7 @@ import ShipModel from './ShipModel';
 
 @Entity()
 @ObjectType()
-export default class ShipSpinoff extends BaseEntity {
+class ShipSpinoff extends BaseEntity {
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -17,3 +17,5 @@ export default class ShipSpinoff extends BaseEntity {
   @ManyToOne(() => ShipModel, (sm: ShipModel) => sm.spinoffs)
   model: Promise<ShipModel>;
 }
+
+export default ShipSpinoff;

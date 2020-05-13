@@ -5,7 +5,7 @@ import { AuthProvider } from '@modules/auth/providers';
 import { UserResult } from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })
-export default class UserProvider {
+class UserProvider {
   private userRepo: Repository<User>;
   private currentUser: User | null;
 
@@ -51,3 +51,5 @@ export default class UserProvider {
     return user;
   }
 }
+
+export default UserProvider;
