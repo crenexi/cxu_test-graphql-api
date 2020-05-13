@@ -63,4 +63,4 @@ validateRedisActive
 validatePostgresActive
 
 # Start app
-tsnd --inspect --respawn ./src/bin/www.ts
+npm run tsnd
