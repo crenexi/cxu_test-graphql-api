@@ -1,27 +1,21 @@
-import { Connection } from 'typeorm';
 import { GraphQLModule } from '@graphql-modules/core';
-import {
-  Session,
-  AppModuleConfig as Config,
-  AppModuleContext as Context,
-} from '@root/types';
+import { Session, AppModuleConfig, AppModuleContext } from '@root/types';
 import { AuthModule } from './modules/auth';
 import { UserModule } from './modules/user';
 import { ShipModelModule } from './modules/ship-model';
+import { ConnModule } from './modules/conn';
 
 const featureModules = [
   UserModule,
   ShipModelModule,
 ];
 
-const AppModule = new GraphQLModule<Config, Session, Context>({
+const AppModule = new GraphQLModule<AppModuleConfig, Session, AppModuleContext>({
   name: 'App',
   configRequired: true,
-  providers: ({ config: { conn } }) => [
-    { provide: Connection, useValue: conn },
-  ],
   imports: ({ config: { conn } }) => [
     AuthModule.forRoot({ conn }),
+    ConnModule.forRoot({ conn }),
     ...featureModules,
   ],
   context: ({ req }) => ({

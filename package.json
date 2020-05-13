@@ -5,11 +5,11 @@
   "license": "MIT",
   "main": "dist/bin/www.js",
   "scripts": {
-    "clean": "rm -rf ./dist",
+    "clean": "rm -rf ./dist ./logs",
     "lint": "gulp lint",
     "prestart": "npm run clean && npm run lint",
     "start": "./bin/start.sh",
-    "tsnd": "tsnd --no-notify --respawn --transpileOnly ./src/bin/www.ts",
+    "tsnd": "tsnd --debounce 100 --no-notify --respawn --transpileOnly ./src/bin/www.ts",
     "prebuild": "npm run clean && npm run lint && npm run test",
     "build": "tsc -b",
     "test": "echo \"Error: no test specified\"",
