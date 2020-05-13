@@ -39,7 +39,7 @@ Each GraphQL module has a folder structure as follows:
 
 Below, we define a type `IsSuspended`. We then create a union (with a method provided by TypeGraphQL) to return to GraphQL.
 
-```javascript
+```typescript
 // UserResult.ts
 
 @ObjectType()
