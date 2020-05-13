@@ -1,9 +1,10 @@
-import { Resolver, Query, Arg } from 'type-graphql';
+import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { Manufacturer } from '@root/entities';
 import { ShipModelProvider } from '../providers';
+import { CreateManufacturerInput } from '../types/inputs';
 
 @Resolver(() => Manufacturer)
-export default class ManufacturerResolver {
+class ManufacturerResolver {
   constructor(private shipModelProvider: ShipModelProvider) {
     this.shipModelProvider = shipModelProvider;
   }
@@ -17,4 +18,13 @@ export default class ManufacturerResolver {
   manufacturer(@Arg('id') id: string): Promise<Manufacturer | false> {
     return this.shipModelProvider.getManufacturer(id);
   }
+
+  @Mutation(() => Manufacturer)
+  createManufacturer(
+    @Arg('input') input: CreateManufacturerInput,
+  ): Promise<Manufacturer> {
+    return this.shipModelProvider.createManufacturer(input);
+  }
 }
+
+export default ManufacturerResolver;

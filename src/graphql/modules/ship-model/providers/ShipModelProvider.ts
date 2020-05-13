@@ -1,6 +1,7 @@
 import { Connection, Repository } from 'typeorm';
 import { ShipModel, Manufacturer } from '@root/entities';
 import { Injectable } from '@graphql-modules/di';
+import { CreateManufacturerInput } from '../types/inputs';
 
 @Injectable()
 class ShipModelProvider {
@@ -30,6 +31,11 @@ class ShipModelProvider {
   /** Get manufacturer */
   async getManufacturer(id: string): Promise<Manufacturer | false> {
     return await this.manufacturerRepo.findOne(id) || false;
+  }
+
+  /** Create manufacturer */
+  async createManufacturer(input: CreateManufacturerInput): Promise<Manufacturer> {
+    return this.manufacturerRepo.save(input as Manufacturer);
   }
 }
 

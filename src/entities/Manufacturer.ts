@@ -5,7 +5,7 @@ import ShipIdentity from './ShipIdentity';
 
 @Entity()
 @ObjectType()
-export default class Manufacturer extends BaseEntity {
+class Manufacturer extends BaseEntity {
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -17,3 +17,5 @@ export default class Manufacturer extends BaseEntity {
   )
   shipIdentities: Promise<ShipIdentity[]>;
 }
+
+export default Manufacturer;
