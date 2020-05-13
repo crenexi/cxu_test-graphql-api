@@ -4,6 +4,7 @@ import { ApolloServer, ApolloError } from 'apollo-server-express';
 import { InitApollo } from '../../types';
 import AppModule from '../../graphql/AppModule';
 import logger from '../../services/logger';
+import { emitSchemaSnap } from '../../services/graphql-utils';
 
 /** Handle Apollo errors */
 const formatError = (err: GraphQLError) => {
@@ -18,6 +19,8 @@ const formatError = (err: GraphQLError) => {
 /** Setup the Apollo server */
 const initApollo: InitApollo = async ({ conn, app }) => {
   const { schema, context } = AppModule.forRoot({ conn });
+
+  emitSchemaSnap(schema);
 
   const apolloServer = new ApolloServer({
     schema,

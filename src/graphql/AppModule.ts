@@ -8,7 +8,6 @@ import {
 import { AuthModule } from './modules/auth';
 import { UserModule } from './modules/user';
 import { ShipModelModule } from './modules/ship-model';
-// import { emitSchemaSnap } from '../services/graphql-utils';
 
 const featureModules = [
   UserModule,
@@ -29,9 +28,6 @@ const AppModule = new GraphQLModule<Config, Session, Context>({
     url: `${req.protocol}://${req.get('host')}`,
   }),
 });
-
-// Emits schema via helper
-// emitSchemaSnap(AppModule.schema);
 
 export default AppModule;
 

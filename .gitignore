@@ -53,4 +53,9 @@ testem.log
 
 # Certs
 /src/config/certs
+
+# Sensitive config
 ormconfig.json
+
+# Snapshots
+__snapshots__
