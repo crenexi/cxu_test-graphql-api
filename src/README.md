@@ -4,20 +4,14 @@
 
 Note: to add an alias, you must add to tsconfig.json AND package.json.
 
-### Wildcard Aliases
-
-- **@app/\*** - src/app/*
-- **@config/\*** - src/config/*
-- **@services/\*** - src/services/*
-- **@graphql/\*** - src/graphql/*
-- **@modules/\*** - src/graphql/modules/*
-- **@types/\*** - src/types/*
-
-### Absolute Aliases
-
-- **@helpers** - src/helpers/index.ts
-- **@entities** - src/entities/index.ts
-- **@types** - src/types/index.ts
+```
+@root/* ========= src/*
+@config/* ======= src/config/*
+@typeorm/* ====== src/typeorm/*
+@app/* ========== src/app/*
+@graphql/* ========== src/graphql/*
+@modules/* ====== src/graphql/modules/*
+```
 
 ## Logging Levels
 

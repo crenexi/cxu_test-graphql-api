@@ -20,7 +20,7 @@ export enum ShipSizeClass {
   CAPITAL = 'capital',
 }
 registerEnumType(ShipSizeClass, {
-  name: 'Direction',
+  name: 'ShipSizeClass',
 });
 
 /** The crew capacity of the ship */

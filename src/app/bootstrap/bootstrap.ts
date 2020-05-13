@@ -1,7 +1,7 @@
 import express from 'express';
 import debugLib from 'debug';
 import { Bootstrap } from '../../types';
-import initApollo from './init-apollo';
+// import initApollo from './init-apollo';
 import initSession from './init-session';
 import initMiddlewares from './init-middlewares';
 import appRouter from '../router';
@@ -21,7 +21,7 @@ const bootstrap: Bootstrap = async (conn) => {
   initMiddlewares(app);
 
   // 3. GraphQL endpoint
-  await initApollo({ conn, app });
+  // await initApollo({ conn, app });
 
   // 4. Other endpoints
   app.use(appRouter);

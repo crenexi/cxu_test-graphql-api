@@ -1,7 +1,7 @@
 /* eslint import/first: 0 */
 
 // Module alias
-import 'module-alias/register';
+import './aliases';
 
 // Reflect metadata
 import 'reflect-metadata';
