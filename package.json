@@ -4,6 +4,16 @@
   "repository": {},
   "license": "UNLICENSED",
   "main": "dist/bin/www.js",
+  "_moduleAliases": {
+    "@app": "dist/app",
+    "@graphql": "dist/graphql",
+    "@modules": "dist/graphql/modules",
+    "@config": "dist/config",
+    "@types": "dist/types",
+    "@entities": "dist/entities",
+    "@helpers": "dist/helpers",
+    "@services": "dist/services"
+  },
   "scripts": {
     "clean": "rm -rf ./dist",
     "lint": "gulp lint",
@@ -18,11 +28,11 @@
     "orm:migration:show": "npm run typeorm:cli -- migration:show",
     "orm:migration:run": "npm run typeorm:cli -- migration:run",
     "orm:migration:revert": "npm run typeorm:cli -- migration:revert",
-    "pm2:start": "pm2 start ./config/pm2.config.js",
-    "pm2:restart": "pm2 restart ./config/pm2.config.js",
-    "pm2:stop": "pm2 stop ./config/pm2.config.js",
-    "pm2:delete": "pm2 delete ./config/pm2.config.js",
-    "pm2:logs": "pm2 logs ./config/pm2.config.js",
+    "pm2:start": "pm2 start ./dist/config/pm2.config.js",
+    "pm2:restart": "pm2 restart ./dist/config/pm2.config.js",
+    "pm2:stop": "pm2 stop ./dist/config/pm2.config.js",
+    "pm2:delete": "pm2 delete ./dist/config/pm2.config.js",
+    "pm2:logs": "pm2 logs ./dist/config/pm2.config.js",
     "prerelease": "npm run orm:schema:log && npm run orm:migration:show",
     "release:start": "npm run prerelease & ./bin/release-start.sh",
     "release:finish": "./bin/release-finish.sh"

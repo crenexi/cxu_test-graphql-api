@@ -1,7 +1,15 @@
 /* eslint import/first: 0 */
+
+// Module alias
+import 'module-alias/register';
+
+// Reflect metadata
 import 'reflect-metadata';
+
+// Environment variables
 import dotEnvSafe from 'dotenv-safe';
 dotEnvSafe.config();
+
 import debugLib from 'debug';
 import express from 'express';
 import http from 'http';

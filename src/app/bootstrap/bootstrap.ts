@@ -1,36 +1,15 @@
 import express from 'express';
 import debugLib from 'debug';
-import path from 'path';
-import moduleAlias from 'module-alias';
-import appConfig from '@config/app.config';
 import { Bootstrap } from '../../types';
 import initApollo from './init-apollo';
 import initSession from './init-session';
 import initMiddlewares from './init-middlewares';
 import appRouter from '../router';
 
-const configureAliases = (): void => {
-  const { paths } = appConfig;
-  const rootDir = path.basename(path.dirname(path.join(__dirname, '..')));
-
-  const aliases = (() => {
-    if (rootDir === 'src') return paths;
-
-    return Object.entries(paths).reduce((a, [k, v]) => {
-      const p = path.join(__dirname, '../../../', v.replace(/src/g, 'dist'));
-      return { ...a, [k]: p };
-    }, {});
-  })();
-
-  moduleAlias.addAliases(aliases);
-};
-
 /** Express application */
 const bootstrap: Bootstrap = async (conn) => {
   const debug = debugLib('express:app');
   debug('Bootstrapping app...');
-
-  configureAliases();
 
   const app = express();
   app.set('trust proxy', 1);

@@ -4,7 +4,7 @@ const ecosystemConfig = {
   apps: [{
     name: "api.webbuniverse.com",
     script: 'node',
-    args: './dist/app/bin/www.js',
+    args: './dist/bin/www.js',
     listen_timeout : 5000,
     kill_timeout : 5000,
     exp_backoff_restart_delay: 100,

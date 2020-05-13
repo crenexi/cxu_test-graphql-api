@@ -1,9 +1,6 @@
 import { CookieOptions } from 'express';
 
 export interface AppConfig {
-  paths: {
-    [key: string]: string;
-  };
   prodOrigins: string[];
   env: string;
   isProduction: boolean;
@@ -40,16 +37,6 @@ export interface AppConfig {
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 const appConfig: AppConfig = {
-  paths: {
-    '@app': 'src/app',
-    '@gql': 'src/graphql',
-    '@modules': 'src/graphql/modules',
-    '@config': 'src/config',
-    '@types': 'src/types/*',
-    '@entities': 'src/entities',
-    '@helpers': 'src/helpers',
-    '@services': 'src/services',
-  },
   prodOrigins: [
     'https://www.webbuniverse.com',
     'https://dev.webbuniverse.com',

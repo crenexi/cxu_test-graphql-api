@@ -4,13 +4,14 @@
 
 Note: to add an alias, you must add to tsconfig.json AND package.json.
 
-- **@app**
-- **@gql**
-- **@config**
-- **@types**
-- **@entities**
-- **@helpers**
-- **@services**
+- **@app** - src/app
+- **@graphql** - src/graphql
+- **@modules** - src/graphql/modules
+- **@config** - src/config
+- **@types** - src/types
+- **@entities** - src/entities
+- **@helpers** - src/helpers
+- **@services** - src/services
 
 ## Logging Levels
 
