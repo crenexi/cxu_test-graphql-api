@@ -6,12 +6,12 @@ import {
 } from '../types';
 import { AuthModule } from './modules/auth';
 import { UserModule } from './modules/user';
-import { ShipModelModule } from './modules/ship-model';
-// import { emitSchemaDefinition } from './helpers';
+// import { ShipModelModule } from './modules/ship-model';
+import { emitSchemaSnap } from '../services/graphql-utils';
 
 const featureModules = [
   UserModule,
-  ShipModelModule,
+  // ShipModelModule,
 ];
 
 const AppModule = new GraphQLModule<Config, Session, Context>({
@@ -27,7 +27,7 @@ const AppModule = new GraphQLModule<Config, Session, Context>({
 });
 
 // Emits schema via helper
-// emitSchemaDefinition(AppModule.schema);
+emitSchemaSnap(AppModule.schema);
 
 export default AppModule;
 
