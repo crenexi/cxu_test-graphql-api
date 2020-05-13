@@ -41,14 +41,14 @@ const nodeEnv = process.env.NODE_ENV || 'development';
 
 const appConfig: AppConfig = {
   paths: {
-    '@app': 'src/app/*',
-    '@gql': 'src/graphql/*',
-    '@modules': 'src/graphql/modules/*',
-    '@config': 'src/config/*',
+    '@app': 'src/app',
+    '@gql': 'src/graphql',
+    '@modules': 'src/graphql/modules',
+    '@config': 'src/config',
     '@types': 'src/types/*',
-    '@entities': 'src/entities/*',
-    '@helpers': 'src/helpers/*',
-    '@services': 'src/services/*',
+    '@entities': 'src/entities',
+    '@helpers': 'src/helpers',
+    '@services': 'src/services',
   },
   prodOrigins: [
     'https://www.webbuniverse.com',
