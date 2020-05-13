@@ -9,7 +9,7 @@
     "lint": "gulp lint",
     "prestart": "npm run clean && npm run lint",
     "start": "./bin/start.sh",
-    "tsnd": "tsnd --inspect --no-notify --respawn --transpileOnly ./src/bin/www.ts",
+    "tsnd": "tsnd --no-notify --respawn --transpileOnly ./src/bin/www.ts",
     "prebuild": "npm run clean && npm run lint && npm run test",
     "build": "tsc -b",
     "test": "echo \"Error: no test specified\"",

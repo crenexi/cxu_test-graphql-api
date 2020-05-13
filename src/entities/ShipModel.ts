@@ -42,7 +42,7 @@ export enum ShipLengthClass {
   C4_XLARGE = 'xlarge', // over 90m
 }
 registerEnumType(ShipLengthClass, {
-  name: 'ShipSizeClass',
+  name: 'ShipLengthClass',
 });
 
 @Entity()

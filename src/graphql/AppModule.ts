@@ -1,3 +1,4 @@
+import { Connection } from 'typeorm';
 import { GraphQLModule } from '@graphql-modules/core';
 import {
   Session,
@@ -7,7 +8,7 @@ import {
 import { AuthModule } from './modules/auth';
 import { UserModule } from './modules/user';
 import { ShipModelModule } from './modules/ship-model';
-import { emitSchemaSnap } from '../services/graphql-utils';
+// import { emitSchemaSnap } from '../services/graphql-utils';
 
 const featureModules = [
   UserModule,
@@ -17,6 +18,9 @@ const featureModules = [
 const AppModule = new GraphQLModule<Config, Session, Context>({
   name: 'App',
   configRequired: true,
+  providers: ({ config: { conn } }) => [
+    { provide: Connection, useValue: conn },
+  ],
   imports: ({ config: { conn } }) => [
     AuthModule.forRoot({ conn }),
     ...featureModules,
@@ -27,7 +31,7 @@ const AppModule = new GraphQLModule<Config, Session, Context>({
 });
 
 // Emits schema via helper
-emitSchemaSnap(AppModule.schema);
+// emitSchemaSnap(AppModule.schema);
 
 export default AppModule;
 

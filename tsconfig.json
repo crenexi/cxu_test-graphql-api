@@ -16,6 +16,7 @@
       "@config/*": ["config/*"],
       "@typeorm": ["typeorm/*"],
       "@app/*": ["app/*"],
+      "@services/*": ["services/*"],
       "@graphql/*": ["graphql/*"],
       "@modules/*": ["graphql/modules/*"],
     },

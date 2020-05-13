@@ -35,7 +35,7 @@ const loggerTransports = (): Transport[] => {
     transports.push(new winstonTransports.Console({
       level: debugging ? 'debug' : 'info',
       format: format.simple(),
-      handleExceptions: true,
+      handleExceptions: debugging,
     }));
   }
 

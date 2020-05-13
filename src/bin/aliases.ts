@@ -2,8 +2,13 @@ import moduleAlias from 'module-alias';
 import path from 'path';
 
 const pathsConfig: any = {
-  "@config": "config",
-  "@typeorm": "typeorm",
+  "root": ".",
+  "@config": "./config",
+  "@typeorm": "./typeorm",
+  "@app": "./app",
+  "@services": "./services",
+  "@graphql": "./graphql",
+  "@modules": "./graphql/modules"
 };
 
 const baseDir = path.basename(path.dirname(__dirname));
