@@ -1,6 +1,10 @@
 import { CookieOptions } from 'express';
 
 export interface AppConfig {
+  paths: {
+    [key: string]: string;
+  };
+  prodOrigins: string[];
   env: string;
   isProduction: boolean;
   isDevelopment: boolean;
@@ -13,7 +17,6 @@ export interface AppConfig {
     accessSecret: string;
     refreshSecret: string;
   };
-  prodOrigins: string[];
   postgres: {
     host: string;
     port: number;
@@ -37,6 +40,21 @@ export interface AppConfig {
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 const appConfig: AppConfig = {
+  paths: {
+    '@app': 'src/app/*',
+    '@gql': 'src/graphql/*',
+    '@modules': 'src/graphql/modules/*',
+    '@config': 'src/config/*',
+    '@types': 'src/types/*',
+    '@entities': 'src/entities/*',
+    '@helpers': 'src/helpers/*',
+    '@services': 'src/services/*',
+  },
+  prodOrigins: [
+    'https://www.webbuniverse.com',
+    'https://dev.webbuniverse.com',
+    'https://admin.webbuniverse.com',
+  ],
   env: nodeEnv,
   isDevelopment: nodeEnv === 'development',
   isProduction: nodeEnv === 'production',
@@ -53,11 +71,6 @@ const appConfig: AppConfig = {
     accessSecret: process.env.ACCESS_TOKEN_SECRET || 'Avengers Assemble',
     refreshSecret: process.env.REFRESH_TOKEN_SECRET || 'Avengers Assemble',
   },
-  prodOrigins: [
-    'https://www.webbuniverse.com',
-    'https://dev.webbuniverse.com',
-    'https://admin.webbuniverse.com',
-  ],
   postgres: {
     host: process.env.POSTGRES_HOST || '',
     port: parseInt(process.env.POSTGRES_PORT as string, 10),

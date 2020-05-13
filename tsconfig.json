@@ -9,12 +9,16 @@
       "esnext.asynciterable"
     ],
     "outDir": "./dist",
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "*": [
-        "node_modules/*",
-        "src/types/*"
-      ]
+      "*": ["node_modules/*"],
+      "@app/*": ["src/app/*"],
+      "@gql/*": ["src/graphql/*"],
+      "@config/*": ["src/config/*"],
+      "@types/*": ["src/types/*"],
+      "@entities/*": ["src/entities/*"],
+      "@helpers/*": ["src/helpers/*"],
+      "@services/*": ["src/services/*"],
     },
     "declaration": false,
     "sourceMap": true,

@@ -1,6 +1,6 @@
 import { transports as winstonTransports, format } from 'winston';
 import Transport from 'winston-transport';
-import config from '../../config/app.config';
+import config from '@config/app.config';
 import loggerConfig from './logger-config';
 
 const { isDevelopment, debugging } = config;
