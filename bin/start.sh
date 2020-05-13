@@ -63,4 +63,4 @@ validateRedisActive
 validatePostgresActive
 
 # Start app
-gulp
+tsnd --inspect --respawn ./src/bin/www.ts
