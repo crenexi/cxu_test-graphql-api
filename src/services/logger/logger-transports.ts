@@ -34,7 +34,12 @@ const loggerTransports = (): Transport[] => {
   if (isDevelopment) {
     transports.push(new winstonTransports.Console({
       level: debugging ? 'debug' : 'info',
-      format: format.simple(),
+      format: format.combine(
+        format.colorize(),
+        format.timestamp({ format: loggerConfig.dateFormat }),
+        format.errors({ stack: true }),
+        format.json(),
+      ),
       handleExceptions: debugging,
     }));
   }

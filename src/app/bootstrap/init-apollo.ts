@@ -14,6 +14,7 @@ const initApollo: InitApollo = async ({ conn, app }) => {
     schema, // schema from AppModule
     context, // context from AppModule
     formatError, // custom error format
+    introspection: true,
   });
 
   // Apply app to apollo server

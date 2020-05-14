@@ -12,7 +12,7 @@ interface LogOpts {
 // Make winston aware of level colors
 winston.addColors(loggerConfig.levels.colors);
 
-const { debugging } = config;
+const { isDevelopment, debugging } = config;
 const { combine } = format;
 
 class LoggerService {
@@ -73,7 +73,7 @@ class LoggerService {
 
     // Reduce string/Error to string
     const message: string = (() => {
-      if (value instanceof Error) return value.stack || value.toString();
+      if (value instanceof Error) return JSON.stringify(value);
       return value;
     })();
 

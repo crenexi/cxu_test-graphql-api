@@ -17,24 +17,36 @@ registerEnumType(ShipSizeClass, {
 
 /** The crew capacity of the ship */
 export enum ShipCrewClass {
-  C1_SINGLE = 'single', // 1 person
-  C2_SMALL_CREW = 'smallCrew', // 2-3 crew
-  C3_MEDIUM_CREW = 'mediumCrew', // 4-8 crew
-  C4_LARGE_CREW = 'largeCrew', // 9+ crew
+  SINGLE = 'single',
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  LARGE = 'large',
 }
 registerEnumType(ShipCrewClass, {
   name: 'ShipCrewClass',
+  description: [
+    'Single: 1 person',
+    'Small: 2-3 crew',
+    'Medium: 4-8 crew',
+    'Large: 9+ crew',
+  ].join(', '),
 });
 
 /** The length class of the ship */
 export enum ShipLengthClass {
-  C1_SMALL = 'small', // under 20m
-  C2_MEDIUM = 'medium', // 20m-30m
-  C3_LARGE = 'large', // 30m-90m
-  C4_XLARGE = 'xlarge', // over 90m
+  SMALL = 'small',
+  MEDIUM = 'medium',
+  LARGE = 'large',
+  XLARGE = 'xlarge',
 }
 registerEnumType(ShipLengthClass, {
   name: 'ShipLengthClass',
+  description: [
+    'Small: under 20m',
+    'Medium: 20m-30m',
+    'Large: 30m-90m',
+    'XLarge: over 90m',
+  ].join(', '),
 });
 
 @Entity()
