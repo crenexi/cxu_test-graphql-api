@@ -1,5 +1,6 @@
 import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
+import { DBCreateError } from '@common/errors';
 import {
   ShipModel,
   ShipIdentity,
@@ -29,7 +30,8 @@ class ShipModelProvider {
 
   /** Get ship models */
   async getModels(): Promise<ShipModel[]> {
-    return this.shipModelRepo.find();
+    throw new DB('Test');
+    // return this.shipModelRepo.find();
   }
 
   /** Get ship model */
@@ -74,9 +76,10 @@ class ShipModelProvider {
     input: CreateManufacturerInput,
   ): Promise<Manufacturer> {
     try {
-      return await this.manufacturerRepo.create(input).save();
+      return this.manufacturerRepo.create(input).save();
     } catch (err) {
-      throw
+      const message = `Failed to create manufacturer '${input.name}'`;
+      throw new DBCreateError(message);
     }
   }
 }

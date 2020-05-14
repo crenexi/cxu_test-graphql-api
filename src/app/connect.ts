@@ -3,7 +3,7 @@ import chalk from 'chalk';
 import { createConnection } from 'typeorm';
 import config from '@config/app.config';
 import typeormConfig from '@config/orm.config';
-import { Connect } from '../types';
+import { Connect } from '../common/types';
 
 const connect: Connect = async () => {
   const dbName = config.postgres.database;

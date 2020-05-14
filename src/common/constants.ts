@@ -1,6 +1,10 @@
 export const errorCodes = {
-  DB_GET_FAILURE: 'DB_GET_FAILURE',
-  DB_CREATE_FAILURE: 'DB_CREATE_FAILURE',
-  DB_UPDATE_FAILURE: 'DB_UPDATE_FAILURE',
-  DB_DELETE_FAILURE: 'DB_DELETE_FAILURE',
+  dbError: 'DB_ERROR',
+};
+
+export const errorNames = {
+  dbGetError: 'DBGetError',
+  dbCreateError: 'DBCreateError',
+  dbUpdateError: 'DBUpdateError',
+  dbDeleteError: 'DBDeleteError',
 };
