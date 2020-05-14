@@ -30,8 +30,7 @@ class ShipModelProvider {
 
   /** Get ship models */
   async getModels(): Promise<ShipModel[]> {
-    throw new DB('Test');
-    // return this.shipModelRepo.find();
+    return this.shipModelRepo.find();
   }
 
   /** Get ship model */
