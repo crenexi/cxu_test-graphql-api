@@ -1,11 +1,7 @@
-import { InputType, Field, Int } from 'type-graphql';
+import { InputType, Field } from 'type-graphql';
 import { IsAlphanumeric, MaxLength } from 'class-validator';
 import { ShipModel } from '@root/entities';
-import {
-  ShipSizeClass,
-  ShipCrewClass,
-  ShipLengthClass,
-} from '@root/entities/ShipModel';
+import CreateShipSpecsInput from './CreateShipSpecsInput';
 
 @InputType()
 class CreateShipModelInput implements Partial<ShipModel> {
@@ -19,17 +15,8 @@ class CreateShipModelInput implements Partial<ShipModel> {
   @MaxLength(1000)
   description: string;
 
-  @Field(() => ShipSizeClass)
-  sizeClass: ShipSizeClass;
-
-  @Field(() => ShipCrewClass)
-  crewClass: ShipCrewClass;
-
-  @Field(() => ShipLengthClass)
-  lengthClass: ShipLengthClass;
-
-  @Field(() => Int)
-  cargoCapacity: number;
+  @Field(() => CreateShipSpecsInput)
+  specs: CreateShipSpecsInput;
 }
 
 export default CreateShipModelInput;

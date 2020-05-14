@@ -9,12 +9,12 @@ import {
 } from '@root/entities';
 import { messages } from '../constants';
 import {
+  CreateShipModelInput,
   CreateManufacturerInput,
 } from '../types/inputs';
 import {
   ShipModelResult,
   ShipIdentityResult,
-  ShipSpecsResult,
   ManufacturerResult,
 } from '../types/results';
 
@@ -46,6 +46,30 @@ class ShipModelProvider {
     });
   }
 
+  /** Create ship model */
+  async createModel(
+    input: CreateShipModelInput,
+  ): Promise<ShipModel> {
+    try {
+      const { specs: specsInput, ...restInput } = input;
+
+      // Ship specs
+      const specs = this.shipSpecsRepo.create(specsInput);
+      await specs.save();
+
+      // Ship model
+      const model = this.shipModelRepo.create({
+        ...restInput,
+        specsId: specs.id,
+      });
+
+      return model.save();
+    } catch (err) {
+      const message = `Failed to create ship model '${input.name}'`;
+      throw new DBCreateError(message);
+    }
+  }
+
   /** Get ship identities */
   async getIdentities(): Promise<ShipIdentity[]> {
     return this.shipIdentityRepo.find();
@@ -57,15 +81,6 @@ class ShipModelProvider {
 
     return identity || ({
       notFoundNotice: messages.undefinedIdentity,
-    });
-  }
-
-  /** Get ship specs */
-  async getSpecs(id: string): Promise<typeof ShipSpecsResult> {
-    const specs = await this.shipSpecsRepo.findOne(id);
-
-    return specs || ({
-      notFoundNotice: messages.undefinedSpecs,
     });
   }
 

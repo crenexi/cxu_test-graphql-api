@@ -5,8 +5,9 @@ import {
   UpdateDateColumn,
   CreateDateColumn,
 } from 'typeorm';
-import { Field, ID } from 'type-graphql';
+import { ObjectType, Field, ID } from 'type-graphql';
 
+@ObjectType()
 abstract class BaseEntity extends TGBaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')

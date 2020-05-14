@@ -1,3 +1,4 @@
+import { Diff } from 'utility-types';
 import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
 import BaseEntity from './_BaseEntity';
@@ -32,9 +33,17 @@ class ShipModel extends BaseEntity {
   specsId: string;
 
   @Field(() => ShipSpecs)
-  @OneToOne(() => ShipSpecs)
+  @OneToOne(() => ShipSpecs, { eager: true })
   @JoinColumn()
-  specs: ShipSpecs;
+  specs: Diff<ShipSpecs, BaseEntity>;
+
+  // @Column({ nullable: true })
+  // profileId: number;
+
+  // @OneToOne(() => Profile)
+  // @JoinColumn()
+  // profile: Profile;
+
 
   // @Field(() => ShipIdentity)
   // @ManyToOne(() => ShipIdentity, (si: ShipIdentity) => si.models)
