@@ -1,6 +1,10 @@
 import { Connection, Repository } from 'typeorm';
-import { ShipModel, ShipIdentity, Manufacturer } from '@root/entities';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
+import {
+  ShipModel,
+  ShipIdentity,
+  Manufacturer,
+} from '@root/entities';
 import { messages } from '../constants';
 import {
   CreateManufacturerInput,

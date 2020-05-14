@@ -5,11 +5,13 @@ import { ShipModelProvider } from './providers';
 
 import {
   ShipModelResolver,
+  ShipIdentityResolver,
   ManacturerResolver,
 } from './resolvers';
 
 const resolvers = [
   ShipModelResolver,
+  ShipIdentityResolver,
   ManacturerResolver,
 ];
 

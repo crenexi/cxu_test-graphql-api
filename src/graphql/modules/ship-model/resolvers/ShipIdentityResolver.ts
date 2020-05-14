@@ -1,23 +1,23 @@
 import { Resolver, Query, Arg } from 'type-graphql';
-import { ShipModel } from '@root/entities';
+import { ShipIdentity } from '@root/entities';
 import { ShipModelProvider } from '../providers';
 import { ShipIdentityResult } from '../types/results';
 
-@Resolver(() => ShipModel)
-class ShipModelResolver {
+@Resolver(() => ShipIdentity)
+class ShipIdentityResolver {
   constructor(private shipModelProvider: ShipModelProvider) {
     this.shipModelProvider = shipModelProvider;
   }
 
-  @Query(() => [ShipModel])
-  shipModels(): Promise<ShipModel[]> {
+  @Query(() => [ShipIdentity])
+  shipIdentities(): Promise<ShipIdentity[]> {
     return this.shipModelProvider.getIdentities();
   }
 
   @Query(() => ShipIdentityResult)
-  shipModel(@Arg('id') id: string): Promise<typeof ShipIdentityResult> {
+  shipIdentity(@Arg('id') id: string): Promise<typeof ShipIdentityResult> {
     return this.shipModelProvider.getIdentity(id);
   }
 }
 
-export default ShipModelResolver;
+export default ShipIdentityResolver;
