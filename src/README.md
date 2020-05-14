@@ -2,14 +2,18 @@
 
 ## Available aliases
 
-Note: to add an alias, you must add to tsconfig.json AND package.json.
+Note: to add an alias, you must:
+
+1. Add path to **tsconfig.json**
+1. Add path to **src/bin/aliases.ts**
 
 ```
 @root/* ========= src/*
 @config/* ======= src/config/*
 @typeorm/* ====== src/typeorm/*
 @app/* ========== src/app/*
-@graphql/* ========== src/graphql/*
+@common/* ======= src/common/*
+@graphql/* ====== src/graphql/*
 @modules/* ====== src/graphql/modules/*
 ```
 
