@@ -1,17 +1,25 @@
 import { Connection, Repository } from 'typeorm';
-import { ShipModel, Manufacturer } from '@root/entities';
+import { ShipModel, ShipIdentity, Manufacturer } from '@root/entities';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { messages } from '../constants';
-import { CreateManufacturerInput } from '../types/inputs';
-import { ShipModelResult, ManufacturerResult } from '../types/results';
+import {
+  CreateManufacturerInput,
+} from '../types/inputs';
+import {
+  ShipModelResult,
+  ShipIdentityResult,
+  ManufacturerResult,
+} from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })
 class ShipModelProvider {
   private shipModelRepo: Repository<ShipModel>;
+  private shipIdentityRepo: Repository<ShipIdentity>;
   private manufacturerRepo: Repository<Manufacturer>;
 
   constructor(private conn: Connection) {
     this.shipModelRepo = conn.getRepository(ShipModel);
+    this.shipIdentityRepo = conn.getRepository(ShipIdentity);
     this.manufacturerRepo = conn.getRepository(Manufacturer);
   }
 
@@ -26,6 +34,20 @@ class ShipModelProvider {
 
     return model || ({
       notFoundNotice: messages.undefinedModel,
+    });
+  }
+
+  /** Get ship identities */
+  async getIdentities(): Promise<ShipIdentity[]> {
+    return this.shipIdentityRepo.find();
+  }
+
+  /** Get ship identity */
+  async getIdentity(id: string): Promise<typeof ShipIdentityResult> {
+    const identity = await this.shipIdentityRepo.findOne(id);
+
+    return identity || ({
+      notFoundNotice: messages.undefinedIdentity,
     });
   }
 
