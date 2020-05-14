@@ -1,6 +1,7 @@
 import User from './User';
 import ShipModel from './ShipModel';
 import ShipIdentity from './ShipIdentity';
+import ShipSpecs from './ShipSpecs';
 import ShipSpinoff from './ShipSpinoff';
 import Manufacturer from './Manufacturer';
 
@@ -9,6 +10,7 @@ export const entities = [
   User,
   ShipModel,
   ShipIdentity,
+  ShipSpecs,
   ShipSpinoff,
   Manufacturer,
 ];
@@ -18,6 +20,7 @@ export {
   User,
   ShipModel,
   ShipIdentity,
+  ShipSpecs,
   ShipSpinoff,
   Manufacturer,
 };

@@ -4,6 +4,7 @@ import { DBCreateError } from '@common/errors';
 import {
   ShipModel,
   ShipIdentity,
+  ShipSpecs,
   Manufacturer,
 } from '@root/entities';
 import { messages } from '../constants';
@@ -13,6 +14,7 @@ import {
 import {
   ShipModelResult,
   ShipIdentityResult,
+  ShipSpecsResult,
   ManufacturerResult,
 } from '../types/results';
 
@@ -20,11 +22,13 @@ import {
 class ShipModelProvider {
   private shipModelRepo: Repository<ShipModel>;
   private shipIdentityRepo: Repository<ShipIdentity>;
+  private shipSpecsRepo: Repository<ShipSpecs>;
   private manufacturerRepo: Repository<Manufacturer>;
 
   constructor(private conn: Connection) {
     this.shipModelRepo = conn.getRepository(ShipModel);
     this.shipIdentityRepo = conn.getRepository(ShipIdentity);
+    this.shipSpecsRepo = conn.getRepository(ShipSpecs);
     this.manufacturerRepo = conn.getRepository(Manufacturer);
   }
 
@@ -53,6 +57,15 @@ class ShipModelProvider {
 
     return identity || ({
       notFoundNotice: messages.undefinedIdentity,
+    });
+  }
+
+  /** Get ship specs */
+  async getSpecs(id: string): Promise<typeof ShipSpecsResult> {
+    const specs = await this.shipSpecsRepo.findOne(id);
+
+    return specs || ({
+      notFoundNotice: messages.undefinedSpecs,
     });
   }
 

@@ -1,49 +1,16 @@
-import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
-import { ObjectType, Field, Int, registerEnumType } from 'type-graphql';
+import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany } from 'typeorm';
+import { ObjectType, Field } from 'type-graphql';
 import BaseEntity from './_BaseEntity';
-import ShipIdentity from './ShipIdentity';
-import ShipSpinoff from './ShipSpinoff';
+import ShipSpecs from './ShipSpecs';
+// import ShipIdentity from './ShipIdentity';
+// import ShipSpinoff from './ShipSpinoff';
 
 // Quick note about ship entities:
 // ShipIdentity: a ship's central name (ex. Avenger)
 // ShipModel: an elemental ship design (ex. Avenger Titan)
+// ShipSpecs: the specifications of a model (1-1 relation to ShipModel)
 // ShipSpinoff: a style-related variant (ex. Avenger Titan Renegade)
 // Ship: an actual ship entry (owned by a society member)
-
-/** The size class of the ship */
-export enum ShipSizeClass {
-  VEHICLE = 'vehicle',
-  SNUB = 'snub',
-  SMALL = 'small',
-  MEDIUM = 'medium',
-  LARGE = 'large',
-  CAPITAL = 'capital',
-}
-registerEnumType(ShipSizeClass, {
-  name: 'ShipSizeClass',
-});
-
-/** The crew capacity of the ship */
-export enum ShipCrewClass {
-  C1_SINGLE = 'single', // 1 person
-  C2_SMALL_CREW = 'smallCrew', // 2-3 crew
-  C3_MEDIUM_CREW = 'mediumCrew', // 4-8 crew
-  C4_LARGE_CREW = 'largeCrew', // 9+ crew
-}
-registerEnumType(ShipCrewClass, {
-  name: 'ShipCrewClass',
-});
-
-/** The length class of the ship */
-export enum ShipLengthClass {
-  C1_SMALL = 'small', // under 20m
-  C2_MEDIUM = 'medium', // 20m-30m
-  C3_LARGE = 'large', // 30m-90m
-  C4_XLARGE = 'xlarge', // over 90m
-}
-registerEnumType(ShipLengthClass, {
-  name: 'ShipLengthClass',
-});
 
 @Entity()
 @ObjectType()
@@ -56,37 +23,31 @@ class ShipModel extends BaseEntity {
   @Column({ type: 'varchar', length: 1000 })
   description: string;
 
-  @Field(() => ShipSizeClass)
-  @Column({ type: 'enum', enum: ShipSizeClass })
-  sizeClass: ShipSizeClass;
-
-  @Field(() => ShipCrewClass)
-  @Column({ type: 'enum', enum: ShipCrewClass })
-  crewClass: ShipCrewClass;
-
-  @Field(() => ShipLengthClass)
-  @Column({ type: 'enum', enum: ShipLengthClass })
-  lengthClass: ShipLengthClass;
-
-  @Field(() => Int)
-  @Column('integer')
-  cargoCapacity: number;
-
   @Field()
   @Column({ default: false })
   isFlightReady: boolean;
 
-  @Field(() => ShipIdentity)
-  @ManyToOne(() => ShipIdentity, (si: ShipIdentity) => si.models)
-  identity: Promise<ShipIdentity>;
+  @Field({ nullable: true })
+  @Column({ nullable: true })
+  specsId: string;
 
-  @Field(() => [ShipSpinoff])
-  @OneToMany(
-    () => ShipSpinoff,
-    (ss: ShipSpinoff) => ss.model,
-    { eager: true, nullable: true },
-  )
-  spinoffs: Promise<ShipSpinoff[]>;
+  @Field(() => ShipSpecs)
+  @OneToOne(() => ShipSpecs)
+  @JoinColumn()
+  specs: ShipSpecs;
+
+  // @Field(() => ShipIdentity)
+  // @ManyToOne(() => ShipIdentity, (si: ShipIdentity) => si.models)
+  // identity: Promise<ShipIdentity>;
+
+  // @Field(() => [ShipSpinoff])
+  // @OneToMany(
+  //   () => ShipSpinoff,
+  //   (ss: ShipSpinoff) => ss.model,
+  //   { eager: true, nullable: true },
+  // )
+  // spinoffs: Promise<ShipSpinoff[]>;
 }
+
 
 export default ShipModel;
