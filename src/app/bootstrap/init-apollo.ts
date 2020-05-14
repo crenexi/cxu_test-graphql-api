@@ -1,31 +1,19 @@
-import { v4 as uuidv4 } from 'uuid';
-import { GraphQLError } from 'graphql';
-import { ApolloServer, ApolloError } from 'apollo-server-express';
-import logger from '@services/logger';
-import { emitSchemaSnap } from '@services/graphql-utils';
+import { ApolloServer } from 'apollo-server-express';
+import { formatError, emitSchemaSnap } from '@services/graphql-utils';
 import AppModule from '@graphql/AppModule';
 import { InitApollo } from '@root/types';
-
-/** Handle Apollo errors */
-const formatError = (err: GraphQLError) => {
-  if (err.originalError instanceof ApolloError) return err;
-  const errId = uuidv4();
-
-  // Log error and return internal error
-  logger.error(`Error ID: ${errId}} | ${err}`);
-  return new GraphQLError(`Internal Error: ${errId}`);
-};
 
 /** Setup the Apollo server */
 const initApollo: InitApollo = async ({ conn, app }) => {
   const { schema, context } = AppModule.forRoot({ conn });
 
+  // Emit schema snapshot
   emitSchemaSnap(schema);
 
   const apolloServer = new ApolloServer({
-    schema,
-    context,
-    formatError,
+    schema, // schema from AppModule
+    context, // context from AppModule
+    formatError, // custom error format
   });
 
   // Apply app to apollo server
