@@ -6,6 +6,7 @@ const pathsConfig: any = {
   "@config": "./config",
   "@typeorm": "./typeorm",
   "@app": "./app",
+  "@common": "./common",
   "@services": "./services",
   "@graphql": "./graphql",
   "@modules": "./graphql/modules"

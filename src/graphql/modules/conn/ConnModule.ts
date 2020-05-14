@@ -1,6 +1,6 @@
 import { GraphQLModule } from '@graphql-modules/core';
 import { Connection } from 'typeorm';
-import { AppModuleConfig as Config } from '@root/types';
+import { AppModuleConfig as Config } from '@common/types';
 
 const ConnModule = new GraphQLModule<Config>({
   name: 'Conn',

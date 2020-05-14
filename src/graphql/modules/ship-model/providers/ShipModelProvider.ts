@@ -70,8 +70,14 @@ class ShipModelProvider {
   }
 
   /** Create manufacturer */
-  async createManufacturer(input: CreateManufacturerInput): Promise<Manufacturer> {
-    return this.manufacturerRepo.save(input as Manufacturer);
+  async createManufacturer(
+    input: CreateManufacturerInput,
+  ): Promise<Manufacturer> {
+    try {
+      return await this.manufacturerRepo.create(input).save();
+    } catch (err) {
+      throw
+    }
   }
 }
 

@@ -1,6 +1,6 @@
 import express from 'express';
 import debugLib from 'debug';
-import { Bootstrap } from '@root/types';
+import { Bootstrap } from '@common/types';
 import initApollo from './init-apollo';
 import initSession from './init-session';
 import initMiddlewares from './init-middlewares';

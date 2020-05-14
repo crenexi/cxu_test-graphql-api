@@ -6,7 +6,7 @@ import { genSalt, hash, compare } from 'bcrypt-nodejs';
 import config from '@config/app.config';
 import logger from '@services/logger';
 import { createToken } from '@root/helpers';
-import { Session } from '@root/types';
+import { Session } from '@common/types';
 import { User } from '@root/entities';
 import { messages } from '../constants';
 

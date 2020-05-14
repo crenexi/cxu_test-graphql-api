@@ -7,7 +7,7 @@ import rateLimit from 'express-rate-limit';
 import RateLimitRedis from 'rate-limit-redis';
 import config from '@config/app.config';
 import logger from '@services/logger';
-import { InitRedis, InitSession } from '@root/types';
+import { InitRedis, InitSession } from '@common/types';
 
 const TEN_MINUTES = 1000 * 60 * 10;
 const ONE_DAY = 86400;

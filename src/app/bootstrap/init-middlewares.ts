@@ -7,7 +7,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import errorHandler from 'errorhandler';
 import config from '@config/app.config';
-import { InitMiddlewares } from '@root/types';
+import { InitMiddlewares } from '@common/types';
 import accessLogger from '../middlewares/access-logger';
 
 const initMiddlewares: InitMiddlewares = (app) => {

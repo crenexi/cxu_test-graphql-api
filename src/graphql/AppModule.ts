@@ -1,5 +1,5 @@
 import { GraphQLModule } from '@graphql-modules/core';
-import { Session, AppModuleConfig, AppModuleContext } from '@root/types';
+import { Session, AppModuleConfig, AppModuleContext } from '@common/types';
 import { AuthModule } from './modules/auth';
 import { UserModule } from './modules/user';
 import { ShipModelModule } from './modules/ship-model';
