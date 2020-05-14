@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { Manufacturer } from '@root/entities';
 import { ShipModelProvider } from '../providers';
 import { CreateManufacturerInput } from '../types/inputs';
+import { ManufacturerResult } from '../types/results';
 
 @Resolver(() => Manufacturer)
 class ManufacturerResolver {
@@ -15,7 +16,7 @@ class ManufacturerResolver {
   }
 
   @Query(() => Manufacturer)
-  manufacturer(@Arg('id') id: string): Promise<Manufacturer | false> {
+  manufacturer(@Arg('id') id: string): Promise<typeof ManufacturerResult> {
     return this.shipModelProvider.getManufacturer(id);
   }
 

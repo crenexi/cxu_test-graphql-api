@@ -36,11 +36,11 @@ class User extends BaseEntity {
 
   @Field()
   @Column({ nullable: true })
-  suspensionReason?: string;
+  suspensionNotice?: string;
 
   @Field()
   @Column({ nullable: true })
-  archivalReason?: string;
+  archivalNotice?: string;
 }
 
 export default User;

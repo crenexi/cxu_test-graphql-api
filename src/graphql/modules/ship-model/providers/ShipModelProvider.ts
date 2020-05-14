@@ -1,7 +1,10 @@
 import { Connection, Repository } from 'typeorm';
 import { ShipModel, Manufacturer } from '@root/entities';
 import { Injectable } from '@graphql-modules/di';
+import { messages } from '../constants';
 import { CreateManufacturerInput } from '../types/inputs';
+import { ManufacturerResult } from '../types/results';
+
 
 @Injectable()
 class ShipModelProvider {
@@ -29,8 +32,16 @@ class ShipModelProvider {
   }
 
   /** Get manufacturer */
-  async getManufacturer(id: string): Promise<Manufacturer | false> {
-    return await this.manufacturerRepo.findOne(id) || false;
+  async getManufacturer(id: string): Promise<typeof ManufacturerResult> {
+    const manufacturer = await this.manufacturerRepo.findOne(id);
+
+    if (!manufacturer) {
+      return {
+        notFoundNotice: messages.undefinedManufacturer,
+      };
+    }
+
+    return manufacturer;
   }
 
   /** Create manufacturer */

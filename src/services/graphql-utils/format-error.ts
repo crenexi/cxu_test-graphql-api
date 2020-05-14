@@ -16,9 +16,10 @@ const formatError = (err: GraphQLError) => {
   const { message, locations, path } = err;
   const code = get(err, 'extension.code', 'Internal Error');
   const name = get(err, 'extensions.exception.name', '');
+  const stacktrace = get(err, 'extensions.exception.stacktrace', null);
 
   // Default extensions
-  const defaultExtensions = { id, code, name };
+  const defaultExtensions = { id, code, name, stacktrace };
 
   // Database errors
   const dbErrorNames = [

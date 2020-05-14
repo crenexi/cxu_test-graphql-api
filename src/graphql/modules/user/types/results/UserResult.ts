@@ -1,31 +1,18 @@
-import { ObjectType, Field, createUnionType } from 'type-graphql';
+import { createUnionType } from 'type-graphql';
 import { User } from '@root/entities';
-
-@ObjectType()
-class IsSuspended {
-  @Field()
-  suspensionReason: string;
-}
-
-@ObjectType()
-class IsArchived {
-  @Field()
-  archivalReason: string;
-}
-
-@ObjectType()
-class NotFound {
-  @Field()
-  message: string;
-}
+import {
+  WarnNotFound,
+  WarnIsSuspended,
+  WarnIsArchived,
+} from '@graphql/common/types';
 
 const UserResult = createUnionType({
   name: 'UserResult',
-  types: () => [User, IsSuspended, IsArchived, NotFound],
+  types: () => [User, WarnNotFound, WarnIsSuspended, WarnIsArchived],
   resolveType: (value) => {
-    if ('suspensionReason' in value) return IsSuspended;
-    if ('archivalReason' in value) return IsArchived;
-    if ('message' in value) return NotFound;
+    if ('notFoundNotice' in value) return WarnNotFound;
+    if ('archivalNotice' in value) return WarnIsArchived;
+    if ('suspensionNotice' in value) return WarnIsSuspended;
     return User;
   },
 });
