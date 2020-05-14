@@ -15,7 +15,7 @@ class ManufacturerResolver {
     return this.shipModelProvider.getManufacturers();
   }
 
-  @Query(() => Manufacturer)
+  @Query(() => ManufacturerResult)
   manufacturer(@Arg('id') id: string): Promise<typeof ManufacturerResult> {
     return this.shipModelProvider.getManufacturer(id);
   }

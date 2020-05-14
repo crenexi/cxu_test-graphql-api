@@ -6,8 +6,8 @@ const ManufacturerResult = createUnionType({
   name: 'ManufacturerResult',
   types: () => [Manufacturer, WarnNotFound],
   resolveType: (value) => {
-    if ('notFoundNotice' in value) return WarnNotFound;
-    return Manufacturer;
+    if ('notFoundNotice' in value) return 'WarnNotFound';
+    return 'Manufacturer';
   },
 });
 

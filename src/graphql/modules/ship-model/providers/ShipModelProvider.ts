@@ -1,12 +1,12 @@
 import { Connection, Repository } from 'typeorm';
 import { ShipModel, Manufacturer } from '@root/entities';
-import { Injectable } from '@graphql-modules/di';
+import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { messages } from '../constants';
 import { CreateManufacturerInput } from '../types/inputs';
 import { ManufacturerResult } from '../types/results';
 
 
-@Injectable()
+@Injectable({ scope: ProviderScope.Session })
 class ShipModelProvider {
   private shipModelRepo: Repository<ShipModel>;
   private manufacturerRepo: Repository<Manufacturer>;
