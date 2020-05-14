@@ -3,11 +3,11 @@ import { IsAlphanumeric, MaxLength } from 'class-validator';
 import { Manufacturer } from '@root/entities';
 
 @InputType()
-class AddManufacturerInput implements Partial<Manufacturer> {
+class CreateManufacturerInput implements Partial<Manufacturer> {
   @Field()
   @IsAlphanumeric()
   @MaxLength(50)
   name: string;
 }
 
-export default AddManufacturerInput;
+export default CreateManufacturerInput;

@@ -3,8 +3,7 @@ import { ShipModel, Manufacturer } from '@root/entities';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { messages } from '../constants';
 import { CreateManufacturerInput } from '../types/inputs';
-import { ManufacturerResult } from '../types/results';
-
+import { ShipModelResult, ManufacturerResult } from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })
 class ShipModelProvider {
@@ -22,8 +21,12 @@ class ShipModelProvider {
   }
 
   /** Get ship model */
-  async getModel(id: string): Promise<ShipModel | false> {
-    return await this.shipModelRepo.findOne(id) || false;
+  async getModel(id: string): Promise<typeof ShipModelResult> {
+    const model = await this.shipModelRepo.findOne(id);
+
+    return model || ({
+      notFoundNotice: messages.undefinedModel,
+    });
   }
 
   /** Get manufacturers */
@@ -35,13 +38,9 @@ class ShipModelProvider {
   async getManufacturer(id: string): Promise<typeof ManufacturerResult> {
     const manufacturer = await this.manufacturerRepo.findOne(id);
 
-    if (!manufacturer) {
-      return {
-        notFoundNotice: messages.undefinedManufacturer,
-      };
-    }
-
-    return manufacturer;
+    return manufacturer || ({
+      notFoundNotice: messages.undefinedManufacturer,
+    });
   }
 
   /** Create manufacturer */
