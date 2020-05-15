@@ -18,12 +18,12 @@ const formatError = (err: GraphQLError) => {
   const code = get(err, 'extensions.code', errorCodes.internalServerError);
   const isGraphQLCode = graphqlCodes.includes(code);
 
-  if (!config.isDevelopment) {
+  if (config.isDevelopment) {
     console.log(err);
     return err;
   }
 
-  if (!config.isProduction) {
+  if (config.isProduction) {
     const id = uuidv4();
     const { message, locations, path } = err;
 
