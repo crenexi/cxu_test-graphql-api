@@ -1,5 +1,6 @@
 import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
+import { UnknownError } from '@common/errors';
 import {
   ShipModel,
   ShipIdentity,
@@ -33,7 +34,7 @@ class ShipModelProvider {
 
   /** Get ship models */
   async getModels(): Promise<ShipModel[]> {
-    throw Error('Something went wrong');
+    throw new UnknownError();
     // return this.shipModelRepo.find();
   }
 

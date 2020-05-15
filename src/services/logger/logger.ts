@@ -77,7 +77,6 @@ class LoggerService {
     })();
 
     this.logger.log(level, message, { meta });
-    // console.log(value);
   }
 }
 
