@@ -1,4 +1,5 @@
 import { InputType, Field, Int } from 'type-graphql';
+import { IsPositive } from 'class-validator';
 import { ShipSpecs } from '@root/entities';
 import {
   ShipSizeClass,
@@ -18,6 +19,7 @@ class CreateShipSpecsInput implements Partial<ShipSpecs> {
   lengthClass: ShipLengthClass;
 
   @Field(() => Int)
+  @IsPositive()
   cargoCapacity: number;
 }
 

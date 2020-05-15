@@ -1,4 +1,5 @@
-import winston, { createLogger, format, Logger } from 'winston';
+import winston, { createLogger, Logger } from 'winston';
+import get from 'lodash.get';
 import config from '@config/app.config';
 import loggerConfig from './logger-config';
 import loggerTransports from './logger-transports';
@@ -12,8 +13,7 @@ interface LogOpts {
 // Make winston aware of level colors
 winston.addColors(loggerConfig.levels.colors);
 
-const { isDevelopment, debugging } = config;
-const { combine } = format;
+const { debugging } = config;
 
 class LoggerService {
   logData: null | object;
@@ -24,7 +24,6 @@ class LoggerService {
 
     this.logger = createLogger({
       levels: loggerConfig.levels.map,
-      format: LoggerService.jsonFormat(),
       transports: loggerTransports(),
       exitOnError: false,
     });
@@ -71,23 +70,14 @@ class LoggerService {
   private log(opts: LogOpts): void {
     const { level, value, meta } = opts;
 
-    // Reduce string/Error to string
-    const message: string = (() => {
-      if (value instanceof Error) return JSON.stringify(value);
-      return value;
+    const message = !(value instanceof Error) ? value : (() => {
+      const code = get(value, 'extensions.code', 'INTERNAL_SERVER_ERROR');
+      const valueStr = JSON.stringify(value);
+      return `${code} | ${value.message} | JSON: ${valueStr}`;
     })();
 
     this.logger.log(level, message, { meta });
-  }
-
-  /** Format for JSON */
-  static jsonFormat() {
-    return combine(
-      format.colorize(),
-      format.timestamp({ format: loggerConfig.dateFormat }),
-      format.errors({ stack: true }),
-      format.json(),
-    );
+    // console.log(value);
   }
 }
 

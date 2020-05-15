@@ -4,6 +4,21 @@ import config from '@config/app.config';
 import loggerConfig from './logger-config';
 
 const { isDevelopment, debugging } = config;
+const { combine, errors, colorize, simple } = format;
+
+/** Format for JSON */
+const jsonFormat = () => combine(
+  format.timestamp({ format: loggerConfig.dateFormat }),
+  format.errors({ stack: true }),
+  format.json(),
+);
+
+/** Format for console */
+const consoleFormat = () => combine(
+  errors({ stack: true }),
+  colorize(),
+  simple(),
+);
 
 const loggerTransports = (): Transport[] => {
   const transports: Transport[] = [];
@@ -18,11 +33,13 @@ const loggerTransports = (): Transport[] => {
     transports.push(
       new winstonTransports.File({
         level: 'error',
+        format: jsonFormat(),
         handleExceptions: true,
         filename: loggerConfig.paths.errorLog,
         ...fileTransportCommons,
       }),
       new winstonTransports.File({
+        format: jsonFormat(),
         handleExceptions: false,
         filename: loggerConfig.paths.combinedLog,
         ...fileTransportCommons,
@@ -34,13 +51,8 @@ const loggerTransports = (): Transport[] => {
   if (isDevelopment) {
     transports.push(new winstonTransports.Console({
       level: debugging ? 'debug' : 'info',
-      format: format.combine(
-        format.colorize(),
-        format.timestamp({ format: loggerConfig.dateFormat }),
-        format.errors({ stack: true }),
-        format.json(),
-      ),
-      handleExceptions: debugging,
+      format: consoleFormat(),
+      handleExceptions: true,
     }));
   }
 
