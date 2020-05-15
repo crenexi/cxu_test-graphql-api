@@ -1,14 +1,20 @@
 import codes from './error-codes';
 
 interface ErrorMeta {
-  [key: string]: {
-    name: string;
-    code: string;
-    message: string;
-  };
+  name: string;
+  code: string;
+  message: string;
 }
 
-const errorMeta: ErrorMeta = {
+interface Errors {
+  unknownError: ErrorMeta;
+  unknownInputError: ErrorMeta;
+  authenticationError: ErrorMeta;
+  alreadyAuthenticatedError: ErrorMeta;
+  forbiddenError: ErrorMeta;
+}
+
+const errorMeta: Errors = {
   unknownError: {
     name: 'InternalServerError',
     code: codes.internalServerError,

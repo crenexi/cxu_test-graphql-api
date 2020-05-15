@@ -2,29 +2,38 @@
 import { v4 as uuidv4 } from 'uuid';
 import { GraphQLError } from 'graphql';
 import { ApolloError } from 'apollo-server-express';
-// import get from 'lodash.get';
+import get from 'lodash.get';
 import config from '@config/app.config';
+import { errorCodes } from '@common/constants';
 import logger from '@services/logger';
 
 const formatError = (err: GraphQLError) => {
-  const { originalError } = err;
+  // GraphQL error codes
+  const graphqlCodes = [
+    errorCodes.graphqlParseError,
+    errorCodes.graphqlValidationError,
+  ];
+
+  // Error code
+  const code = get(err, 'extensions.code', errorCodes.internalServerError);
+  const isGraphQLCode = graphqlCodes.includes(code);
 
   if (config.isDevelopment) {
-    console.log(originalError || err);
+    console.log(err);
     return err;
   }
 
   if (config.isProduction) {
-    if (err.originalError instanceof ApolloError) return err;
-
-    // Log internally
     const id = uuidv4();
-    logger.error(`Error ID: ${id}`);
-    logger.error(err);
 
-    const { message } = err;
+    if (isGraphQLCode) {
+      logger.critical(`[GRAPHQL ERROR] ID: ${id}`);
+    } else {
+      logger.error(err);
+    }
 
-    return { id, message };
+    const { message, locations, path } = err;
+    return { id, message, locations, path, code };
   }
 
   return err;
