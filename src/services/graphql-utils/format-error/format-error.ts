@@ -18,21 +18,29 @@ const formatError = (err: GraphQLError) => {
   const code = get(err, 'extensions.code', errorCodes.internalServerError);
   const isGraphQLCode = graphqlCodes.includes(code);
 
-  if (config.isDevelopment) {
+  if (!config.isDevelopment) {
     console.log(err);
     return err;
   }
 
-  if (config.isProduction) {
+  if (!config.isProduction) {
     const id = uuidv4();
+    const { message, locations, path } = err;
 
     if (isGraphQLCode) {
-      logger.critical(`[GRAPHQL ERROR] ID: ${id}`);
+      const rows = [
+        `[${code}]`,
+        `ID: ${id}`,
+        `Message: ${message}`,
+        `Locations: ${JSON.stringify(locations)}`,
+        `Path: ${JSON.stringify(path)}`,
+      ];
+
+      logger.critical(rows.join('\n#| '));
     } else {
       logger.error(err);
     }
 
-    const { message, locations, path } = err;
     return { id, message, locations, path, code };
   }
 
