@@ -1,4 +1,4 @@
-import { Connection, Repository } from 'typeorm';
+import { Connection, Repository, QueryBuilder } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import {
   ShipModel,
@@ -34,12 +34,25 @@ export class ShipModelProvider {
 
   /** Get ship models */
   async getModels(): Promise<ShipModel[]> {
-    return this.shipModelRepo.find();
+    return this.shipModelRepo
+      .createQueryBuilder('shipModel')
+      .leftJoinAndSelect(
+        ShipSpecs,
+        'shipSpecs',
+        'shipModel.specsId = shipSpecs.id',
+      ).getMany();
   }
 
   /** Get ship model */
   async getModel(id: string): Promise<typeof ShipModelResult> {
-    const model = await this.shipModelRepo.findOne(id);
+    const model = await this.shipModelRepo
+      .createQueryBuilder('shipModel')
+      .leftJoinAndSelect(
+        ShipSpecs,
+        'shipSpecs',
+        'shipModel.specsId = shipSpecs.id',
+      ).where('shipModel.id = :id', { id })
+      .getOne();
 
     return model || ({
       notFoundNotice: messages.undefinedModel,
@@ -63,7 +76,10 @@ export class ShipModelProvider {
         specsId: specs.id,
       };
       const model = this.shipModelRepo.create(shipModel);
-      return await model.save();
+      const savedModel = await model.save();
+
+      // Updated ship model
+      return savedModel;
     } catch (err) {
       throw Error(err);
     }
@@ -76,17 +92,22 @@ export class ShipModelProvider {
     try {
       const { specs: shipSpecs, ...restInput } = input;
 
-      // Update ship specs
-      if (shipSpecs) {
-        await this.shipSpecsRepo.update(specsId, shipSpecs);
+      // Create ship specs
+      if (specs) {
+        const specs = this.shipSpecsRepo.create(shipSpecs);
+        await specs.save();
       }
 
-      // Ship model
-      const model = this.shipModelRepo.create({
+      // Create ship model
+      const shipModel = {
         ...restInput,
         specsId: specs.id,
-      });
+      };
+      const model = this.shipModelRepo.create(shipModel);
+      const savedModel = await model.save();
 
+      // Updated ship model
+      return savedModel;
     } catch (err) {
       throw Error('Failed to update ship model');
     }

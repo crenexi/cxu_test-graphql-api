@@ -28,9 +28,9 @@ export class ShipModel extends BaseEntity {
   @Column({ default: false })
   isFlightReady: boolean;
 
-  @Field({ nullable: true })
-  @Column({ nullable: true })
-  specsId: string;
+  // @Field({ nullable: true })
+  // @Column({ nullable: true })
+  // specsId: string;
 
   @Field(() => ShipSpecs)
   @OneToOne(() => ShipSpecs, { eager: true })
@@ -43,7 +43,6 @@ export class ShipModel extends BaseEntity {
   // @OneToOne(() => Profile)
   // @JoinColumn()
   // profile: Profile;
-
 
   // @Field(() => ShipIdentity)
   // @ManyToOne(() => ShipIdentity, (si: ShipIdentity) => si.models)
