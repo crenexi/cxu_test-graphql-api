@@ -19,7 +19,7 @@ import {
 } from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })
-class ShipModelProvider {
+export class ShipModelProvider {
   private shipModelRepo: Repository<ShipModel>;
   private shipIdentityRepo: Repository<ShipIdentity>;
   private shipSpecsRepo: Repository<ShipSpecs>;
@@ -49,7 +49,7 @@ class ShipModelProvider {
   /** Create ship model */
   async createModel(
     input: CreateShipModelInput,
-  ): Promise<true> {
+  ): Promise<ShipModel> {
     try {
       const { specs: specsInput, ...restInput } = input;
 
@@ -63,11 +63,13 @@ class ShipModelProvider {
         specsId: specs.id,
       });
 
-      model.save();
-      return true;
+      // console.log(model);
+
+      await model.save();
+      return model;
     } catch (err) {
-      // const message = `Failed to create ship model '${input.name}'`;
-      throw Error('No idea');
+      const message = `Failed to create ship model '${input.name}'`;
+      throw Error(message);
     }
   }
 
@@ -106,10 +108,8 @@ class ShipModelProvider {
     try {
       return this.manufacturerRepo.create(input).save();
     } catch (err) {
-      // const message = `Failed to create manufacturer '${input.name}'`;
-      throw Error('No idea');
+      const message = `Failed to create manufacturer '${input.name}'`;
+      throw Error(message);
     }
   }
 }
-
-export default ShipModelProvider;
