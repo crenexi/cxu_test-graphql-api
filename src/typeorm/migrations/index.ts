@@ -1,1 +1,1 @@
-export { default } from './_enabled-migrations';
+export { enabledMigrations as migrations } from './_enabled-migrations';

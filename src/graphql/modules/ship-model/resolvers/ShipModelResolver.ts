@@ -5,7 +5,7 @@ import { CreateShipModelInput } from '../types/inputs';
 import { ShipModelResult } from '../types/results';
 
 @Resolver(() => ShipModel)
-class ShipModelResolver {
+export class ShipModelResolver {
   constructor(private shipModelProvider: ShipModelProvider) {
     this.shipModelProvider = shipModelProvider;
   }
@@ -27,5 +27,3 @@ class ShipModelResolver {
     return this.shipModelProvider.createModel(input);
   }
 }
-
-export default ShipModelResolver;

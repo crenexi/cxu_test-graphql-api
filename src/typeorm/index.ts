@@ -1,2 +1,2 @@
-export { default as migrations } from './migrations';
-export { default as subscribers } from './subscribers';
+export { migrations } from './migrations';
+export { subscribers } from './subscribers';

@@ -4,7 +4,7 @@ import { UserProvider } from '../providers';
 import { UserResult } from '../types/results';
 
 @Resolver(() => User)
-class UserResolver {
+export class UserResolver {
   constructor(private userProvider: UserProvider) {
     this.userProvider = userProvider;
   }
@@ -19,5 +19,3 @@ class UserResolver {
     return this.userProvider.getUser(id);
   }
 }
-
-export default UserResolver;

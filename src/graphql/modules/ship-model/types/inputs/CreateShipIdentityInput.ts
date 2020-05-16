@@ -3,7 +3,7 @@ import { IsAlphanumeric, MaxLength } from 'class-validator';
 import { ShipIdentity } from '@root/entities';
 
 @InputType()
-class CreateShipIdentityInput implements Partial<ShipIdentity> {
+export class CreateShipIdentityInput implements Partial<ShipIdentity> {
   @Field()
   @IsAlphanumeric()
   @MaxLength(50)
@@ -14,5 +14,3 @@ class CreateShipIdentityInput implements Partial<ShipIdentity> {
   @MaxLength(1000)
   description: string;
 }
-
-export default CreateShipIdentityInput;

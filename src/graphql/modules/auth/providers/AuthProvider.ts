@@ -21,7 +21,7 @@ type AuthResult = {
 }
 
 @Injectable({ scope: ProviderScope.Session })
-class AuthProvider implements OnRequest {
+export class AuthProvider implements OnRequest {
   session: Session;
   userRepo: Repository<User>;
   currentUser: User | null;
@@ -160,5 +160,3 @@ class AuthProvider implements OnRequest {
     this.session.res.cookie(cookieName, refreshToken, cookieOpts);
   }
 }
-
-export default AuthProvider;

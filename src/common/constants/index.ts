@@ -1,2 +1,2 @@
-export { default as errorCodes } from './error-codes';
-export { default as errorMeta } from './error-meta';
+export { errorCodes } from './error-codes';
+export { errorMeta } from './error-meta';

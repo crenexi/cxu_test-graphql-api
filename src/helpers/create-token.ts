@@ -6,7 +6,7 @@ type CreateTokenOpts = {
   userId: string;
 }
 
-const createToken = ({ type, userId }: CreateTokenOpts) => {
+export const createToken = ({ type, userId }: CreateTokenOpts) => {
   const isRefresh = type === 'refresh';
   const expiresIn = isRefresh ? '7d' : '10m';
 
@@ -16,5 +16,3 @@ const createToken = ({ type, userId }: CreateTokenOpts) => {
 
   return sign({ userId }, secret, { expiresIn });
 };
-
-export default createToken;

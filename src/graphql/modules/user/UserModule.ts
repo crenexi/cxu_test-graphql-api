@@ -6,7 +6,7 @@ import { UserResolver } from './resolvers';
 
 const resolvers = [UserResolver];
 
-const UserModule = new GraphQLModule({
+export const UserModule = new GraphQLModule({
   name: 'User',
   imports: [AuthModule],
   providers: [
@@ -20,5 +20,3 @@ const UserModule = new GraphQLModule({
     }),
   ],
 });
-
-export default UserModule;

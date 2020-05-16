@@ -9,5 +9,3 @@ export const getSemVer = () => {
 
   return pjson.version || '0.0.0';
 };
-
-export default getSemVer;

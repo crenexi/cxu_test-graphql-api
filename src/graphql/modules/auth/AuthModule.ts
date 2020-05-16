@@ -3,7 +3,7 @@ import { Connection } from 'typeorm';
 import { AppModuleConfig as Config } from '@common/types';
 import { AuthProvider } from './providers';
 
-const AuthModule = new GraphQLModule<Config>({
+export const AuthModule = new GraphQLModule<Config>({
   name: 'Auth',
   configRequired: true,
   providers: ({ config: { conn } }) => [
@@ -11,5 +11,3 @@ const AuthModule = new GraphQLModule<Config>({
     AuthProvider,
   ],
 });
-
-export default AuthModule;

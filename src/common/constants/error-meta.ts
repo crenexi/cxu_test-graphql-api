@@ -14,7 +14,7 @@ interface Errors {
   forbiddenError: ErrorMeta;
 }
 
-const errorMeta: Errors = {
+export const errorMeta: Errors = {
   unknownError: {
     name: 'InternalServerError',
     code: codes.internalServerError,
@@ -41,5 +41,3 @@ const errorMeta: Errors = {
     message: `You're are not authorized to do that`,
   },
 };
-
-export default errorMeta;

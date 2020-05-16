@@ -1,5 +1,1 @@
-/* eslint-disable global-require */
-
-const enabledSubscribers: Function[] = [];
-
-export default enabledSubscribers;
+export const enabledSubscribers: Function[] = [];

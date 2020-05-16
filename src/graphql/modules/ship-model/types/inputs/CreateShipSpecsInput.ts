@@ -8,7 +8,7 @@ import {
 } from '@root/entities/ShipSpecs';
 
 @InputType()
-class CreateShipSpecsInput implements Partial<ShipSpecs> {
+export class CreateShipSpecsInput implements Partial<ShipSpecs> {
   @Field(() => ShipSizeClass)
   sizeClass: ShipSizeClass;
 
@@ -22,5 +22,3 @@ class CreateShipSpecsInput implements Partial<ShipSpecs> {
   @IsPositive()
   cargoCapacity: number;
 }
-
-export default CreateShipSpecsInput;

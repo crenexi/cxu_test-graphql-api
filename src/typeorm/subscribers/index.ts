@@ -1,1 +1,1 @@
-export { default } from './_enabled-subscribers';
+export { enabledSubscribers as subscribers } from './_enabled-subscribers';

@@ -2,7 +2,7 @@ import { createUnionType } from 'type-graphql';
 import { ShipIdentity } from '@root/entities';
 import { WarnNotFound } from '@graphql/common/types';
 
-const ShipIdentityResult = createUnionType({
+export const ShipIdentityResult = createUnionType({
   name: 'ShipIdentityResult',
   types: () => [ShipIdentity, WarnNotFound],
   resolveType: (value) => {
@@ -10,5 +10,3 @@ const ShipIdentityResult = createUnionType({
     return 'ShipIdentity';
   },
 });
-
-export default ShipIdentityResult;

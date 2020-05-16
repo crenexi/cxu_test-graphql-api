@@ -15,7 +15,7 @@ const resolvers = [
   ManacturerResolver,
 ];
 
-const ShipModelModule = new GraphQLModule({
+export const ShipModelModule = new GraphQLModule({
   name: 'ShipModel',
   imports: [ConnModule],
   providers: [
@@ -29,5 +29,3 @@ const ShipModelModule = new GraphQLModule({
     }),
   ],
 });
-
-export default ShipModelModule;

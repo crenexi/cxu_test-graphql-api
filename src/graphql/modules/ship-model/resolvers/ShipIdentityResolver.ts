@@ -4,7 +4,7 @@ import { ShipModelProvider } from '../providers';
 import { ShipIdentityResult } from '../types/results';
 
 @Resolver(() => ShipIdentity)
-class ShipIdentityResolver {
+export class ShipIdentityResolver {
   constructor(private shipModelProvider: ShipModelProvider) {
     this.shipModelProvider = shipModelProvider;
   }
@@ -19,5 +19,3 @@ class ShipIdentityResolver {
     return this.shipModelProvider.getIdentity(id);
   }
 }
-
-export default ShipIdentityResolver;

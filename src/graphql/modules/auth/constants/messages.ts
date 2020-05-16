@@ -1,4 +1,4 @@
-const messages = {
+export const messages = {
   noToken: 'Missing authentication token',
   noIdentifier: 'Must supply handle or email',
   handleTaken: 'That user handle is already taken',
@@ -8,5 +8,3 @@ const messages = {
   suspendedUser: 'That user is suspended',
   wrongPassword: 'That password is invalid',
 };
-
-export default messages;

@@ -1,1 +1,1 @@
-export { default as refreshTokenController } from './controller';
+export { refreshTokenController } from './controller';

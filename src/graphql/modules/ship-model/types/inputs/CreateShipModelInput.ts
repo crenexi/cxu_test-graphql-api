@@ -4,7 +4,7 @@ import { ShipModel } from '@root/entities';
 import CreateShipSpecsInput from './CreateShipSpecsInput';
 
 @InputType()
-class CreateShipModelInput implements Partial<ShipModel> {
+export class CreateShipModelInput implements Partial<ShipModel> {
   @Field()
   @MaxLength(50)
   name: string;
@@ -16,5 +16,3 @@ class CreateShipModelInput implements Partial<ShipModel> {
   @Field(() => CreateShipSpecsInput)
   specs: CreateShipSpecsInput;
 }
-
-export default CreateShipModelInput;

@@ -4,5 +4,5 @@ export const alphanumeric = (s: string): string => {
   return !result ? '' : result.join('');
 };
 
-export { default as getSemVer } from './get-sem-ver';
-export { default as createToken } from './create-token';
+export { getSemVer } from './get-sem-ver';
+export { createToken } from './create-token';

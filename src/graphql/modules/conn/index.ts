@@ -1,1 +1,1 @@
-export { default as ConnModule } from './ConnModule';
+export { ConnModule } from './ConnModule';

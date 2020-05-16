@@ -4,7 +4,7 @@ import { GraphQLSchema } from 'graphql';
 
 type EmitSchemaDefinition = (schema: GraphQLSchema) => Promise<void>;
 
-const emitSchemaSnap: EmitSchemaDefinition = async (schema) => {
+export const emitSchemaSnap: EmitSchemaDefinition = async (schema) => {
   const outPathEnd = '__snapshots__/schema/schema.gql';
   const outPath = path.resolve(__dirname, '../../', outPathEnd);
 
@@ -12,5 +12,3 @@ const emitSchemaSnap: EmitSchemaDefinition = async (schema) => {
     commentDescriptions: false,
   });
 };
-
-export default emitSchemaSnap;

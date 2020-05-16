@@ -1,1 +1,1 @@
-export { default as ShipModelModule } from './ShipModelModule';
+export { ShipModelModule } from './ShipModelModule';
