@@ -9,6 +9,7 @@ import {
 import { messages } from '../constants';
 import {
   CreateShipModelInput,
+  UpdateShipModelInput,
   CreateManufacturerInput,
 } from '../types/inputs';
 import {
@@ -50,11 +51,35 @@ export class ShipModelProvider {
     input: CreateShipModelInput,
   ): Promise<ShipModel> {
     try {
-      const { specs: specsInput, ...restInput } = input;
+      const { specs: shipSpecs, ...restInput } = input;
 
-      // Ship specs
-      const specs = this.shipSpecsRepo.create(specsInput);
+      // Create ship specs
+      const specs = this.shipSpecsRepo.create(shipSpecs);
       await specs.save();
+
+      // Create ship model
+      const shipModel = {
+        ...restInput,
+        specsId: specs.id,
+      };
+      const model = this.shipModelRepo.create(shipModel);
+      return await model.save();
+    } catch (err) {
+      throw Error(err);
+    }
+  }
+
+  /** Update ship model */
+  async updateModel(
+    input: UpdateShipModelInput,
+  ): Promise<ShipModel> {
+    try {
+      const { specs: shipSpecs, ...restInput } = input;
+
+      // Update ship specs
+      if (shipSpecs) {
+        await this.shipSpecsRepo.update(specsId, shipSpecs);
+      }
 
       // Ship model
       const model = this.shipModelRepo.create({
@@ -62,13 +87,8 @@ export class ShipModelProvider {
         specsId: specs.id,
       });
 
-      // console.log(model);
-
-      await model.save();
-      return model;
     } catch (err) {
-      const message = `Failed to create ship model '${input.name}'`;
-      throw Error(message);
+      throw Error('Failed to update ship model');
     }
   }
 

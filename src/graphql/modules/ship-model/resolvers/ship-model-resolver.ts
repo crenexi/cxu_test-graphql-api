@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { ShipModel } from '@root/entities';
 import { ShipModelProvider } from '../providers';
-import { CreateShipModelInput } from '../types/inputs';
+import { CreateShipModelInput, UpdateShipModelInput } from '../types/inputs';
 import { ShipModelResult } from '../types/results';
 
 @Resolver(() => ShipModel)
