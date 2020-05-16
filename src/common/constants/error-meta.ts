@@ -1,4 +1,4 @@
-import codes from './error-codes';
+import { errorCodes as codes } from './error-codes';
 
 interface ErrorMeta {
   name: string;

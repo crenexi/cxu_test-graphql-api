@@ -1,6 +1,6 @@
 import { ApolloServer } from 'apollo-server-express';
 import { formatError, emitSchemaSnap } from '@services/graphql-utils';
-import AppModule from '@graphql/AppModule';
+import { AppModule } from '@graphql/app-module';
 import { InitApollo } from '@common/types';
 
 /** Setup the Apollo server */
