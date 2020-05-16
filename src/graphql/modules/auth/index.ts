@@ -1,1 +1,1 @@
-export { AuthModule } from './AuthModule';
+export { AuthModule } from './auth-module';

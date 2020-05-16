@@ -1,3 +1,3 @@
-export { ShipModelResolver } from './ShipModelResolver';
-export { ShipIdentityResolver } from './ShipIdentityResolver';
-export { ManufacturerResolver } from './ManufacturerResolver';
+export { ShipModelResolver } from './ship-model-resolver';
+export { ShipIdentityResolver } from './ship-identity-resolver';
+export { ManufacturerResolver } from './manufacturer-resolver';

@@ -1,11 +1,11 @@
 import { Entity, Column, OneToMany } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
-import BaseEntity from './_BaseEntity';
-import ShipIdentity from './ShipIdentity';
+import { BaseEntity } from './_base-entity';
+import { ShipIdentity } from './ship-identity';
 
 @Entity()
 @ObjectType()
-class Manufacturer extends BaseEntity {
+export class Manufacturer extends BaseEntity {
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -17,5 +17,3 @@ class Manufacturer extends BaseEntity {
   )
   shipIdentities: Promise<ShipIdentity[]>;
 }
-
-export default Manufacturer;

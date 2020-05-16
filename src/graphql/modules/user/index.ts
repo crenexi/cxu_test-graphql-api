@@ -1,1 +1,1 @@
-export { UserModule } from './UserModule';
+export { UserModule } from './user-module';

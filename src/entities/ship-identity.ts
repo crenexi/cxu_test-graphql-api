@@ -1,12 +1,12 @@
 import { Entity, Column, ManyToOne, OneToMany } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
-import BaseEntity from './_BaseEntity';
-import ShipModel from './ShipModel';
-import Manufacturer from './Manufacturer';
+import { BaseEntity } from './_base-entity';
+import { ShipModel } from './ship-model';
+import { Manufacturer } from './manufacturer';
 
 @Entity()
 @ObjectType()
-class ShipIdentity extends BaseEntity {
+export class ShipIdentity extends BaseEntity {
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -27,5 +27,3 @@ class ShipIdentity extends BaseEntity {
   @OneToMany(() => ShipModel, (sm: ShipModel) => sm.identity)
   models: Promise<ShipModel[]>;
 }
-
-export default ShipIdentity;

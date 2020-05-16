@@ -1,1 +1,1 @@
-export { ConnModule } from './ConnModule';
+export { ConnModule } from './conn-module';

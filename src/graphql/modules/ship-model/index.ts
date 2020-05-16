@@ -1,1 +1,1 @@
-export { ShipModelModule } from './ShipModelModule';
+export { ShipModelModule } from './ship-model-module';

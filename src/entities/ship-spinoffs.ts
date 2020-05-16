@@ -1,11 +1,11 @@
 import { Entity, Column, ManyToOne } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
-import BaseEntity from './_BaseEntity';
-import ShipModel from './ShipModel';
+import { BaseEntity } from './_base-entity';
+import { ShipModel } from './ship-model';
 
 @Entity()
 @ObjectType()
-class ShipSpinoff extends BaseEntity {
+export class ShipSpinoff extends BaseEntity {
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -17,5 +17,3 @@ class ShipSpinoff extends BaseEntity {
   @ManyToOne(() => ShipModel, (sm: ShipModel) => sm.spinoffs)
   model: Promise<ShipModel>;
 }
-
-export default ShipSpinoff;

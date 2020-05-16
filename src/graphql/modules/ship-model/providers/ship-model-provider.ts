@@ -1,6 +1,5 @@
 import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-// import {  } from '@common/errors';
 import {
   ShipModel,
   ShipIdentity,

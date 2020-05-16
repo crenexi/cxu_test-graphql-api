@@ -1,1 +1,1 @@
-export { default as UserResult } from './UserResult';
+export { UserResult } from './user-result';

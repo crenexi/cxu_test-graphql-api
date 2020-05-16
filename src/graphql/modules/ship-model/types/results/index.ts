@@ -1,3 +1,3 @@
-export { ShipModelResult } from './ShipModelResult';
-export { ShipIdentityResult } from './ShipIdentityResult';
-export { ManufacturerResult } from './ManufacturerResult';
+export { ShipModelResult } from './ship-model-result';
+export { ShipIdentityResult } from './ship-identity-result';
+export { ManufacturerResult } from './manufacturer-result';

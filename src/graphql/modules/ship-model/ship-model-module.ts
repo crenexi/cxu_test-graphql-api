@@ -6,13 +6,13 @@ import { ShipModelProvider } from './providers';
 import {
   ShipModelResolver,
   ShipIdentityResolver,
-  ManacturerResolver,
+  ManufacturerResolver,
 } from './resolvers';
 
 const resolvers = [
   ShipModelResolver,
   ShipIdentityResolver,
-  ManacturerResolver,
+  ManufacturerResolver,
 ];
 
 export const ShipModelModule = new GraphQLModule({

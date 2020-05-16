@@ -1,10 +1,10 @@
 import { InputType, Field } from 'type-graphql';
 import { MaxLength } from 'class-validator';
 import { ShipModel } from '@root/entities';
-import UpdateShipSpecsInput from './UpdateShipSpecsInput';
+import { CreateShipSpecsInput } from './create-ship-specs-input';
 
 @InputType()
-export class UpdateShipModelInput implements Partial<ShipModel> {
+export class CreateShipModelInput implements Partial<ShipModel> {
   @Field()
   @MaxLength(50)
   name: string;
@@ -13,6 +13,6 @@ export class UpdateShipModelInput implements Partial<ShipModel> {
   @MaxLength(1000)
   description: string;
 
-  @Field(() => UpdateShipSpecsInput)
-  specs: UpdateShipSpecsInput;
+  @Field(() => CreateShipSpecsInput)
+  specs: CreateShipSpecsInput;
 }

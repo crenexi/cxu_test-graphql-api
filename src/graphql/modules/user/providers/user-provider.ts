@@ -2,6 +2,7 @@ import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { User } from '@root/entities';
 import { AuthProvider } from '@modules/auth/providers';
+import { messages } from '../constants';
 import { UserResult } from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })
@@ -35,17 +36,19 @@ export class UserProvider {
 
     // User not found
     if (!user) {
-      return { message: 'User does not exist' };
+      return { notFoundNotice: messages.undefinedUser };
     }
 
     // User is archived
     if (user.isArchived) {
-      return { archivalReason: user.archivalReason || 'Unknown' };
+      const notice = user.archivalNotice;
+      return { archivalNotice: notice || messages.archivedUser };
     }
 
     // User is suspended
     if (user.isSuspended) {
-      return { suspensionReason: user.suspensionReason || 'Unknown' };
+      const notice = user.suspensionNotice;
+      return { suspensionNotice: notice || messages.suspendedUser };
     }
 
     return user;

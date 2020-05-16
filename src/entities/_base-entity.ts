@@ -8,7 +8,7 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
-abstract class BaseEntity extends TGBaseEntity {
+export abstract class BaseEntity extends TGBaseEntity {
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -25,5 +25,3 @@ abstract class BaseEntity extends TGBaseEntity {
   @UpdateDateColumn({ type: 'timestamp' })
   updatedAt: Date;
 }
-
-export default BaseEntity;

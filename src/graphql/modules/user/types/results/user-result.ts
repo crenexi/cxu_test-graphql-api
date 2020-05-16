@@ -6,7 +6,7 @@ import {
   WarnIsArchived,
 } from '@graphql/common/types';
 
-const UserResult = createUnionType({
+export const UserResult = createUnionType({
   name: 'UserResult',
   types: () => [User, WarnNotFound, WarnIsSuspended, WarnIsArchived],
   resolveType: (value) => {
@@ -16,5 +16,3 @@ const UserResult = createUnionType({
     return User;
   },
 });
-
-export default UserResult;

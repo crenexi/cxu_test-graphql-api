@@ -1,8 +1,8 @@
 import { Diff } from 'utility-types';
 import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
-import BaseEntity from './_BaseEntity';
-import ShipSpecs from './ShipSpecs';
+import { BaseEntity } from './_base-entity';
+import { ShipSpecs } from './ship-specs';
 // import ShipIdentity from './ShipIdentity';
 // import ShipSpinoff from './ShipSpinoff';
 
@@ -15,7 +15,7 @@ import ShipSpecs from './ShipSpecs';
 
 @Entity()
 @ObjectType()
-class ShipModel extends BaseEntity {
+export class ShipModel extends BaseEntity {
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
@@ -57,6 +57,3 @@ class ShipModel extends BaseEntity {
   // )
   // spinoffs: Promise<ShipSpinoff[]>;
 }
-
-
-export default ShipModel;

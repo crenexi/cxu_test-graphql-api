@@ -1,1 +1,1 @@
-export { ShipModelProvider } from './ShipModelProvider';
+export { ShipModelProvider } from './ship-model-provider';

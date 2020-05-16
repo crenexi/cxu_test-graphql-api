@@ -1,9 +1,9 @@
-import User from './User';
-import ShipModel from './ShipModel';
-import ShipIdentity from './ShipIdentity';
-import ShipSpecs from './ShipSpecs';
-import ShipSpinoff from './ShipSpinoff';
-import Manufacturer from './Manufacturer';
+import { User } from './user';
+import { ShipModel } from './ship-model';
+import { ShipIdentity } from './ship-identity';
+import { ShipSpecs } from './ship-specs';
+import { ShipSpinoff } from './ship-spinoffs';
+import { Manufacturer } from './manufacturer';
 
 // Entites for Postgres
 export const entities = [

@@ -1,6 +1,6 @@
 import { Entity, Column } from 'typeorm';
 import { ObjectType, Field, Int, registerEnumType } from 'type-graphql';
-import BaseEntity from './_BaseEntity';
+import { BaseEntity } from './_base-entity';
 
 /** The size class of the ship */
 export enum ShipSizeClass {
@@ -51,7 +51,7 @@ registerEnumType(ShipLengthClass, {
 
 @Entity()
 @ObjectType()
-class ShipSpecs extends BaseEntity {
+export class ShipSpecs extends BaseEntity {
   @Field(() => ShipSizeClass)
   @Column({ type: 'enum', enum: ShipSizeClass })
   sizeClass: ShipSizeClass;
@@ -68,5 +68,3 @@ class ShipSpecs extends BaseEntity {
   @Column('integer')
   cargoCapacity: number;
 }
-
-export default ShipSpecs;

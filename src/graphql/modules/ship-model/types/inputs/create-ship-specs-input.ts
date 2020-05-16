@@ -5,7 +5,7 @@ import {
   ShipSizeClass,
   ShipCrewClass,
   ShipLengthClass,
-} from '@root/entities/ShipSpecs';
+} from '@root/entities/ship-specs';
 
 @InputType()
 export class CreateShipSpecsInput implements Partial<ShipSpecs> {

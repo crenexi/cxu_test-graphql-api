@@ -1,10 +1,10 @@
 import { Entity, Column } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
-import BaseEntity from './_BaseEntity';
+import { BaseEntity } from './_base-entity';
 
 @Entity()
 @ObjectType()
-class User extends BaseEntity {
+export class User extends BaseEntity {
   @Column()
   password: string;
 
@@ -31,16 +31,14 @@ class User extends BaseEntity {
   signature?: string;
 
   @Field()
+  @Column({ nullable: true })
+  archivalNotice?: string;
+
+  @Field()
   @Column({ default: false })
   isSuspended: boolean;
 
   @Field()
   @Column({ nullable: true })
   suspensionNotice?: string;
-
-  @Field()
-  @Column({ nullable: true })
-  archivalNotice?: string;
 }
-
-export default User;
