@@ -45,17 +45,36 @@ export class ShipModelProvider {
 
   /** Get ship model */
   async getModel(id: string): Promise<typeof ShipModelResult> {
-    const model = await this.shipModelRepo
+    // const model = await this.shipModelRepo
+    //   .createQueryBuilder('shipModel')
+    //   .leftJoinAndSelect(
+    //     ShipSpecs,
+    //     'shipSpecs',
+    //     'shipModel.specsId = shipSpecs.id',
+    //   ).where('shipModel.id = :id', { id })
+    //   .getOne();
+
+    const model = await this.shipModelRepo.findOne(id);
+
+    if (!model) {
+      return ({
+        notFoundNotice: messages.undefinedModel,
+      });
+    }
+
+    model.specs = await this.shipModelRepo
       .createQueryBuilder('shipModel')
-      .leftJoinAndSelect(
-        ShipSpecs,
-        'shipSpecs',
-        'shipModel.specsId = shipSpecs.id',
-      ).where('shipModel.id = :id', { id })
-      .getOne();
+      .relation('specs')
+      .of(model)
+      .loadOne();
+
+    // post.categories = await getConnection()
+    //   .createQueryBuilder()
+    //   .relation(Post, "categories")
+    //   .of(post) // you can use just post id as well
+    //   .loadMany();
 
     return model || ({
-      notFoundNotice: messages.undefinedModel,
     });
   }
 
@@ -64,6 +83,20 @@ export class ShipModelProvider {
     input: CreateShipModelInput,
   ): Promise<ShipModel> {
     try {
+
+
+
+      await getConnection()
+      .createQueryBuilder()
+      .insert()
+      .into(User)
+      .values([
+          { firstName: "Timber", lastName: "Saw" },
+          { firstName: "Phantom", lastName: "Lancer" }
+       ])
+      .execute();
+
+
       const { specs: shipSpecs, ...restInput } = input;
 
       // Create ship specs

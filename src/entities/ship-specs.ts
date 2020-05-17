@@ -52,19 +52,35 @@ registerEnumType(ShipLengthClass, {
 @Entity()
 @ObjectType()
 export class ShipSpecs extends BaseEntity {
+  /** Size class */
   @Field(() => ShipSizeClass)
-  @Column({ type: 'enum', enum: ShipSizeClass })
+  @Column({
+    name: 'size_class',
+    type: 'enum',
+    enum: ShipSizeClass,
+  })
   sizeClass: ShipSizeClass;
 
+  /** Crew class */
   @Field(() => ShipCrewClass)
-  @Column({ type: 'enum', enum: ShipCrewClass })
+  @Column({
+    name: 'crew_class',
+    type: 'enum',
+    enum: ShipCrewClass,
+  })
   crewClass: ShipCrewClass;
 
+  /** Length class */
   @Field(() => ShipLengthClass)
-  @Column({ type: 'enum', enum: ShipLengthClass })
+  @Column({
+    name: 'length_class',
+    type: 'enum',
+    enum: ShipLengthClass,
+  })
   lengthClass: ShipLengthClass;
 
+  /** Cargo capacity */
   @Field(() => Int)
-  @Column('integer')
+  @Column({ name: 'cargo_capacity', type: 'integer' })
   cargoCapacity: number;
 }

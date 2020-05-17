@@ -9,19 +9,27 @@ import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
 export abstract class BaseEntity extends TGBaseEntity {
+  /** ID */
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
+  /** Is archived */
   @Field()
-  @Column({ type: 'boolean', default: false })
+  @Column({
+    name: 'is_archived',
+    type: 'boolean',
+    default: false,
+  })
   isArchived: boolean;
 
+  /** Created at */
   @Field()
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt: Date;
 
+  /** Updated at */
   @Field()
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
   updatedAt: Date;
 }

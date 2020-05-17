@@ -6,14 +6,16 @@ import { ShipIdentity } from './ship-identity';
 @Entity()
 @ObjectType()
 export class Manufacturer extends BaseEntity {
+  /** Name */
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
 
+  /** Identities */
   @OneToMany(
     () => ShipIdentity,
-    (si: ShipIdentity) => si.manufacturer,
+    (identity: ShipIdentity) => identity.manufacturer,
     { nullable: true },
   )
-  shipIdentities: Promise<ShipIdentity[]>;
+  identities: Promise<ShipIdentity[]>;
 }

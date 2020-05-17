@@ -16,14 +16,17 @@ import { ShipSpecs } from './ship-specs';
 @Entity()
 @ObjectType()
 export class ShipModel extends BaseEntity {
+  /** Name */
   @Field()
   @Column({ type: 'varchar', length: 50, unique: true })
   name: string;
 
+  /** Description */
   @Field()
   @Column({ type: 'varchar', length: 1000 })
   description: string;
 
+  /** Is flight ready */
   @Field()
   @Column({ default: false })
   isFlightReady: boolean;
@@ -32,6 +35,7 @@ export class ShipModel extends BaseEntity {
   // @Column({ nullable: true })
   // specsId: string;
 
+  /** Specs */
   @Field(() => ShipSpecs)
   @OneToOne(() => ShipSpecs, { eager: true })
   @JoinColumn()
