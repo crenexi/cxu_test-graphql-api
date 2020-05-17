@@ -1,5 +1,5 @@
 import {
-  BaseEntity as TGBaseEntity,
+  // BaseEntity as TGBaseEntity,
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
@@ -8,7 +8,7 @@ import {
 import { ObjectType, Field, ID } from 'type-graphql';
 
 @ObjectType()
-export abstract class BaseEntity extends TGBaseEntity {
+export abstract class BaseEntity {
   /** ID */
   @Field(() => ID)
   @PrimaryGeneratedColumn('uuid')

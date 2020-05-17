@@ -1,5 +1,5 @@
 import { Diff } from 'utility-types';
-import { Entity, Column, JoinColumn, OneToOne, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, JoinColumn, OneToOne } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
 import { BaseEntity } from './_base-entity';
 import { ShipSpecs } from './ship-specs';
@@ -37,7 +37,7 @@ export class ShipModel extends BaseEntity {
 
   /** Specs */
   @Field(() => ShipSpecs)
-  @OneToOne(() => ShipSpecs, { eager: true })
+  @OneToOne(() => ShipSpecs)
   @JoinColumn()
   specs: Diff<ShipSpecs, BaseEntity>;
 
@@ -56,7 +56,7 @@ export class ShipModel extends BaseEntity {
   // @OneToMany(
   //   () => ShipSpinoff,
   //   (ss: ShipSpinoff) => ss.model,
-  //   { eager: true, nullable: true },
+  //   { nullable: true },
   // )
   // spinoffs: Promise<ShipSpinoff[]>;
 }

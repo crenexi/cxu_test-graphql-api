@@ -1,5 +1,6 @@
-import { Connection, Repository, QueryBuilder } from 'typeorm';
+import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
+import { UnknownError } from '@common/errors';
 import {
   ShipModel,
   ShipIdentity,
@@ -45,37 +46,27 @@ export class ShipModelProvider {
 
   /** Get ship model */
   async getModel(id: string): Promise<typeof ShipModelResult> {
-    // const model = await this.shipModelRepo
-    //   .createQueryBuilder('shipModel')
-    //   .leftJoinAndSelect(
-    //     ShipSpecs,
-    //     'shipSpecs',
-    //     'shipModel.specsId = shipSpecs.id',
-    //   ).where('shipModel.id = :id', { id })
-    //   .getOne();
-
+    // Get the model
     const model = await this.shipModelRepo.findOne(id);
 
+    // Undefined model
     if (!model) {
-      return ({
-        notFoundNotice: messages.undefinedModel,
-      });
+      return ({ notFoundNotice: messages.undefinedModel });
     }
 
-    model.specs = await this.shipModelRepo
-      .createQueryBuilder('shipModel')
+    // Get the specs
+    const specs = await this.shipModelRepo
+      .createQueryBuilder()
       .relation('specs')
-      .of(model)
+      .of(ShipSpecs)
       .loadOne();
 
-    // post.categories = await getConnection()
-    //   .createQueryBuilder()
-    //   .relation(Post, "categories")
-    //   .of(post) // you can use just post id as well
-    //   .loadMany();
+    // Undefined specs
+    if (!specs) {
+      throw new UnknownError(messages.undefinedSpecs);
+    }
 
-    return model || ({
-    });
+    return { ...model, specs };
   }
 
   /** Create ship model */
@@ -123,12 +114,13 @@ export class ShipModelProvider {
     input: UpdateShipModelInput,
   ): Promise<ShipModel> {
     try {
+      const { shipModelRepo, shipSpecsRepo } = this;
       const { specs: shipSpecs, ...restInput } = input;
 
       // Create ship specs
       if (specs) {
-        const specs = this.shipSpecsRepo.create(shipSpecs);
-        await specs.save();
+        const specs = shipSpecsRepo.create(shipSpecs);
+        await shipSpecsRepo.save(specs);
       }
 
       // Create ship model
