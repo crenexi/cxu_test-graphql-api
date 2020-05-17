@@ -73,40 +73,44 @@ export class ShipModelProvider {
   async createModel(
     input: CreateShipModelInput,
   ): Promise<ShipModel> {
+    const { specs: shipSpecs, ...restInput } = input;
+
     try {
 
-
-
-      await getConnection()
-      .createQueryBuilder()
-      .insert()
-      .into(User)
-      .values([
-          { firstName: "Timber", lastName: "Saw" },
-          { firstName: "Phantom", lastName: "Lancer" }
-       ])
-      .execute();
-
-
-      const { specs: shipSpecs, ...restInput } = input;
-
-      // Create ship specs
-      const specs = this.shipSpecsRepo.create(shipSpecs);
-      await specs.save();
-
-      // Create ship model
-      const shipModel = {
-        ...restInput,
-        specsId: specs.id,
-      };
-      const model = this.shipModelRepo.create(shipModel);
-      const savedModel = await model.save();
-
-      // Updated ship model
-      return savedModel;
     } catch (err) {
-      throw Error(err);
+      throw new UnknownError(err);
     }
+
+    // try {
+    //   await getConnection()
+    //   .createQueryBuilder()
+    //   .insert()
+    //   .into(User)
+    //   .values([
+    //       { firstName: "Timber", lastName: "Saw" },
+    //       { firstName: "Phantom", lastName: "Lancer" }
+    //    ])
+    //   .execute();
+
+    //   const { specs: shipSpecs, ...restInput } = input;
+
+    //   // Create ship specs
+    //   const specs = this.shipSpecsRepo.create(shipSpecs);
+    //   await specs.save();
+
+    //   // Create ship model
+    //   const shipModel = {
+    //     ...restInput,
+    //     specsId: specs.id,
+    //   };
+    //   const model = this.shipModelRepo.create(shipModel);
+    //   const savedModel = await model.save();
+
+    //   // Updated ship model
+    //   return savedModel;
+    // } catch (err) {
+    //   throw Error(err);
+    // }
   }
 
   /** Update ship model */

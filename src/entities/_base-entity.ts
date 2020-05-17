@@ -1,5 +1,4 @@
 import {
-  // BaseEntity as TGBaseEntity,
   PrimaryGeneratedColumn,
   Column,
   UpdateDateColumn,
