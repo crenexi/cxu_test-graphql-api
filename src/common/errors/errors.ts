@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { ApolloError } from 'apollo-server-express';
-import { errorMeta as meta, ErrorMeta } from '../constants';
+import { errorMeta, ErrorMeta } from '../constants';
 
 type Details = (meta: ErrorMeta, m: any) => any;
 
@@ -18,8 +18,9 @@ const details: Details = (meta, m) => {
 
 /** Generic internal error */
 export class InternalError extends ApolloError {
-  constructor(m?: string, properties?: object) {
-    const { message, code, name } = details(meta.internalError, m);
+  constructor(m?: any, properties?: object) {
+    const meta = errorMeta.internalError;
+    const { message, code, name } = details(meta, m);
     super(message, code, { name, ...properties });
   }
 }
@@ -27,7 +28,8 @@ export class InternalError extends ApolloError {
 /** Internal database error */
 export class InternalDatabaseError extends ApolloError {
   constructor(m?: any, properties?: object) {
-    const { message, code, name } = details(meta.internalDatabaseError, m);
+    const meta = errorMeta.internalDatabaseError;
+    const { message, code, name } = details(meta, m);
     super(message, code, { name, ...properties });
   }
 }
@@ -35,7 +37,8 @@ export class InternalDatabaseError extends ApolloError {
 /** Unknown input error */
 export class InternalInputError extends ApolloError {
   constructor(m?: any, properties?: object) {
-    const { message, code, name } = details(meta.internalInputError, m);
+    const meta = errorMeta.internalInputError;
+    const { message, code, name } = details(meta, m);
     super(message, code, { name, ...properties });
   }
 }
@@ -43,7 +46,8 @@ export class InternalInputError extends ApolloError {
 /** Authentication error */
 export class AuthenticationError extends ApolloError {
   constructor(m?: any, properties?: object) {
-    const { message, code, name } = details(meta.authenticationError, m);
+    const meta = errorMeta.authenticationError;
+    const { message, code, name } = details(meta, m);
     super(message, code, { name, ...properties });
   }
 }
@@ -51,7 +55,8 @@ export class AuthenticationError extends ApolloError {
 /** Already authenticated error */
 export class AlreadyAuthenticatedError extends ApolloError {
   constructor(m?: any, properties?: object) {
-    const { message, code, name } = details(meta.alreadyAuthenticatedError, m);
+    const meta = errorMeta.alreadyAuthenticatedError;
+    const { message, code, name } = details(meta, m);
     super(message, code, { name, ...properties });
   }
 }
@@ -59,7 +64,8 @@ export class AlreadyAuthenticatedError extends ApolloError {
 /** Forbidden error */
 export class ForbiddenError extends ApolloError {
   constructor(m?: any, properties?: object) {
-    const { message, code, name } = details(meta.forbiddenError, m);
+    const meta = errorMeta.forbiddenError;
+    const { message, code, name } = details(meta, m);
     super(message, code, { name, ...properties });
   }
 }
