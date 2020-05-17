@@ -1,2 +1,2 @@
 export { errorCodes } from './error-codes';
-export { errorMeta } from './error-meta';
+export { errorMeta, ErrorMeta } from './error-meta';

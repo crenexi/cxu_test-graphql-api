@@ -1,6 +1,7 @@
 export {
-  UnknownError,
-  UnknownInputError,
+  InternalError,
+  InternalDatabaseError,
+  InternalInputError,
   AuthenticationError,
   AlreadyAuthenticatedError,
   ForbiddenError,

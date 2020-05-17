@@ -1,6 +1,6 @@
 import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-import { UnknownError } from '@common/errors';
+import { InternalError, InternalDatabaseError } from '@common/errors';
 import {
   ShipModel,
   ShipIdentity,
@@ -63,7 +63,7 @@ export class ShipModelProvider {
 
     // Undefined specs
     if (!specs) {
-      throw new UnknownError(messages.undefinedSpecs);
+      throw new InternalError(messages.undefinedSpecs);
     }
 
     return { ...model, specs };
@@ -78,7 +78,7 @@ export class ShipModelProvider {
     try {
 
     } catch (err) {
-      throw new UnknownError(err);
+      throw new InternalDatabaseError(err);
     }
 
     // try {
