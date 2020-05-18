@@ -1,25 +1,45 @@
 import { Connection } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-import { ShipModel, ShipIdentity, Manufacturer } from '@root/entities';
-import { messages } from '../constants';
+
+import { CreateShipModelInput } from '../types/inputs';
+
+import { ShipModelResult } from '../types/results';
+
+import { getModels } from './ship-model/get-models';
+import { getModel } from './ship-model/get-model';
+import { createModel } from './ship-model/create-model';
+import { updateModel } from './ship-model/update-model';
+import { deleteModel } from './ship-model/delete-model';
+
+interface IShipModelProvider {
+  getModels: () =>
+}
 
 @Injectable({ scope: ProviderScope.Session })
-export class ShipModelProvider {
+export class ShipModelProvider implements IShipModelProvider {
   constructor(private conn: Connection) {
     this.conn = conn;
   }
 
+  // Ship model: GET
+  getModels = () => getModels(this.conn);
+  getModel = (id: string) => getModel(this.conn, id);
+  createModel = (input: CreateShipModelInput) => createModel(this.conn, input);
+  };
 
-/** Get ship models */
-/** Get ship model */
-/** Create ship model */
+  // Ship model: UPDATE
+  updateModel = () => {
+    return updateModel();
+  };
 
-  /** Get ship identities */
+  // Ship model: DELETE
+  deleteModel = () => deleteModel();
+
+  /*
   async getIdentities(): Promise<ShipIdentity[]> {
     return this.shipIdentityRepo.find();
   }
 
-  /** Get ship identity */
   async getIdentity(id: string): Promise<typeof ShipIdentityResult> {
     const identity = await this.shipIdentityRepo.findOne(id);
 
@@ -28,12 +48,10 @@ export class ShipModelProvider {
     });
   }
 
-  /** Get manufacturers */
   async getManufacturers(): Promise<Manufacturer[]> {
     return this.manufacturerRepo.find();
   }
 
-  /** Get manufacturer */
   async getManufacturer(id: string): Promise<typeof ManufacturerResult> {
     const manufacturer = await this.manufacturerRepo.findOne(id);
 
@@ -42,7 +60,6 @@ export class ShipModelProvider {
     });
   }
 
-  /** Create manufacturer */
   async createManufacturer(
     input: CreateManufacturerInput,
   ): Promise<Manufacturer> {
@@ -53,4 +70,5 @@ export class ShipModelProvider {
       throw Error(message);
     }
   }
+  */
 }
