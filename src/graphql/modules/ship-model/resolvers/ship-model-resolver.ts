@@ -37,7 +37,7 @@ export class ShipModelResolver {
   // }
 
   @Mutation()
-  deleteShipModel(@Arg('id') id: string): void {
+  deleteShipModel(@Arg('id') id: string): Promise<void> {
     return this.shipModelProvider.deleteModel(id);
   }
 }
