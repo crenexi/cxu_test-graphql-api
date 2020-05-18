@@ -1,8 +1,10 @@
 import { Resolver, Query, Mutation, Arg } from 'type-graphql';
 import { ShipModel } from '@root/entities';
+import { ShipModelResult } from '@root/entities/results';
 import { ShipModelProvider } from '../providers';
-import { CreateShipModelInput, UpdateShipModelInput } from '../types/inputs';
-import { ShipModelResult } from '../types/results';
+
+import { CreateShipModelInput } from '../operations/create';
+// import { UpdateShipModelInput } from '../operations/update';
 
 @Resolver(() => ShipModel)
 export class ShipModelResolver {
@@ -12,12 +14,12 @@ export class ShipModelResolver {
 
   @Query(() => [ShipModel])
   shipModels(): Promise<ShipModel[]> {
-    return this.shipModelProvider.getModels();
+    return this.shipModelProvider.models();
   }
 
   @Query(() => ShipModelResult)
   shipModel(@Arg('id') id: string): Promise<typeof ShipModelResult> {
-    return this.shipModelProvider.getModel(id);
+    return this.shipModelProvider.model(id);
   }
 
   @Mutation(() => ShipModel)
@@ -27,12 +29,12 @@ export class ShipModelResolver {
     return this.shipModelProvider.createModel(input);
   }
 
-  @Mutation(() => ShipModel)
-  updateShipModel(
-    @Arg('input') input: UpdateShipModelInput,
-  ): Promise<ShipModel> {
-    return this.shipModelProvider.updateModel(input);
-  }
+  // @Mutation(() => ShipModel)
+  // updateShipModel(
+  //   @Arg('input') input: UpdateShipModelInput,
+  // ): Promise<ShipModel> {
+  //   return this.shipModelProvider.updateModel(input);
+  // }
 
   @Mutation()
   deleteShipModel(@Arg('id') id: string): void {

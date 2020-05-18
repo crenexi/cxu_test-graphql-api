@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { inputTryCatch, dbTryCatch } from '@root/helpers';
 import { ShipModel, ShipSpecs } from '@root/entities';
-import { CreateShipModelInput } from '../../types/inputs';
+import { CreateShipModelInput } from './create-ship-model-input';
 
 type CreateShipModel = (
   conn: Connection,

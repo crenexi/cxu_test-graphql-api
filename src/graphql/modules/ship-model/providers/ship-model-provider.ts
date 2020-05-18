@@ -1,36 +1,59 @@
 import { Connection } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { ShipModel } from '@root/entities';
-import { CreateShipModelInput } from '../types/inputs';
-import { ShipModelResult } from '../types/results';
+import { ShipModelResult } from '@root/entities/results';
 
-import { getModels } from './ship-model/get-models';
-import { getModel } from './ship-model/get-model';
-import { createModel } from './ship-model/create-model';
-import { updateModel } from './ship-model/update-model';
-import { deleteModel } from './ship-model/delete-model';
+import {
+  getShipModels,
+  getShipModel,
+} from '../operations/get';
 
-interface ShipModelProviderShape {
-  getModels: () => Promise<ShipModel[]>;
-  getModel: (id: string) => Promise<typeof ShipModelResult>;
-}
+import {
+  createShipModel,
+  CreateShipModelInput,
+} from '../operations/create';
+
+import {
+  updateShipModel,
+  UpdateShipModelInput,
+} from '../operations/update';
+
+import {
+  deleteShipModel,
+} from '../operations/delete';
+
+type Models = () => Promise<ShipModel[]>;
+type Model = (id: string) => Promise<typeof ShipModelResult>;
+type CreateModel = (input: CreateShipModelInput) => Promise<ShipModel>;
+// type UpdateModel = (input: UpdateShipModelInput) => Promise<ShipModel>;
+type DeleteModel = (id: string) => void;
 
 @Injectable({ scope: ProviderScope.Session })
-export class ShipModelProvider implements ShipModelProviderShape {
+export class ShipModelProvider {
   constructor(private conn: Connection) {
     this.conn = conn;
   }
 
-  /** Get models */
-  getModels = () => getModels(this.conn);
+  /** Model: get */
+  models: Models = () => getShipModels(this.conn);
 
-  /** Get model */
-  getModel = (id: string) => getModel(this.conn, { id });
+  /** Model: get one */
+  model: Model = id => getShipModel(this.conn, { id });
 
-  /** Create model */
-  createModel = (input: CreateShipModelInput) => {
-    return createModel(this.conn, { input });
+  /** Model: create */
+  createModel: CreateModel = (input) => {
+    return createShipModel(this.conn, { input });
   };
+
+  /** Model: update */
+  // updateModel: UpdateModel = (input: UpdateShipModelInput) => {
+  //   return updateShipModel();
+  // }
+
+  /** Model: delete */
+  deleteModel: DeleteModel = id => deleteShipModel();
+
+  }
 
   // Ship model: UPDATE
   // updateModel = () => {

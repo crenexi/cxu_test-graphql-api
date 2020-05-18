@@ -1,3 +1,5 @@
-export const deleteShipModel = async () => {
+type DeleteShipModel = () => void;
+
+export const deleteShipModel: DeleteShipModel = async () => {
   // TODO
 };

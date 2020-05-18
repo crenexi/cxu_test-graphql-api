@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { dbTryCatch } from '@root/helpers';
 import { ShipModel, ShipSpecs } from '@root/entities';
-import { ShipModelResult } from '../../types/results';
+import { ShipModelResult } from '@root/entities/results';
 import { messages } from '../../constants';
 
 type GetShipModel = (

@@ -6,6 +6,8 @@ The overall setup looks as follows:
 
 ```
 /entities
+#### /results
+######## ShipModelResult
 #### _BaseEntity.ts
 #### ShipIdentity.ts
 /graphql
@@ -23,11 +25,8 @@ Each GraphQL module has a folder structure as follows:
 
 ```
 /ship-model
-#### /types
-######## /args          <== ex. { ShipModelsArgs }
-######## /inputs        <== ex. { CreateShipModelInput }
-######## /results       <== ex. { ShipModelResult }
 #### /constants         <== ex. { messages }
+#### /operations        <== ex. { createShipModel, CreateShipModelInput  }
 #### /providers         <== ex. { ShipModelProvider }
 #### /resolvers         <== ex. { ShipModelResolver }
 #### ShipModelModule.ts

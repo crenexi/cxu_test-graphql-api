@@ -1,4 +1,6 @@
-export const updateShipModel = async () => {
+type UpdateShipModel = () => void;
+
+export const updateShipModel: UpdateShipModel = async () => {
   // TODO
 };
 
