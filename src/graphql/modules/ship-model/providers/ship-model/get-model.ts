@@ -1,7 +1,15 @@
+import { Connection } from 'typeorm';
+import { dbTryCatch } from '@root/helpers';
+import { ShipModel, ShipSpecs } from '@root/entities';
+import { ShipModelResult } from '../../types/results';
+import { messages } from '../../constants';
+
 export const getModel = async (
-  shipModelRepo: Repository<ShipModel>,
+  conn: Connection,
   id: string,
 ): Promise<typeof ShipModelResult> => {
+  const shipModelRepo = conn.getRepository(ShipModel);
+
   const model = await dbTryCatch(() => {
     return shipModelRepo
       .createQueryBuilder('shipModel')
@@ -18,4 +26,3 @@ export const getModel = async (
     notFoundNotice: messages.undefinedModel,
   });
 };
-

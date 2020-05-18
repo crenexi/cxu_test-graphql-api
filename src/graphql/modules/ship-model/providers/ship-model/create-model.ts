@@ -1,16 +1,25 @@
-export const createModel = async(
+import { Connection } from 'typeorm';
+import { inputTryCatch, dbTryCatch } from '@root/helpers';
+import { ShipModel, ShipSpecs } from '@root/entities';
+import { CreateShipModelInput } from '../../types/inputs';
+
+export const createModel = async (
+  conn: Connection,
   input: CreateShipModelInput,
-): Promise<ShipModel> {
+): Promise<ShipModel> => {
+  const shipModelRepo = conn.getRepository(ShipModel);
+  const shipSpecsRepo = conn.getRepository(ShipSpecs);
+
   const { specsInput, ...restInput } = input;
 
   // Create ship specs
   const shipSpecs = await inputTryCatch<ShipSpecs>(async () => {
-    return this.shipSpecsRepo.create(specsInput);
+    return shipSpecsRepo.create(specsInput);
   });
 
   // Create ship model
   const shipModel = await inputTryCatch<ShipModel>(async () => {
-    return this.shipModelRepo.create({
+    return shipModelRepo.create({
       ...restInput,
       specsId: shipSpecs.id,
     });
@@ -18,7 +27,7 @@ export const createModel = async(
 
   // Save entities
   return dbTryCatch(async () => {
-    await this.shipSpecsRepo.save(shipSpecs);
-    return this.shipModelRepo.save(shipModel);
+    await shipSpecsRepo.save(shipSpecs);
+    return shipModelRepo.save(shipModel);
   });
 };
