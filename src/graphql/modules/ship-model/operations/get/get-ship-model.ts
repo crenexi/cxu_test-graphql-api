@@ -23,7 +23,7 @@ export const getShipModel: GetShipModel = async (conn, id) => {
       ).getOne();
   });
 
-  // Undefined model
+  // ShipModel or WarnNotFound
   return model || ({
     notFoundNotice: messages.undefinedModel,
   });

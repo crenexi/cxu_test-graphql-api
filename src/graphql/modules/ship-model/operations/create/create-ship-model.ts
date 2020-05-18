@@ -20,6 +20,8 @@ export const createShipModel: CreateShipModel = async (conn, { input }) => {
 
     // Create ship model
     const shipModel = await shipModelRepo.save({ specsId, ...restInput });
+
+    // Success: return ID
     return shipModel.id;
   });
 };

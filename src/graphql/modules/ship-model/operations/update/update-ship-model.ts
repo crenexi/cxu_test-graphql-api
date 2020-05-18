@@ -1,11 +1,8 @@
 import { Connection } from 'typeorm';
 import isEmpty from 'lodash.isempty';
 import { dbTryCatch } from '@root/helpers';
-import { InternalInputError } from '@common/errors';
 import { ShipModel, ShipSpecs } from '@root/entities';
 import { UpdateShipModelInput } from './update-ship-model-input';
-import { UpdateShipSpecsInput } from './update-ship-specs-input';
-import { messages } from '../../constants';
 
 type UpdateShipModel = (
   conn: Connection,
@@ -13,7 +10,7 @@ type UpdateShipModel = (
     id: string;
     input: UpdateShipModelInput;
   },
-) => Promise<ShipModel>;
+) => Promise<string>;
 
 export const updateShipModel: UpdateShipModel = async (conn, { id, input }) => {
   const shipModelRepo = conn.getRepository(ShipModel);
@@ -21,9 +18,9 @@ export const updateShipModel: UpdateShipModel = async (conn, { id, input }) => {
 
   const { specsInput, ...restInput } = input;
 
-  await dbTryCatch<ShipModel>(async () => {
+  return dbTryCatch<string>(async () => {
     // Update specs, if applicable
-    if (specsInput && !isEmpty(specsInput)) {
+    if (!isEmpty(specsInput)) {
       const { id: specsId } = await shipModelRepo.findOneOrFail(id);
       await shipSpecsRepo.save({ id: specsId, ...specsInput });
     }
@@ -33,25 +30,7 @@ export const updateShipModel: UpdateShipModel = async (conn, { id, input }) => {
       await shipModelRepo.save({ id, ...restInput });
     }
 
-    // Updated ship model
+    // Success: return ID
+    return id;
   });
 };
-
-/*
-    // Create ship specs
-    if (specs) {
-      const specs = shipSpecsRepo.create(shipSpecs);
-      await shipSpecsRepo.save(specs);
-    }
-
-    // Create ship model
-    const shipModel = {
-      ...restInput,
-      specsId: specs.id,
-    };
-    const model = this.shipModelRepo.create(shipModel);
-    const savedModel = await model.save();
-
-    // Updated ship model
-    return savedModel;
-*/
