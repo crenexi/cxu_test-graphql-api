@@ -1,8 +1,7 @@
 import { Connection } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-
+import { ShipModel } from '@root/entities';
 import { CreateShipModelInput } from '../types/inputs';
-
 import { ShipModelResult } from '../types/results';
 
 import { getModels } from './ship-model/get-models';
@@ -11,19 +10,14 @@ import { createModel } from './ship-model/create-model';
 import { updateModel } from './ship-model/update-model';
 import { deleteModel } from './ship-model/delete-model';
 
-interface IShipModelProvider {
-  getModels: () =>
-}
-
 @Injectable({ scope: ProviderScope.Session })
-export class ShipModelProvider implements IShipModelProvider {
+export class ShipModelProvider {
   constructor(private conn: Connection) {
     this.conn = conn;
   }
 
-  // Ship model: GET
-  getModels = () => getModels(this.conn);
-  getModel = (id: string) => getModel(this.conn, id);
+  getModels = () => await getModels(this.conn);
+  getModel = (id: string) => await getModel(id).bind(this);
   createModel = (input: CreateShipModelInput) => createModel(this.conn, input);
   };
 
@@ -34,6 +28,8 @@ export class ShipModelProvider implements IShipModelProvider {
 
   // Ship model: DELETE
   deleteModel = () => deleteModel();
+
+
 
   /*
   async getIdentities(): Promise<ShipIdentity[]> {

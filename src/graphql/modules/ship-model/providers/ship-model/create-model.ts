@@ -3,10 +3,12 @@ import { inputTryCatch, dbTryCatch } from '@root/helpers';
 import { ShipModel, ShipSpecs } from '@root/entities';
 import { CreateShipModelInput } from '../../types/inputs';
 
-export const createModel = async (
+type CreateModel = (
   conn: Connection,
-  input: CreateShipModelInput,
-): Promise<ShipModel> => {
+  payload: { input: CreateShipModelInput },
+) => Promise<ShipModel>;
+
+export const createModel: CreateModel = async (conn, { input }) => {
   const shipModelRepo = conn.getRepository(ShipModel);
   const shipSpecsRepo = conn.getRepository(ShipSpecs);
 

@@ -26,4 +26,16 @@ export class ShipModelResolver {
   ): Promise<ShipModel> {
     return this.shipModelProvider.createModel(input);
   }
+
+  @Mutation(() => ShipModel)
+  updateShipModel(
+    @Arg('input') input: UpdateShipModelInput,
+  ): Promise<ShipModel> {
+    return this.shipModelProvider.updateModel(input);
+  }
+
+  @Mutation()
+  deleteShipModel(@Arg('id') id: string): void {
+    return this.shipModelProvider.deleteModel(id);
+  }
 }
