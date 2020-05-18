@@ -1,5 +1,6 @@
 export {
   GUID,
+  EmailAddress,
 } from './scalar-types';
 
 export {

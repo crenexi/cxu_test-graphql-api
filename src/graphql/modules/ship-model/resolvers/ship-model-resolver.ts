@@ -1,6 +1,6 @@
-import { Resolver, Query, Mutation, Arg } from 'type-graphql';
+import { Resolver, Query, Mutation, Arg, ID } from 'type-graphql';
 import { ShipModel } from '@root/entities';
-import { ShipModelResult } from '@root/entities/results';
+import { ShipModelResult } from '@graphql/common/results';
 import { ShipModelProvider } from '../providers';
 
 import { CreateShipModelInput } from '../operations/create';
@@ -22,23 +22,23 @@ export class ShipModelResolver {
     return this.shipModelProvider.model(id);
   }
 
-  @Mutation(() => )
+  @Mutation(() => ID)
   createShipModel(
     @Arg('input') input: CreateShipModelInput,
   ): Promise<string> {
     return this.shipModelProvider.createModel(input);
   }
 
-  @Mutation(() => ShipModel)
+  @Mutation(() => ID)
   updateShipModel(
     @Arg('id') id: string,
     @Arg('input') input: UpdateShipModelInput,
-  ): Promise<ShipModel> {
+  ): Promise<string> {
     return this.shipModelProvider.updateModel(id, input);
   }
 
-  @Mutation()
-  deleteShipModel(@Arg('id') id: string): Promise<void> {
+  @Mutation(() => ID)
+  deleteShipModel(@Arg('id') id: string): Promise<string> {
     return this.shipModelProvider.deleteModel(id);
   }
 }

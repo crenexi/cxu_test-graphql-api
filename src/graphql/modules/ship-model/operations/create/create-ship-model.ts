@@ -6,7 +6,7 @@ import { CreateShipModelInput } from './create-ship-model-input';
 type CreateShipModel = (
   conn: Connection,
   payload: { input: CreateShipModelInput },
-) => Promise<ShipModel>;
+) => Promise<string>;
 
 export const createShipModel: CreateShipModel = async (conn, { input }) => {
   const shipModelRepo = conn.getRepository(ShipModel);
@@ -19,6 +19,7 @@ export const createShipModel: CreateShipModel = async (conn, { input }) => {
     const { id: specsId } = await shipSpecsRepo.save(specsInput);
 
     // Create ship model
-    return shipModelRepo.save({ specsId, ...restInput });
+    const shipModel = await shipModelRepo.save({ specsId, ...restInput });
+    return shipModel.id;
   });
 };

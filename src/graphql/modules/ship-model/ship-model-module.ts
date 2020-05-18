@@ -1,6 +1,5 @@
 import { GraphQLModule } from '@graphql-modules/core';
 import { buildSchemaSync } from 'type-graphql';
-
 import { ConnModule } from '../conn';
 import { ShipModelProvider } from './providers';
 

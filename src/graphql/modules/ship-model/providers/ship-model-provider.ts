@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
 import { ShipModel } from '@root/entities';
-import { ShipModelResult } from '@root/entities/results';
+import { ShipModelResult } from '@graphql/common/results';
 
 import {
   getShipModels,
@@ -24,9 +24,9 @@ import {
 
 type Models = () => Promise<ShipModel[]>;
 type Model = (id: string) => Promise<typeof ShipModelResult>;
-type CreateModel = (input: CreateShipModelInput) => Promise<ShipModel>;
-type UpdateModel = (id: string, input: UpdateShipModelInput) => Promise<ShipModel>;
-type DeleteModel = (id: string) => Promise<void>;
+type CreateModel = (input: CreateShipModelInput) => Promise<string>;
+type UpdateModel = (id: string, input: UpdateShipModelInput) => Promise<string>;
+type DeleteModel = (id: string) => Promise<string>;
 
 @Injectable({ scope: ProviderScope.Session })
 export class ShipModelProvider {

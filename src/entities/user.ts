@@ -1,5 +1,6 @@
 import { Entity, Column } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
+import { EmailAddress } from '@graphql/common/types';
 import { BaseEntity } from './_base-entity';
 
 @Entity()
@@ -20,7 +21,7 @@ export class User extends BaseEntity {
   handle?: string;
 
   /** Email */
-  @Field()
+  @Field(() => EmailAddress)
   @Column({
     type: 'varchar',
     length: 50,

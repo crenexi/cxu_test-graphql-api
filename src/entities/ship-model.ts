@@ -1,7 +1,6 @@
 import { Diff } from 'utility-types';
 import { Entity, Column, JoinColumn, OneToOne } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
-import { GUID } from '@graphql/common/types';
 import { BaseEntity } from './_base-entity';
 import { ShipSpecs } from './ship-specs';
 // import ShipIdentity from './ShipIdentity';
@@ -32,7 +31,6 @@ export class ShipModel extends BaseEntity {
   @Column({ name: 'is_flight_ready', default: false })
   isFlightReady: boolean;
 
-  @Field(() => GUID)
   @Column({ name: 'specs_id', nullable: true })
   specsId: string;
 
