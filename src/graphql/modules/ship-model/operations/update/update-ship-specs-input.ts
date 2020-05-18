@@ -9,16 +9,29 @@ import {
 
 @InputType()
 export class UpdateShipSpecsInput implements Partial<ShipSpecs> {
-  @Field(() => ShipSizeClass)
-  sizeClass: ShipSizeClass;
+  /** Size class */
+  @Field(
+    () => ShipSizeClass,
+    { nullable: true },
+  )
+  sizeClass?: ShipSizeClass;
 
-  @Field(() => ShipCrewClass)
-  crewClass: ShipCrewClass;
+  /** Crew class */
+  @Field(
+    () => ShipCrewClass,
+    { nullable: true },
+  )
+  crewClass?: ShipCrewClass;
 
-  @Field(() => ShipLengthClass)
-  lengthClass: ShipLengthClass;
+  /** Length class */
+  @Field(
+    () => ShipLengthClass,
+    { nullable: true },
+  )
+  lengthClass?: ShipLengthClass;
 
+  /** Cargo capacity */
   @Field(() => Int)
   @IsPositive()
-  cargoCapacity: number;
+  cargoCapacity?: number;
 }

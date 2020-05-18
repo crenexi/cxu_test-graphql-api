@@ -5,17 +5,24 @@ import { UpdateShipSpecsInput } from './update-ship-specs-input';
 
 @InputType()
 export class UpdateShipModelInput implements Partial<ShipModel> {
-  @Field()
+  /** Is archived */
+  @Field({ nullable: true })
   isArchived?: boolean;
 
-  @Field()
+  /** Name */
+  @Field({ nullable: true })
   @MaxLength(50)
-  name: string;
+  name?: string;
 
-  @Field()
+  /** Description */
+  @Field({ nullable: true })
   @MaxLength(1000)
-  description: string;
+  description?: string;
 
-  @Field(() => UpdateShipSpecsInput)
-  specsInput: UpdateShipSpecsInput;
+  /** Specs input */
+  @Field(
+    () => UpdateShipSpecsInput,
+    { nullable: true },
+  )
+  specsInput?: UpdateShipSpecsInput;
 }

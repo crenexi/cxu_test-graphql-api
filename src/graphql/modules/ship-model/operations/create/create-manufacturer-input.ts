@@ -4,6 +4,7 @@ import { Manufacturer } from '@root/entities';
 
 @InputType()
 export class CreateManufacturerInput implements Partial<Manufacturer> {
+  /** Name */
   @Field()
   @IsAlphanumeric()
   @MaxLength(50)

@@ -9,15 +9,19 @@ import {
 
 @InputType()
 export class CreateShipSpecsInput implements Partial<ShipSpecs> {
+  /** Size class */
   @Field(() => ShipSizeClass)
   sizeClass: ShipSizeClass;
 
+  /** Crew class */
   @Field(() => ShipCrewClass)
   crewClass: ShipCrewClass;
 
+  /** Length class */
   @Field(() => ShipLengthClass)
   lengthClass: ShipLengthClass;
 
+  /** Cargo capacity */
   @Field(() => Int)
   @IsPositive()
   cargoCapacity: number;

@@ -1,5 +1,5 @@
 import { Connection } from 'typeorm';
-import { inputTryCatch, dbTryCatch } from '@root/helpers';
+import { dbTryCatch } from '@root/helpers';
 import { ShipModel, ShipSpecs } from '@root/entities';
 import { CreateShipModelInput } from './create-ship-model-input';
 
@@ -14,22 +14,11 @@ export const createShipModel: CreateShipModel = async (conn, { input }) => {
 
   const { specsInput, ...restInput } = input;
 
-  // Create ship specs
-  const shipSpecs = await inputTryCatch<ShipSpecs>(async () => {
-    return shipSpecsRepo.create(specsInput);
-  });
-
-  // Create ship model
-  const shipModel = await inputTryCatch<ShipModel>(async () => {
-    return shipModelRepo.create({
-      ...restInput,
-      specsId: shipSpecs.id,
-    });
-  });
-
-  // Save entities
   return dbTryCatch(async () => {
-    await shipSpecsRepo.save(shipSpecs);
-    return shipModelRepo.save(shipModel);
+    // Create ship specs
+    const { id: specsId } = await shipSpecsRepo.save(specsInput);
+
+    // Create ship model
+    return shipModelRepo.save({ specsId, ...restInput });
   });
 };

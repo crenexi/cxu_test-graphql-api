@@ -4,11 +4,13 @@ import { ShipIdentity } from '@root/entities';
 
 @InputType()
 export class CreateShipIdentityInput implements Partial<ShipIdentity> {
+  /** Name */
   @Field()
   @IsAlphanumeric()
   @MaxLength(50)
   name: string;
 
+  /** Description */
   @Field()
   @IsAlphanumeric()
   @MaxLength(1000)

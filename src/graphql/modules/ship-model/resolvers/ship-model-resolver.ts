@@ -4,7 +4,7 @@ import { ShipModelResult } from '@root/entities/results';
 import { ShipModelProvider } from '../providers';
 
 import { CreateShipModelInput } from '../operations/create';
-// import { UpdateShipModelInput } from '../operations/update';
+import { UpdateShipModelInput } from '../operations/update';
 
 @Resolver(() => ShipModel)
 export class ShipModelResolver {
@@ -22,19 +22,20 @@ export class ShipModelResolver {
     return this.shipModelProvider.model(id);
   }
 
-  @Mutation(() => ShipModel)
+  @Mutation(() => )
   createShipModel(
     @Arg('input') input: CreateShipModelInput,
-  ): Promise<ShipModel> {
+  ): Promise<string> {
     return this.shipModelProvider.createModel(input);
   }
 
-  // @Mutation(() => ShipModel)
-  // updateShipModel(
-  //   @Arg('input') input: UpdateShipModelInput,
-  // ): Promise<ShipModel> {
-  //   return this.shipModelProvider.updateModel(input);
-  // }
+  @Mutation(() => ShipModel)
+  updateShipModel(
+    @Arg('id') id: string,
+    @Arg('input') input: UpdateShipModelInput,
+  ): Promise<ShipModel> {
+    return this.shipModelProvider.updateModel(id, input);
+  }
 
   @Mutation()
   deleteShipModel(@Arg('id') id: string): Promise<void> {

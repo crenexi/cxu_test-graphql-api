@@ -13,10 +13,10 @@ import {
   CreateShipModelInput,
 } from '../operations/create';
 
-// import {
-//   updateShipModel,
-//   UpdateShipModelInput,
-// } from '../operations/update';
+import {
+  updateShipModel,
+  UpdateShipModelInput,
+} from '../operations/update';
 
 import {
   deleteShipModel,
@@ -25,7 +25,7 @@ import {
 type Models = () => Promise<ShipModel[]>;
 type Model = (id: string) => Promise<typeof ShipModelResult>;
 type CreateModel = (input: CreateShipModelInput) => Promise<ShipModel>;
-// type UpdateModel = (input: UpdateShipModelInput) => Promise<ShipModel>;
+type UpdateModel = (id: string, input: UpdateShipModelInput) => Promise<ShipModel>;
 type DeleteModel = (id: string) => Promise<void>;
 
 @Injectable({ scope: ProviderScope.Session })
@@ -46,9 +46,9 @@ export class ShipModelProvider {
     return createShipModel(this.conn, { input });
   };
 
-  // updateModel: UpdateModel = (input: UpdateShipModelInput) => {
-  //   return updateShipModel();
-  // }
+  updateModel: UpdateModel = (id, input) => {
+    return updateShipModel(this.conn, { id, input });
+  }
 
   deleteModel: DeleteModel = (id) => {
     return deleteShipModel(this.conn, { id });
