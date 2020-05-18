@@ -35,38 +35,35 @@ export class ShipModelProvider {
 
   /** Get ship models */
   async getModels(): Promise<ShipModel[]> {
-    return this.shipModelRepo
-      .createQueryBuilder('shipModel')
-      .leftJoinAndSelect(
-        ShipSpecs,
-        'shipSpecs',
-        'shipModel.specsId = shipSpecs.id',
-      ).getMany();
+    return this.dbTryCatch(() => {
+      return this.shipModelRepo
+        .createQueryBuilder('shipModel')
+        .leftJoinAndSelect(
+          ShipSpecs,
+          'shipSpecs',
+          'shipModel.specsId = shipSpecs.id',
+        ).getMany();
+    });
   }
 
   /** Get ship model */
   async getModel(id: string): Promise<typeof ShipModelResult> {
     // Get the model
-    const model = await this.shipModelRepo.findOne(id);
+    const model = await this.dbTryCatch(() => {
+      return this.shipModelRepo
+        .createQueryBuilder('shipModel')
+        .where('shipModel.id = :id', { id })
+        .leftJoinAndSelect(
+          ShipSpecs,
+          'shipSpecs',
+          'shipModel.specsId = shipSpecs.id',
+        ).getOne();
+    });
 
     // Undefined model
-    if (!model) {
-      return ({ notFoundNotice: messages.undefinedModel });
-    }
-
-    // Get the specs
-    const specs = await this.shipModelRepo
-      .createQueryBuilder()
-      .relation('specs')
-      .of(ShipSpecs)
-      .loadOne();
-
-    // Undefined specs
-    if (!specs) {
-      throw new InternalError(messages.undefinedSpecs);
-    }
-
-    return { ...model, specs };
+    return model || ({
+      notFoundNotice: messages.undefinedModel,
+    });
   }
 
   /** Create ship model */
@@ -76,10 +73,11 @@ export class ShipModelProvider {
     const { specs: shipSpecs, ...restInput } = input;
 
     try {
-
+      // Create ship specs
     } catch (err) {
       throw new InternalDatabaseError(err);
     }
+
 
     // try {
     //   await getConnection()
@@ -180,5 +178,11 @@ export class ShipModelProvider {
       const message = `Failed to create manufacturer '${input.name}'`;
       throw Error(message);
     }
+  }
+
+  private async dbTryCatch<T>(fn: () => Promise<T>): Promise<T> {
+    return fn().catch((err: Error) => {
+      throw new InternalDatabaseError(err);
+    });
   }
 }
