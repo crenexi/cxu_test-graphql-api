@@ -4,12 +4,12 @@ import { ShipModel, ShipSpecs } from '@root/entities';
 import { ShipModelResult } from '../../types/results';
 import { messages } from '../../constants';
 
-type GetModel = (
+type GetShipModel = (
   conn: Connection,
   payload: { id: string },
 ) => Promise<typeof ShipModelResult>;
 
-export const getModel: GetModel = async (conn, id) => {
+export const getShipModel: GetShipModel = async (conn, id) => {
   const shipModelRepo = conn.getRepository(ShipModel);
 
   const model = await dbTryCatch(() => {

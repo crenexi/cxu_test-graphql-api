@@ -2,9 +2,9 @@ import { Connection } from 'typeorm';
 import { dbTryCatch } from '@root/helpers';
 import { ShipModel, ShipSpecs } from '@root/entities';
 
-type GetModels = (conn: Connection) => Promise<ShipModel[]>;
+type GetShipModels = (conn: Connection) => Promise<ShipModel[]>;
 
-export const getModels: GetModels = async (conn) => {
+export const getShipModels: GetShipModels = async (conn) => {
   const shipModelRepo = conn.getRepository(ShipModel);
 
   return dbTryCatch(() => {

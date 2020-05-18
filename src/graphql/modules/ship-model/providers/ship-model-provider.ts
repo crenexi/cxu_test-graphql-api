@@ -10,26 +10,35 @@ import { createModel } from './ship-model/create-model';
 import { updateModel } from './ship-model/update-model';
 import { deleteModel } from './ship-model/delete-model';
 
+interface ShipModelProviderShape {
+  getModels: () => Promise<ShipModel[]>;
+  getModel: (id: string) => Promise<typeof ShipModelResult>;
+}
+
 @Injectable({ scope: ProviderScope.Session })
-export class ShipModelProvider {
+export class ShipModelProvider implements ShipModelProviderShape {
   constructor(private conn: Connection) {
     this.conn = conn;
   }
 
-  getModels = () => await getModels(this.conn);
-  getModel = (id: string) => await getModel(id).bind(this);
-  createModel = (input: CreateShipModelInput) => createModel(this.conn, input);
+  /** Get models */
+  getModels = () => getModels(this.conn);
+
+  /** Get model */
+  getModel = (id: string) => getModel(this.conn, { id });
+
+  /** Create model */
+  createModel = (input: CreateShipModelInput) => {
+    return createModel(this.conn, { input });
   };
 
   // Ship model: UPDATE
-  updateModel = () => {
-    return updateModel();
-  };
+  // updateModel = () => {
+  //   return updateModel();
+  // };
 
   // Ship model: DELETE
-  deleteModel = () => deleteModel();
-
-
+  // deleteModel = () => deleteModel();
 
   /*
   async getIdentities(): Promise<ShipIdentity[]> {

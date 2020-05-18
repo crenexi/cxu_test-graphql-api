@@ -1,4 +1,4 @@
-export const updateModel = async () => {
+export const updateShipModel = async () => {
   // TODO
 };
 
