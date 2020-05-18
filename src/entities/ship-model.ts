@@ -28,12 +28,11 @@ export class ShipModel extends BaseEntity {
 
   /** Is flight ready */
   @Field()
-  @Column({ default: false })
+  @Column({ name: 'is_flight_ready', default: false })
   isFlightReady: boolean;
 
-  // @Field({ nullable: true })
-  // @Column({ nullable: true })
-  // specsId: string;
+  @Column({ name: 'specs_id', nullable: true })
+  specsId: string;
 
   /** Specs */
   @Field(() => ShipSpecs)

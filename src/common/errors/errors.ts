@@ -34,7 +34,7 @@ export class InternalDatabaseError extends ApolloError {
   }
 }
 
-/** Unknown input error */
+/** Internal input error */
 export class InternalInputError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.internalInputError;

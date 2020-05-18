@@ -17,5 +17,5 @@ export class UpdateShipModelInput implements Partial<ShipModel> {
   description: string;
 
   @Field(() => UpdateShipSpecsInput)
-  specs: UpdateShipSpecsInput;
+  specsInput: UpdateShipSpecsInput;
 }

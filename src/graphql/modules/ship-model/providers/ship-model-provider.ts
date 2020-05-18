@@ -1,6 +1,5 @@
 import { Connection, Repository } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-import { InternalError, InternalDatabaseError } from '@common/errors';
 import {
   ShipModel,
   ShipIdentity,
@@ -8,16 +7,6 @@ import {
   Manufacturer,
 } from '@root/entities';
 import { messages } from '../constants';
-import {
-  CreateShipModelInput,
-  UpdateShipModelInput,
-  CreateManufacturerInput,
-} from '../types/inputs';
-import {
-  ShipModelResult,
-  ShipIdentityResult,
-  ManufacturerResult,
-} from '../types/results';
 
 @Injectable({ scope: ProviderScope.Session })
 export class ShipModelProvider {
@@ -32,85 +21,6 @@ export class ShipModelProvider {
     this.shipSpecsRepo = conn.getRepository(ShipSpecs);
     this.manufacturerRepo = conn.getRepository(Manufacturer);
   }
-
-  /** Get ship models */
-  async getModels(): Promise<ShipModel[]> {
-    return this.dbTryCatch(() => {
-      return this.shipModelRepo
-        .createQueryBuilder('shipModel')
-        .leftJoinAndSelect(
-          ShipSpecs,
-          'shipSpecs',
-          'shipModel.specsId = shipSpecs.id',
-        ).getMany();
-    });
-  }
-
-  /** Get ship model */
-  async getModel(id: string): Promise<typeof ShipModelResult> {
-    // Get the model
-    const model = await this.dbTryCatch(() => {
-      return this.shipModelRepo
-        .createQueryBuilder('shipModel')
-        .where('shipModel.id = :id', { id })
-        .leftJoinAndSelect(
-          ShipSpecs,
-          'shipSpecs',
-          'shipModel.specsId = shipSpecs.id',
-        ).getOne();
-    });
-
-    // Undefined model
-    return model || ({
-      notFoundNotice: messages.undefinedModel,
-    });
-  }
-
-  /** Create ship model */
-  async createModel(
-    input: CreateShipModelInput,
-  ): Promise<ShipModel> {
-    const { specs: shipSpecs, ...restInput } = input;
-
-    try {
-      // Create ship specs
-    } catch (err) {
-      throw new InternalDatabaseError(err);
-    }
-
-
-    // try {
-    //   await getConnection()
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(User)
-    //   .values([
-    //       { firstName: "Timber", lastName: "Saw" },
-    //       { firstName: "Phantom", lastName: "Lancer" }
-    //    ])
-    //   .execute();
-
-    //   const { specs: shipSpecs, ...restInput } = input;
-
-    //   // Create ship specs
-    //   const specs = this.shipSpecsRepo.create(shipSpecs);
-    //   await specs.save();
-
-    //   // Create ship model
-    //   const shipModel = {
-    //     ...restInput,
-    //     specsId: specs.id,
-    //   };
-    //   const model = this.shipModelRepo.create(shipModel);
-    //   const savedModel = await model.save();
-
-    //   // Updated ship model
-    //   return savedModel;
-    // } catch (err) {
-    //   throw Error(err);
-    // }
-  }
-
   /** Update ship model */
   async updateModel(
     input: UpdateShipModelInput,
@@ -178,11 +88,5 @@ export class ShipModelProvider {
       const message = `Failed to create manufacturer '${input.name}'`;
       throw Error(message);
     }
-  }
-
-  private async dbTryCatch<T>(fn: () => Promise<T>): Promise<T> {
-    return fn().catch((err: Error) => {
-      throw new InternalDatabaseError(err);
-    });
   }
 }

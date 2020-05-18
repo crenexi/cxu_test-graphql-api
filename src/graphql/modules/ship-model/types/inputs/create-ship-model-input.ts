@@ -14,5 +14,5 @@ export class CreateShipModelInput implements Partial<ShipModel> {
   description: string;
 
   @Field(() => CreateShipSpecsInput)
-  specs: CreateShipSpecsInput;
+  specsInput: CreateShipSpecsInput;
 }
