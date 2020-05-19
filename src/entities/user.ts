@@ -37,16 +37,16 @@ export class User extends BaseEntity {
 
   /** Archival notice */
   @Field()
-  @Column({ name: 'archival_notice', nullable: true })
+  @Column({ nullable: true })
   archivalNotice?: string;
 
   /** Is suspended */
   @Field()
-  @Column({ name: 'is_suspended', default: false })
+  @Column({ default: false })
   isSuspended: boolean;
 
   /** Suspension Notice */
   @Field()
-  @Column({ name: 'suspension_notice', nullable: true })
+  @Column({ nullable: true })
   suspensionNotice?: string;
 }

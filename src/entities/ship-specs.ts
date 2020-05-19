@@ -81,6 +81,6 @@ export class ShipSpecs extends BaseEntity {
 
   /** Cargo capacity */
   @Field(() => Int)
-  @Column({ name: 'cargo_capacity', type: 'integer' })
+  @Column({ type: 'integer' })
   cargoCapacity: number;
 }

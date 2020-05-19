@@ -13,6 +13,12 @@ import { ShipSpecs } from './ship-specs';
 // ShipSpinoff: a style-related variant (ex. Avenger Titan Renegade)
 // Ship: an actual ship entry (owned by a society member)
 
+// Snake-cased column names
+const columnNamesMap = {
+  isFlightReady: 'is_flight_ready',
+  specsId: 'specs_id',
+};
+
 @Entity()
 @ObjectType()
 export class ShipModel extends BaseEntity {
@@ -28,10 +34,10 @@ export class ShipModel extends BaseEntity {
 
   /** Is flight ready */
   @Field()
-  @Column({ name: 'is_flight_ready', default: false })
+  @Column({ default: false })
   isFlightReady: boolean;
 
-  @Column({ name: 'specs_id', nullable: true })
+  @Column({ nullable: true })
   specsId: string;
 
   /** Specs */

@@ -1,4 +1,5 @@
 import { ConnectionOptions } from 'typeorm';
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
 import fs from 'fs';
 import logger from '@services/logger';
 import { migrations, subscribers } from '@root/typeorm';
@@ -28,10 +29,14 @@ const readPEM = () => {
   return fs.readFileSync(path).toString();
 };
 
+// Use the snake_case naming strategy
+const namingStrategy = new SnakeNamingStrategy();
+
 const ormConfig: ConnectionOptions = {
   entities,
   migrations,
   subscribers,
+  namingStrategy,
   type: 'postgres',
   host: envConfig.host,
   port: envConfig.port,

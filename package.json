@@ -118,6 +118,7 @@
     "stream": "0.0.2",
     "type-graphql": "^0.17.6",
     "typeorm": "^0.2.24",
+    "typeorm-naming-strategies": "^1.1.0",
     "utility-types": "^3.10.0",
     "uuid": "^8.0.0",
     "winston": "^3.2.1",
