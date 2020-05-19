@@ -14,18 +14,23 @@ const details: Details = (meta, value) => {
     return value;
   })();
 
-  const details: any = { message, code, name };
 
   // Postgres errors
   if (isError && value.detail && value.table) {
-    details.postgres = {
-      code: value.code,
-      detail: value.detail,
-      table: value.table,
+    return {
+      name,
+      code,
+      message: value.detail,
+      postgres: {
+        message,
+        code: value.code,
+        detail: value.detail,
+        table: value.table,
+      },
     };
   }
 
-  return details;
+  return { message, code, name };
 };
 
 /** Generic internal error */
