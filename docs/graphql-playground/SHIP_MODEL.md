@@ -1,9 +1,18 @@
 # Playground: ShipModel
 
-## GetShipModels
+## CountShipModels
+
+#### Query
 
 ```
-{
+```
+
+## GetShipModels
+
+#### Query
+
+```
+query GetShipModels {
   shipModels {
     ...shipModelFields
   }
@@ -11,15 +20,20 @@
 
 # Ship model fields
 fragment shipModelFields on ShipModel {
+  id
   name
+  description
   isFlightReady
   specs {
-    sizeClass
+    id
+    cargoCapacity
   }
 }
 ```
 
 ## GetShipModel
+
+#### Query
 
 ```
 query GetShipModel($id: ID!, $deadId: ID!) {
@@ -64,12 +78,14 @@ fragment shipModelFields on ShipModel {
 
 ```json
 {
-  "id": "ad48bb7e-e909-457e-b6ca-94d1edba8aa3",
+  "id": "ID_HERE",
   "deadId": "3e3da2d1-f402-4883-a040-3e8437f0546a"
 }
 ```
 
 ## CreateShipModel
+
+#### Query
 
 ```
 mutation CreateShipModel(
@@ -79,6 +95,7 @@ mutation CreateShipModel(
   apolloTriage: createShipModel(input: $apolloTriage)
   apolloMedivac: createShipModel(input: $apolloMedivac)
 }
+
 ```
 
 #### Query Variables
@@ -109,15 +126,35 @@ mutation CreateShipModel(
 
 ## UpdateShipModel
 
+#### Query
+
+```
+mutation UpdateShipModel(
+  $apolloTriageId: ID!,
+  $apolloTriageUpdates: UpdateShipModelInput!,
+  $apolloMedivacId: ID!,
+  $apolloMedivacUpdates: UpdateShipModelInput!
+) {
+  apolloTriage: updateShipModel(
+    id: $apolloTriageId,
+    input: $apolloTriageUpdates
+  )
+  apolloMedivac: updateShipModel(
+    id: $apolloMedivacId,
+    input: $apolloMedivacUpdates
+  )
+}
+```
+
 #### Query Variables
 
 ```json
 {
-  "apolloTriageId": "66b25b11-0910-445a-a43a-175459926bc0",
+  "apolloTriageId": "ID_HERE",
   "apolloTriageUpdates": {
     "description": "The legendary Apollo chassis from Roberts Space Industries is the gold standard in medevac and rapid emergency response, having provided critical aid to the known universe for well over two centuries."
   },
-  "apolloMedivacId": "29ecaeb0-7f4e-416b-8cb5-60b9652330a0",
+  "apolloMedivacId": "ID_HERE",
   "apolloMedivacUpdates": {
     "specsInput": {
       "cargoCapacity": 28
@@ -126,4 +163,22 @@ mutation CreateShipModel(
 }
 ```
 
+Note: ensure 1-1 relationship updates occur as expected. In this example, updates to "specsInput" should update the "specs" 1-1 relationship.
+
 ## DeleteShipModel
+
+#### Query
+
+```
+mutation DeleteShipModel($id: ID!) {
+  deleteShipModel(id: $id)
+}
+```
+
+#### Query Variables
+
+```json
+{
+  "id": "ID_HERE"
+}
+```
