@@ -1,7 +1,8 @@
 import { ApolloServer } from 'apollo-server-express';
-import { formatError, emitSchemaSnap } from '@services/graphql-utils';
+import { emitSchemaSnap } from '@services/graphql-utils';
 import { AppModule } from '@graphql/app-module';
 import { InitApollo } from '@common/types';
+import { formatError } from './format-error';
 
 /** Setup the Apollo server */
 const initApollo: InitApollo = async ({ conn, app }) => {

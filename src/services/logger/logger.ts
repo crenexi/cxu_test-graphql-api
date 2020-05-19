@@ -1,5 +1,6 @@
 import winston, { createLogger, Logger } from 'winston';
 import get from 'lodash.get';
+import isEmpty from 'lodash.isempty';
 import config from '@config/app.config';
 import loggerConfig from './logger-config';
 import loggerTransports from './logger-transports';
@@ -73,7 +74,11 @@ class LoggerService {
     const message = !(value instanceof Error) ? value : (() => {
       const code = get(value, 'extensions.code', 'INTERNAL_SERVER_ERROR');
       const valueStr = JSON.stringify(value);
-      return `${code} | ${value.message} | JSON: ${valueStr}`;
+
+      let logStr = `${code} | ${value.message}`;
+      if (!isEmpty(value)) logStr += ` | JSON: ${valueStr}`;
+
+      return logStr;
     })();
 
     this.logger.log(level, message, { meta });
