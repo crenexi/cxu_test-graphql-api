@@ -4,24 +4,36 @@ import { errorMeta, ErrorMeta } from '../constants';
 
 type Details = (meta: ErrorMeta, m: any) => any;
 
-const details: Details = (meta, m) => {
+const details: Details = (meta, value) => {
   const { defaultMessage, code, name } = meta;
+  const isError = value instanceof Error;
 
   const message = (() => {
-    if (!m) return defaultMessage;
-    if (m instanceof Error || m.message) return m.message;
-    return m;
+    if (!value) return defaultMessage;
+    if (isError || value.message) return value.message;
+    return value;
   })();
 
-  return { message, code, name };
+  const details: any = { message, code, name };
+
+  // Postgres errors
+  if (isError && value.detail && value.table) {
+    details.postgres = {
+      code: value.code,
+      detail: value.detail,
+      table: value.table,
+    };
+  }
+
+  return details;
 };
 
 /** Generic internal error */
 export class InternalError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.internalError;
-    const { message, code, name } = details(meta, m);
-    super(message, code, { name, ...properties });
+    const { message, code, ...restDetails } = details(meta, m);
+    super(message, code, { ...restDetails, ...properties });
   }
 }
 
@@ -29,8 +41,8 @@ export class InternalError extends ApolloError {
 export class InternalDatabaseError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.internalDatabaseError;
-    const { message, code, name } = details(meta, m);
-    super(message, code, { name, ...properties });
+    const { message, code, ...restDetails } = details(meta, m);
+    super(message, code, { ...restDetails, ...properties });
   }
 }
 
@@ -38,8 +50,8 @@ export class InternalDatabaseError extends ApolloError {
 export class InternalInputError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.internalInputError;
-    const { message, code, name } = details(meta, m);
-    super(message, code, { name, ...properties });
+    const { message, code, ...restDetails } = details(meta, m);
+    super(message, code, { ...restDetails, ...properties });
   }
 }
 
@@ -47,8 +59,8 @@ export class InternalInputError extends ApolloError {
 export class ForbiddenError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.forbiddenError;
-    const { message, code, name } = details(meta, m);
-    super(message, code, { name, ...properties });
+    const { message, code, ...restDetails } = details(meta, m);
+    super(message, code, { ...restDetails, ...properties });
   }
 }
 
@@ -56,8 +68,8 @@ export class ForbiddenError extends ApolloError {
 export class AuthenticationError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.authenticationError;
-    const { message, code, name } = details(meta, m);
-    super(message, code, { name, ...properties });
+    const { message, code, ...restDetails } = details(meta, m);
+    super(message, code, { ...restDetails, ...properties });
   }
 }
 
@@ -65,8 +77,8 @@ export class AuthenticationError extends ApolloError {
 export class AlreadyAuthenticatedError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.alreadyAuthenticatedError;
-    const { message, code, name } = details(meta, m);
-    super(message, code, { name, ...properties });
+    const { message, code, ...restDetails } = details(meta, m);
+    super(message, code, { ...restDetails, ...properties });
   }
 }
 
@@ -74,7 +86,7 @@ export class AlreadyAuthenticatedError extends ApolloError {
 export class AlreadyExistsError extends ApolloError {
   constructor(m?: any, properties?: object) {
     const meta = errorMeta.alreadyExistsError;
-    const { message, code, name } = details(meta, m);
-    super(message, code, { name, ...properties });
+    const { message, code, ...restDetails } = details(meta, m);
+    super(message, code, { ...restDetails, ...properties });
   }
 }
