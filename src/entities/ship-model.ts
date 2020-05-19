@@ -13,12 +13,6 @@ import { ShipSpecs } from './ship-specs';
 // ShipSpinoff: a style-related variant (ex. Avenger Titan Renegade)
 // Ship: an actual ship entry (owned by a society member)
 
-// Snake-cased column names
-const columnNamesMap = {
-  isFlightReady: 'is_flight_ready',
-  specsId: 'specs_id',
-};
-
 @Entity()
 @ObjectType()
 export class ShipModel extends BaseEntity {
