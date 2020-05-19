@@ -2,7 +2,7 @@ import { User } from './user';
 import { ShipModel } from './ship-model';
 import { ShipIdentity } from './ship-identity';
 import { ShipSpecs } from './ship-specs';
-import { ShipSpinoff } from './ship-spinoffs';
+import { ShipSpinoff } from './ship-spinoff';
 import { Manufacturer } from './manufacturer';
 
 // Entites for Postgres

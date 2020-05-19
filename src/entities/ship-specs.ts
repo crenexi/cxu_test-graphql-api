@@ -1,6 +1,8 @@
-import { Entity, Column } from 'typeorm';
+import { Diff } from 'utility-types';
+import { Entity, Column, OneToOne } from 'typeorm';
 import { ObjectType, Field, Int, registerEnumType } from 'type-graphql';
 import { BaseEntity } from './_base-entity';
+import { ShipModel } from './ship-model';
 
 /** The size class of the ship */
 export enum ShipSizeClass {
@@ -83,4 +85,8 @@ export class ShipSpecs extends BaseEntity {
   @Field(() => Int)
   @Column({ type: 'integer' })
   cargoCapacity: number;
+
+  /** Model */
+  @OneToOne(() => ShipModel, model => model.specs)
+  model: Diff<ShipModel, BaseEntity>;
 }

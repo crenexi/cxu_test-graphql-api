@@ -1,7 +1,7 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
 import { BaseEntity } from './_base-entity';
-// import { ShipModel } from './ship-model';
+import { ShipModel } from './ship-model';
 
 @Entity()
 @ObjectType()
@@ -17,9 +17,9 @@ export class ShipSpinoff extends BaseEntity {
   description: string;
 
   /** Model */
-  // @ManyToOne(
-  //   () => ShipModel,
-  //   (shipModel: ShipModel) => shipModel.spinoffs,
-  // )
-  // model: Promise<ShipModel>;
+  @ManyToOne(
+    () => ShipModel,
+    (shipModel: ShipModel) => shipModel.spinoffs,
+  )
+  model: Promise<ShipModel>;
 }

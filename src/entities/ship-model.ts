@@ -1,10 +1,10 @@
 import { Diff } from 'utility-types';
-import { Entity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { Entity, Column, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import { ObjectType, Field } from 'type-graphql';
 import { BaseEntity } from './_base-entity';
 import { ShipSpecs } from './ship-specs';
 // import ShipIdentity from './ShipIdentity';
-// import ShipSpinoff from './ShipSpinoff';
+import { ShipSpinoff } from './ship-spinoff';
 
 // Quick note about ship entities:
 // ShipIdentity: a ship's central name (ex. Avenger)
@@ -36,7 +36,7 @@ export class ShipModel extends BaseEntity {
 
   /** Specs */
   @Field(() => ShipSpecs)
-  @OneToOne(() => ShipSpecs)
+  @OneToOne(() => ShipSpecs, specs => specs.model)
   @JoinColumn()
   specs: Diff<ShipSpecs, BaseEntity>;
 
@@ -51,11 +51,11 @@ export class ShipModel extends BaseEntity {
   // @ManyToOne(() => ShipIdentity, (si: ShipIdentity) => si.models)
   // identity: Promise<ShipIdentity>;
 
-  // @Field(() => [ShipSpinoff])
-  // @OneToMany(
-  //   () => ShipSpinoff,
-  //   (ss: ShipSpinoff) => ss.model,
-  //   { nullable: true },
-  // )
-  // spinoffs: Promise<ShipSpinoff[]>;
+  @Field(() => [ShipSpinoff])
+  @OneToMany(
+    () => ShipSpinoff,
+    (spinoff: ShipSpinoff) => spinoff.model,
+    { nullable: true },
+  )
+  spinoffs: Promise<ShipSpinoff[]>;
 }
