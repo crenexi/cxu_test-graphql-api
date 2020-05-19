@@ -18,7 +18,7 @@ export class ShipModelResolver {
   }
 
   @Query(() => ShipModelResult)
-  shipModel(@Arg('id') id: string): Promise<typeof ShipModelResult> {
+  shipModel(@Arg('id', () => ID) id: string): Promise<typeof ShipModelResult> {
     return this.shipModelProvider.model(id);
   }
 

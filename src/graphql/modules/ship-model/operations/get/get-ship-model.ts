@@ -9,7 +9,7 @@ type GetShipModel = (
   payload: { id: string },
 ) => Promise<typeof ShipModelResult>;
 
-export const getShipModel: GetShipModel = async (conn, id) => {
+export const getShipModel: GetShipModel = async (conn, { id }) => {
   const shipModelRepo = conn.getRepository(ShipModel);
 
   const model = await dbTryCatch(() => {
