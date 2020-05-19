@@ -6,6 +6,7 @@ import { ShipModelProvider } from './providers';
 import {
   ShipModelResolver,
   ShipSpecsResolver,
+  ShipSpinoffResolver,
   ShipIdentityResolver,
   ManufacturerResolver,
 } from './resolvers';
@@ -13,6 +14,7 @@ import {
 const resolvers = [
   ShipModelResolver,
   ShipSpecsResolver,
+  ShipSpinoffResolver,
   ShipIdentityResolver,
   ManufacturerResolver,
 ];

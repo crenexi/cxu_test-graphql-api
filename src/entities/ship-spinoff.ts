@@ -19,7 +19,7 @@ export class ShipSpinoff extends BaseEntity {
   /** Model */
   @ManyToOne(
     () => ShipModel,
-    (shipModel: ShipModel) => shipModel.spinoffs,
+    (model: ShipModel) => model.spinoffs,
   )
   model: Promise<ShipModel>;
 }

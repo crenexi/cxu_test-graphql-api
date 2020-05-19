@@ -1,11 +1,12 @@
 import { Connection } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-import { ShipModel, ShipSpecs } from '@root/entities';
+import { ShipModel, ShipSpecs, ShipSpinoff } from '@root/entities';
 import { ShipModelResult } from '@graphql/common/results';
 
 import {
   getShipModels,
   getShipModel,
+  getSpinoffsCount,
 } from '../operations/get';
 
 import {
@@ -30,8 +31,9 @@ type CreateModel = (input: CreateShipModelInput) => Promise<string>;
 type UpdateModel = (id: string, input: UpdateShipModelInput) => Promise<string>;
 type DeleteModel = (id: string) => Promise<string>;
 
-// Ship specs types
+// Other types
 type SpecsCount = () => Promise<number>;
+type SpinoffsCount = (modelId?: string) => Promise<number>;
 
 @Injectable({ scope: ProviderScope.Session })
 export class ShipModelProvider {
@@ -39,32 +41,44 @@ export class ShipModelProvider {
     this.conn = conn;
   }
 
+  /** Model: count */
   modelsCount: ModelsCount = () => {
     return this.conn.getRepository(ShipModel).count();
   }
 
+  /** Model: get all */
   models: Models = () => {
     return getShipModels(this.conn);
   };
 
+  /** Model: get one */
   model: Model = (id) => {
     return getShipModel(this.conn, { id });
   };
 
+  /** Model: create */
   createModel: CreateModel = (input) => {
     return createShipModel(this.conn, { input });
   };
 
+  /** Model: update */
   updateModel: UpdateModel = (id, input) => {
     return updateShipModel(this.conn, { id, input });
   }
 
+  /** Model: delete */
   deleteModel: DeleteModel = (id) => {
     return deleteShipModel(this.conn, { id });
   };
 
+  /** Specs: count */
   specsCount: SpecsCount = () => {
     return this.conn.getRepository(ShipSpecs).count();
+  }
+
+  /** Spinoffs: count */
+  spinoffsCount: SpinoffsCount = (modelId) => {
+    return getSpinoffsCount(this.conn, { modelId });
   }
 
   // async getIdentities(): Promise<ShipIdentity[]> {
