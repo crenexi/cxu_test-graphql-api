@@ -31,14 +31,14 @@ export class ShipModelResolver {
 
   @Mutation(() => ID)
   updateShipModel(
-    @Arg('id') id: string,
+    @Arg('id', () => ID) id: string,
     @Arg('input') input: UpdateShipModelInput,
   ): Promise<string> {
     return this.shipModelProvider.updateModel(id, input);
   }
 
   @Mutation(() => ID)
-  deleteShipModel(@Arg('id') id: string): Promise<string> {
+  deleteShipModel(@Arg('id', () => ID) id: string): Promise<string> {
     return this.shipModelProvider.deleteModel(id);
   }
 }

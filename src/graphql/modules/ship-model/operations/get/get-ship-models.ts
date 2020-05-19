@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm';
 import { dbTryCatch } from '@root/helpers';
-import { ShipModel, ShipSpecs } from '@root/entities';
+import { ShipModel } from '@root/entities';
 
 type GetShipModels = (conn: Connection) => Promise<ShipModel[]>;
 
@@ -9,11 +9,11 @@ export const getShipModels: GetShipModels = (conn) => {
 
   return dbTryCatch(() => {
     return shipModelRepo
-      .createQueryBuilder('shipModel')
+      .createQueryBuilder('model')
       .leftJoinAndSelect(
-        ShipSpecs,
-        'shipSpecs',
-        'shipModel.specsId = shipSpecs.id',
+        'model.specs',
+        'specs',
+        'specs.id = model.specs_id',
       ).getMany();
   });
 };

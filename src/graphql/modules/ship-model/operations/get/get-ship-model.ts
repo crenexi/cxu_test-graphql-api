@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm';
 import { dbTryCatch } from '@root/helpers';
-import { ShipModel, ShipSpecs } from '@root/entities';
+import { ShipModel } from '@root/entities';
 import { ShipModelResult } from '@graphql/common/results';
 import { messages } from '../../constants';
 
@@ -14,12 +14,12 @@ export const getShipModel: GetShipModel = async (conn, { id }) => {
 
   const model = await dbTryCatch(() => {
     return shipModelRepo
-      .createQueryBuilder('shipModel')
-      .where('shipModel.id = :id', { id })
+      .createQueryBuilder('model')
+      .where('model.id = :id', { id })
       .leftJoinAndSelect(
-        ShipSpecs,
-        'shipSpecs',
-        'shipModel.specsId = shipSpecs.id',
+        'model.specs',
+        'specs',
+        'specs.id = model.specs_id',
       ).getOne();
   });
 

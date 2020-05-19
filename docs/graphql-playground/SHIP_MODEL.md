@@ -1,4 +1,73 @@
-# Playground: ShipModel Operations
+# Playground: ShipModel
+
+## GetShipModels
+
+```
+{
+  shipModels {
+    ...shipModelFields
+  }
+}
+
+# Ship model fields
+fragment shipModelFields on ShipModel {
+  name
+  isFlightReady
+  specs {
+    sizeClass
+  }
+}
+```
+
+## GetShipModel
+
+```
+query GetShipModel($id: ID!, $deadId: ID!) {
+  shipModel: shipModel(id: $id) {
+    __typename
+    ... on ShipModel {
+      ...shipModelFields
+    }
+    ... on WarnNotFound {
+      notFoundNotice
+    }
+  }
+
+  deadShipModel: shipModel(id: $deadId) {
+    __typename
+    ... on ShipModel {
+      ...shipModelFields
+    }
+    ... on WarnNotFound {
+      notFoundNotice
+    }
+  }
+}
+
+# Ship model fields
+fragment shipModelFields on ShipModel {
+  name
+  description
+  isFlightReady
+  updatedAt
+  specs {
+    sizeClass
+    crewClass
+    lengthClass
+    cargoCapacity
+    updatedAt
+  }
+}
+```
+
+#### Query Variables
+
+```json
+{
+  "id": "ad48bb7e-e909-457e-b6ca-94d1edba8aa3",
+  "deadId": "3e3da2d1-f402-4883-a040-3e8437f0546a"
+}
+```
 
 ## CreateShipModel
 
@@ -12,7 +81,7 @@ mutation CreateShipModel(
 }
 ```
 
-### Query Variables
+#### Query Variables
 ```json
 {
   "apolloTriage": {
