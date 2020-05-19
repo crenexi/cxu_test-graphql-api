@@ -57,9 +57,9 @@ These modules reflect a plan to build a web application to serve various functio
 
 ## Documentation
 
-- **[Application Overview](src/README.md)** - middlewares, cache, etc.
-- **[GraphQL Overview](src/graphql/README.md)** - entities, modules, providers, etc.
-- **[TypeORM Usage](src/typeorm/README.md)** - migrations, subscribers, etc.
+- **[Application Overview](docs/application/00_OVERVIEW.md)** - middlewares, cache, etc.
+- **[TypeORM Usage](docs/application/01_TYPEORM.md)** - migrations, subscribers, etc.
+- **[GraphQL Overview](docs/application/02_GRAPHQL.md)** - entities, modules, providers, etc.
 
 ## Versioning
 

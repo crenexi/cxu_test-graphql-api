@@ -21,6 +21,8 @@ GraphQL and TypeORM types are defined in the same place dubbed **entities**. An 
 - **createdAt** - CreateDateColumn - Date of the 'timestamp' type
 - **updatedAt** - UpdateDateColumn - Date of the 'timestamp' type
 
+***Note: SnakeCaseStrategy is enabled, meaning isArchived gets synced into Postgres as is_archived. There's no need to specify a column name except to explicitly specify one.***
+
 Each GraphQL module has a folder structure as follows:
 
 ```
