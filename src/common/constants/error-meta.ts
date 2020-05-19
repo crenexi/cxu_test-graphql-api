@@ -10,9 +10,10 @@ export interface Errors {
   internalError: ErrorMeta;
   internalDatabaseError: ErrorMeta;
   internalInputError: ErrorMeta;
+  forbiddenError: ErrorMeta;
   authenticationError: ErrorMeta;
   alreadyAuthenticatedError: ErrorMeta;
-  forbiddenError: ErrorMeta;
+  alreadyExistsError: ErrorMeta;
 }
 
 export const errorMeta: Errors = {
@@ -31,6 +32,11 @@ export const errorMeta: Errors = {
     code: codes.internalServerError,
     defaultMessage: 'An unknown internal input error occured',
   },
+  forbiddenError: {
+    name: 'ForbiddenError',
+    code: codes.internalServerError,
+    defaultMessage: `You're are not authorized to do that`,
+  },
   authenticationError: {
     name: 'AuthenticationError',
     code: codes.authenticationError,
@@ -41,9 +47,9 @@ export const errorMeta: Errors = {
     code: codes.authenticationError,
     defaultMessage: `You're already logged in`,
   },
-  forbiddenError: {
-    name: 'ForbiddenError',
-    code: codes.internalServerError,
-    defaultMessage: `You're are not authorized to do that`,
+  alreadyExistsError: {
+    name: 'AlreadyExists',
+    code: codes.userInputError,
+    defaultMessage: 'That one already exists',
   },
 };

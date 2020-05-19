@@ -2,7 +2,8 @@ export {
   InternalError,
   InternalDatabaseError,
   InternalInputError,
+  ForbiddenError,
   AuthenticationError,
   AlreadyAuthenticatedError,
-  ForbiddenError,
+  AlreadyExistsError,
 } from './errors';

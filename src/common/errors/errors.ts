@@ -43,6 +43,15 @@ export class InternalInputError extends ApolloError {
   }
 }
 
+/** Forbidden error */
+export class ForbiddenError extends ApolloError {
+  constructor(m?: any, properties?: object) {
+    const meta = errorMeta.forbiddenError;
+    const { message, code, name } = details(meta, m);
+    super(message, code, { name, ...properties });
+  }
+}
+
 /** Authentication error */
 export class AuthenticationError extends ApolloError {
   constructor(m?: any, properties?: object) {
@@ -61,10 +70,10 @@ export class AlreadyAuthenticatedError extends ApolloError {
   }
 }
 
-/** Forbidden error */
-export class ForbiddenError extends ApolloError {
+/** Already exists error */
+export class AlreadyExistsError extends ApolloError {
   constructor(m?: any, properties?: object) {
-    const meta = errorMeta.forbiddenError;
+    const meta = errorMeta.alreadyExistsError;
     const { message, code, name } = details(meta, m);
     super(message, code, { name, ...properties });
   }
