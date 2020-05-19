@@ -1,7 +1,8 @@
-import { Resolver, Query, Arg } from 'type-graphql';
+import { Resolver } from 'type-graphql';
+// import { Resolver, Query, Arg } from 'type-graphql';
 import { ShipIdentity } from '@root/entities';
+// import { ShipIdentityResult } from '@graphql/common/results';
 import { ShipModelProvider } from '../providers';
-import { ShipIdentityResult } from '../types/results';
 
 @Resolver(() => ShipIdentity)
 export class ShipIdentityResolver {
@@ -9,13 +10,13 @@ export class ShipIdentityResolver {
     this.shipModelProvider = shipModelProvider;
   }
 
-  @Query(() => [ShipIdentity])
-  shipIdentities(): Promise<ShipIdentity[]> {
-    return this.shipModelProvider.getIdentities();
-  }
+  // @Query(() => [ShipIdentity])
+  // shipIdentities(): Promise<ShipIdentity[]> {
+  //   return this.shipModelProvider.getIdentities();
+  // }
 
-  @Query(() => ShipIdentityResult)
-  shipIdentity(@Arg('id') id: string): Promise<typeof ShipIdentityResult> {
-    return this.shipModelProvider.getIdentity(id);
-  }
+  // @Query(() => ShipIdentityResult)
+  // shipIdentity(@Arg('id') id: string): Promise<typeof ShipIdentityResult> {
+  //   return this.shipModelProvider.getIdentity(id);
+  // }
 }
