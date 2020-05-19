@@ -20,14 +20,14 @@ export const updateShipModel: UpdateShipModel = async (conn, { id, input }) => {
 
   return dbTryCatch<string>(async () => {
     // Update specs, if applicable
-    if (!isEmpty(specsInput)) {
-      const { id: specsId } = await shipModelRepo.findOneOrFail(id);
-      await shipSpecsRepo.save({ id: specsId, ...specsInput });
+    if (specsInput && !isEmpty(specsInput)) {
+      const { specsId } = await shipModelRepo.findOneOrFail(id);
+      await shipSpecsRepo.update({ id: specsId }, specsInput);
     }
 
     // Update model, if applicable
     if (!isEmpty(restInput)) {
-      await shipModelRepo.save({ id, ...restInput });
+      await shipModelRepo.update({ id }, restInput);
     }
 
     // Success: return ID

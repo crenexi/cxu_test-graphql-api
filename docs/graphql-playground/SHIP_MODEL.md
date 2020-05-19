@@ -106,3 +106,24 @@ mutation CreateShipModel(
   }
 }
 ```
+
+## UpdateShipModel
+
+#### Query Variables
+
+```json
+{
+  "apolloTriageId": "66b25b11-0910-445a-a43a-175459926bc0",
+  "apolloTriageUpdates": {
+    "description": "The legendary Apollo chassis from Roberts Space Industries is the gold standard in medevac and rapid emergency response, having provided critical aid to the known universe for well over two centuries."
+  },
+  "apolloMedivacId": "29ecaeb0-7f4e-416b-8cb5-60b9652330a0",
+  "apolloMedivacUpdates": {
+    "specsInput": {
+      "cargoCapacity": 28
+    }
+  }
+}
+```
+
+## DeleteShipModel
