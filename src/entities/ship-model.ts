@@ -31,6 +31,7 @@ export class ShipModel extends BaseEntity {
   @Column({ default: false })
   isFlightReady: boolean;
 
+  /** Specs ID */
   @Column()
   specsId: string;
 
