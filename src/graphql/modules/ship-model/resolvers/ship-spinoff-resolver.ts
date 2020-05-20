@@ -15,7 +15,7 @@ export class ShipSpinoffResolver {
   shipSpinoffsCount(
     @Arg('modelId', () => ID, { nullable: true }) modelId: string,
   ): Promise<number> {
-    return this.shipModelProvider.spinoffsCount(modelId);
+    return this.shipModelProvider.getSpinoffsCount(modelId);
   }
 
   @Mutation(() => ID)

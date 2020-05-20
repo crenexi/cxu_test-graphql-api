@@ -1,55 +1,69 @@
 import { Connection } from 'typeorm';
 import { Injectable, ProviderScope } from '@graphql-modules/di';
-import { ShipModel, ShipSpecs } from '@root/entities';
-import { ShipModelResult } from '@graphql/common/results';
+import { ShipModel, ShipSpecs, Manufacturer } from '@root/entities';
+import { ShipModelResult, ManufacturerResult } from '@graphql/common/results';
 
 import {
   getShipModels,
   getShipModel,
   getSpinoffsCount,
   getIdentitiesCount,
+  getManufacturers,
+  getManufacturer,
 } from '../operations/get';
 
 import {
-  createShipModel,
   CreateShipModelInput,
-  createShipSpinoff,
   CreateShipSpinoffInput,
+  CreateManufacturerInput,
+  createShipModel,
+  createShipSpinoff,
+  createManufacturer,
 } from '../operations/create';
 
 import {
-  updateShipModel,
   UpdateShipModelInput,
-  updateShipSpinoff,
   UpdateShipSpinoffInput,
+  UpdateManufacturerInput,
+  updateShipModel,
+  updateShipSpinoff,
+  updateManufacturer,
 } from '../operations/update';
 
 import {
   deleteShipModel,
   deleteShipSpinoff,
   deleteOrphanedShipSpecs,
+  deleteManufacturer,
 } from '../operations/delete';
 
 // Ship model types
-type ModelsCount = () => Promise<number>;
-type Models = () => Promise<ShipModel[]>;
-type Model = (id: string) => Promise<typeof ShipModelResult>;
+type GetModelsCount = () => Promise<number>;
+type GetModels = () => Promise<ShipModel[]>;
+type GetModel = (id: string) => Promise<typeof ShipModelResult>;
 type CreateModel = (input: CreateShipModelInput) => Promise<string>;
 type UpdateModel = (id: string, input: UpdateShipModelInput) => Promise<string>;
 type DeleteModel = (id: string) => Promise<string>;
 
 // Ship specs types
-type SpecsCount = () => Promise<number>;
+type GetSpecsCount = () => Promise<number>;
 type DeleteOrphanedSpecs = () => Promise<string[]>;
 
 // Ship spinoff types
-type SpinoffsCount = (modelId?: string) => Promise<number>;
+type GetSpinoffsCount = (modelId?: string) => Promise<number>;
 type CreateSpinoff = (modelId: string, input: CreateShipSpinoffInput) => Promise<string>;
 type UpdateSpinoff = (id: string, input: UpdateShipSpinoffInput) => Promise<string>;
 type DeleteSpinoff = (id: string) => Promise<string>;
 
 // Ship identity types
-type IdentitiesCount = (manufacturerId?: string) => Promise<number>;
+type GetIdentitiesCount = (manufacturerId?: string) => Promise<number>;
+
+// Manufacturer types
+type GetManufacturers = () => Promise<Manufacturer[]>;
+type GetManufacturer = (id: string) => Promise<typeof ManufacturerResult>;
+type CreateManufacturer = (input: CreateManufacturerInput) => Promise<string>;
+type UpdateManufacturer = (id: string, input: UpdateManufacturerInput) => Promise<string>;
+type DeleteManufacturer = (id: string) => Promise<string>;
 
 @Injectable({ scope: ProviderScope.Session })
 export class ShipModelProvider {
@@ -58,17 +72,17 @@ export class ShipModelProvider {
   }
 
   /** Model: count */
-  modelsCount: ModelsCount = () => {
+  getModelsCount: GetModelsCount = () => {
     return this.conn.getRepository(ShipModel).count();
   };
 
   /** Model: get all */
-  models: Models = () => {
+  getModels: GetModels = () => {
     return getShipModels(this.conn);
   };
 
   /** Model: get one */
-  model: Model = (id) => {
+  getModel: GetModel = (id) => {
     return getShipModel(this.conn, { id });
   };
 
@@ -88,7 +102,7 @@ export class ShipModelProvider {
   };
 
   /** Specs: count */
-  specsCount: SpecsCount = () => {
+  getSpecsCount: GetSpecsCount = () => {
     return this.conn.getRepository(ShipSpecs).count();
   };
 
@@ -98,7 +112,7 @@ export class ShipModelProvider {
   };
 
   /** Spinoff: count */
-  spinoffsCount: SpinoffsCount = (modelId) => {
+  getSpinoffsCount: GetSpinoffsCount = (modelId) => {
     return getSpinoffsCount(this.conn, { modelId });
   };
 
@@ -118,42 +132,32 @@ export class ShipModelProvider {
   };
 
   /** Identity: count */
-  identitiesCount: IdentitiesCount = (manufacturerId) => {
+  getIdentitiesCount: GetIdentitiesCount = (manufacturerId) => {
     return getIdentitiesCount(this.conn, { manufacturerId });
   };
 
-  // async getIdentities(): Promise<ShipIdentity[]> {
-  //   return this.shipIdentityRepo.find();
-  // }
+  /** Manufacturer: get all */
+  getManufacturers: GetManufacturers = () => {
+    return getManufacturers(this.conn);
+  };
 
-  // async getIdentity(id: string): Promise<typeof ShipIdentityResult> {
-  //   const identity = await this.shipIdentityRepo.findOne(id);
+  /** Manufacturer: get one */
+  getManufacturer: GetManufacturer = (id) => {
+    return getManufacturer(this.conn, { id });
+  };
 
-  //   return identity || ({
-  //     notFoundNotice: messages.undefinedIdentity,
-  //   });
-  // }
+  /** Manufacturer: create */
+  createManufacturer: CreateManufacturer = (input) => {
+    return createManufacturer(this.conn, { input });
+  };
 
-  // async getManufacturers(): Promise<Manufacturer[]> {
-  //   return this.manufacturerRepo.find();
-  // }
+  /** Manufacturer: update */
+  updateManufacturer: UpdateManufacturer = (id, input) => {
+    return updateManufacturer(this.conn, { id, input });
+  };
 
-  // async getManufacturer(id: string): Promise<typeof ManufacturerResult> {
-  //   const manufacturer = await this.manufacturerRepo.findOne(id);
-
-  //   return manufacturer || ({
-  //     notFoundNotice: messages.undefinedManufacturer,
-  //   });
-  // }
-
-  // async createManufacturer(
-  //   input: CreateManufacturerInput,
-  // ): Promise<Manufacturer> {
-  //   try {
-  //     return this.manufacturerRepo.create(input).save();
-  //   } catch (err) {
-  //     const message = `Failed to create manufacturer '${input.name}'`;
-  //     throw Error(message);
-  //   }
-  // }
+  /** Manufacturer: delete */
+  deleteManufacturer: DeleteManufacturer = (id) => {
+    return deleteManufacturer(this.conn, { id });
+  };
 }

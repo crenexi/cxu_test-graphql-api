@@ -11,7 +11,7 @@ export class ShipIdentityResolver {
 
   @Query(() => Int)
   shipIdentitiesCount(): Promise<number> {
-    return this.shipModelProvider.identitiesCount();
+    return this.shipModelProvider.getIdentitiesCount();
   }
 
   // @Query(() => [ShipIdentity])

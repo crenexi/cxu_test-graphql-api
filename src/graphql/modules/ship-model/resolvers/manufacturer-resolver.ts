@@ -1,9 +1,10 @@
-import { Resolver } from 'type-graphql';
-// import { Resolver, Query, Mutation, Arg } from 'type-graphql';
+import { Resolver, Query, Mutation, Arg, ID } from 'type-graphql';
 import { Manufacturer } from '@root/entities';
-// import { ManufacturerResult } from '@graphql/common/results';
+import { ManufacturerResult } from '@graphql/common/results';
 import { ShipModelProvider } from '../providers';
-// import { CreateManufacturerInput } from '../types/inputs';
+
+import { CreateManufacturerInput } from '../operations/create';
+import { UpdateManufacturerInput } from '../operations/update';
 
 @Resolver(() => Manufacturer)
 export class ManufacturerResolver {
@@ -11,20 +12,33 @@ export class ManufacturerResolver {
     this.shipModelProvider = shipModelProvider;
   }
 
-  // @Query(() => [Manufacturer])
-  // manufacturers(): Promise<Manufacturer[]> {
-  //   return this.shipModelProvider.getManufacturers();
-  // }
+  @Query(() => [Manufacturer])
+  manufacturers(): Promise<Manufacturer[]> {
+    return this.shipModelProvider.getManufacturers();
+  }
 
-  // @Query(() => ManufacturerResult)
-  // manufacturer(@Arg('id') id: string): Promise<typeof ManufacturerResult> {
-  //   return this.shipModelProvider.getManufacturer(id);
-  // }
+  @Query(() => ManufacturerResult)
+  manufacturer(@Arg('id') id: string): Promise<typeof ManufacturerResult> {
+    return this.shipModelProvider.getManufacturer(id);
+  }
 
-  // @Mutation(() => Manufacturer)
-  // createManufacturer(
-  //   @Arg('input') input: CreateManufacturerInput,
-  // ): Promise<Manufacturer> {
-  //   return this.shipModelProvider.createManufacturer(input);
-  // }
+  @Mutation(() => ID)
+  createManufacturer(
+    @Arg('input') input: CreateManufacturerInput,
+  ): Promise<string> {
+    return this.shipModelProvider.createManufacturer(input);
+  }
+
+  @Mutation(() => ID)
+  updateManufacturer(
+    @Arg('id', () => ID) id: string,
+    @Arg('input') input: UpdateManufacturerInput,
+  ): Promise<string> {
+    return this.shipModelProvider.updateManufacturer(id, input);
+  }
+
+  @Mutation(() => ID)
+  deleteManufacturer(@Arg('id') id: string): Promise<string> {
+    return this.shipModelProvider.deleteManufacturer(id);
+  }
 }

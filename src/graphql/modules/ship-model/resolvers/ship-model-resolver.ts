@@ -14,17 +14,17 @@ export class ShipModelResolver {
 
   @Query(() => Int)
   shipModelsCount(): Promise<number> {
-    return this.shipModelProvider.modelsCount();
+    return this.shipModelProvider.getModelsCount();
   }
 
   @Query(() => [ShipModel])
   shipModels(): Promise<ShipModel[]> {
-    return this.shipModelProvider.models();
+    return this.shipModelProvider.getModels();
   }
 
   @Query(() => ShipModelResult)
   shipModel(@Arg('id', () => ID) id: string): Promise<typeof ShipModelResult> {
-    return this.shipModelProvider.model(id);
+    return this.shipModelProvider.getModel(id);
   }
 
   @Mutation(() => ID)

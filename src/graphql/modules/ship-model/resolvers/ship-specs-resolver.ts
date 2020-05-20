@@ -10,7 +10,7 @@ export class ShipSpecsResolver {
 
   @Query(() => Int)
   shipSpecsCount(): Promise<number> {
-    return this.shipModelProvider.specsCount();
+    return this.shipModelProvider.getSpecsCount();
   }
 
   @Mutation(() => [ID])
