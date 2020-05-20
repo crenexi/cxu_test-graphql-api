@@ -12,7 +12,7 @@ type GetShipModel = (
 export const getShipModel: GetShipModel = async (conn, { id }) => {
   const shipModelRepo = conn.getRepository(ShipModel);
 
-  const model = await dbTryCatch(() => {
+  const model = await dbTryCatch<ShipModel | undefined>(() => {
     return shipModelRepo
       .createQueryBuilder('model')
       .where('model.id = :id', { id })

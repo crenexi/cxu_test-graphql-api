@@ -7,7 +7,7 @@ type GetShipModels = (conn: Connection) => Promise<ShipModel[]>;
 export const getShipModels: GetShipModels = (conn) => {
   const shipModelRepo = conn.getRepository(ShipModel);
 
-  return dbTryCatch(() => {
+  return dbTryCatch<ShipModel[]>(() => {
     return shipModelRepo
       .createQueryBuilder('model')
       // Model specs

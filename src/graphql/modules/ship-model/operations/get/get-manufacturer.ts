@@ -12,7 +12,7 @@ type GetManufacturer = (
 export const getManufacturer: GetManufacturer = async (conn, { id }) => {
   const manufacturerRepo = conn.getRepository(Manufacturer);
 
-  const manufacturer = await dbTryCatch(() => {
+  const manufacturer = await dbTryCatch<Manufacturer | undefined>(() => {
     return manufacturerRepo.findOne(id);
   });
 

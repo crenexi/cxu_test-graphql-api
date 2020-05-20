@@ -21,7 +21,7 @@ export const createShipSpinoff: CreateShipSpinoff = async (conn, payload) => {
     throw new InternalInputError(messages.missingModelId);
   }
 
-  return dbTryCatch(async () => {
+  return dbTryCatch<string>(async () => {
     const spinoff = await shipSpinoffRepo.save({ modelId, ...input });
 
     // Success: return ID

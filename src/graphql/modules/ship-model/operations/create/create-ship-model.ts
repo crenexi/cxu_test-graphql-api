@@ -14,7 +14,7 @@ export const createShipModel: CreateShipModel = async (conn, { input }) => {
 
   const { specsInput, ...restInput } = input;
 
-  return dbTryCatch(async () => {
+  return dbTryCatch<string>(async () => {
     // Create ship specs
     const { id: specsId } = await shipSpecsRepo.save(specsInput);
 

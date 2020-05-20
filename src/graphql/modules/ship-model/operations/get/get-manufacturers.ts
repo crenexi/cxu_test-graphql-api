@@ -7,7 +7,7 @@ type GetManufacturers = (conn: Connection) => Promise<Manufacturer[]>;
 export const getManufacturers: GetManufacturers = (conn) => {
   const manufacturerRepo = conn.getRepository(Manufacturer);
 
-  return dbTryCatch(() => {
+  return dbTryCatch<Manufacturer[]>(() => {
     return manufacturerRepo.find();
   });
 };
