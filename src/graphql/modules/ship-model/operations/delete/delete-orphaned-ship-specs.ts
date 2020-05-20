@@ -1,4 +1,5 @@
 import { Connection } from 'typeorm';
+import isEmpty from 'lodash.isempty';
 import { dbTryCatch } from '@root/helpers';
 import { ShipSpecs } from '@root/entities';
 
@@ -17,6 +18,9 @@ export const deleteOrphanedShipSpecs: DeleteOrphanedShipSpecs = async (conn) => 
       )
       .where('model is null')
       .getMany();
+
+    // Success: nothing to delete
+    if (isEmpty(orphanedSpecs)) return [];
 
     // Bulk delete
     const ids = orphanedSpecs.map(s => s.id);
