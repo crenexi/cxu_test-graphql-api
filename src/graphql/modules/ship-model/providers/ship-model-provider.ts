@@ -47,6 +47,9 @@ type CreateSpinoff = (modelId: string, input: CreateShipSpinoffInput) => Promise
 type UpdateSpinoff = (id: string, input: UpdateShipSpinoffInput) => Promise<string>;
 type DeleteSpinoff = (id: string) => Promise<string>;
 
+// Ship identity types
+type IdentitiesCount = (manufacturerId?: string) => Promise<number>;
+
 @Injectable({ scope: ProviderScope.Session })
 export class ShipModelProvider {
   constructor(private conn: Connection) {
@@ -56,7 +59,7 @@ export class ShipModelProvider {
   /** Model: count */
   modelsCount: ModelsCount = () => {
     return this.conn.getRepository(ShipModel).count();
-  }
+  };
 
   /** Model: get all */
   models: Models = () => {
@@ -76,7 +79,7 @@ export class ShipModelProvider {
   /** Model: update */
   updateModel: UpdateModel = (id, input) => {
     return updateShipModel(this.conn, { id, input });
-  }
+  };
 
   /** Model: delete */
   deleteModel: DeleteModel = (id) => {
@@ -86,32 +89,37 @@ export class ShipModelProvider {
   /** Specs: count */
   specsCount: SpecsCount = () => {
     return this.conn.getRepository(ShipSpecs).count();
-  }
+  };
 
   /** Specs: deletes specs with no associated model */
   deleteOrphanedSpecs: DeleteOrphanedSpecs = () => {
     return deleteOrphanedShipSpecs(this.conn);
-  }
+  };
 
   /** Spinoff: count */
   spinoffsCount: SpinoffsCount = (modelId) => {
     return getSpinoffsCount(this.conn, { modelId });
-  }
+  };
 
   /** Spinoff: create */
   createSpinoff: CreateSpinoff = (modelId, input) => {
     return createShipSpinoff(this.conn, { modelId, input });
-  }
+  };
 
   /** Spinoff: update */
   updateSpinoff: UpdateSpinoff = (id, input) => {
     return updateShipSpinoff(this.conn, { id, input });
-  }
+  };
 
   /** Spinoff: delete */
   deleteSpinoff: DeleteSpinoff = (id) => {
     return deleteShipSpinoff(this.conn, { id });
-  }
+  };
+
+  /** Identity: count */
+  identitiesCount: IdentitiesCount = (manufacturerId) => {
+
+  };
 
   // async getIdentities(): Promise<ShipIdentity[]> {
   //   return this.shipIdentityRepo.find();

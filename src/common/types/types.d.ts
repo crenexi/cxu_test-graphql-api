@@ -40,7 +40,7 @@ export type InitRedis = () => RedisState;
 export type Session = {
   req: express.Request;
   res: express.Response;
-}
+};
 
 export type ConnectionParams = {
   authToken?: string;
@@ -52,8 +52,8 @@ export type ConnectionParams = {
 
 export type AppModuleConfig = {
   conn: Connection;
-}
+};
 
 export type AppModuleContext = {
   url: string;
-}
+};

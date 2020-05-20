@@ -14,11 +14,11 @@ type Credentials = {
   password: string;
   handle?: string;
   email?: string;
-}
+};
 
 type AuthResult = {
   accessToken: string;
-}
+};
 
 @Injectable({ scope: ProviderScope.Session })
 export class AuthProvider implements OnRequest {

@@ -1,5 +1,4 @@
-import { Resolver } from 'type-graphql';
-// import { Resolver, Query, Arg } from 'type-graphql';
+import { Resolver, Query, Int } from 'type-graphql';
 import { ShipIdentity } from '@root/entities';
 // import { ShipIdentityResult } from '@graphql/common/results';
 import { ShipModelProvider } from '../providers';
@@ -8,6 +7,11 @@ import { ShipModelProvider } from '../providers';
 export class ShipIdentityResolver {
   constructor(private shipModelProvider: ShipModelProvider) {
     this.shipModelProvider = shipModelProvider;
+  }
+
+  @Query(() => Int)
+  shipIdentitiesCount(): Promise<number> {
+    return this.shipModelProvider.identitiesCount();
   }
 
   // @Query(() => [ShipIdentity])

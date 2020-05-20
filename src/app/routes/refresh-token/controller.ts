@@ -8,7 +8,7 @@ import { createToken } from '@root/helpers';
 
 type AccessTokenPayload = {
   userId: string;
-}
+};
 
 export const refreshTokenController = async (req: Request, res: Response) => {
   const { cookieName, cookieOpts } = config.auth;
