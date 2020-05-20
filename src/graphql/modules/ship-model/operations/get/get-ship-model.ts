@@ -16,11 +16,13 @@ export const getShipModel: GetShipModel = async (conn, { id }) => {
     return shipModelRepo
       .createQueryBuilder('model')
       .where('model.id = :id', { id })
+      // Model specs
       .leftJoinAndSelect(
         'model.specs',
         'specs',
         'specs.id = model.specs_id',
       )
+      // Model spinoffs
       .leftJoinAndSelect(
         'model.spinoffs',
         'spinoff',

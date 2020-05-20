@@ -56,7 +56,6 @@ export class ShipModel extends BaseEntity {
   @OneToMany(
     () => ShipSpinoff,
     (spinoff: ShipSpinoff) => spinoff.model,
-    { nullable: true },
   )
   spinoffs: Promise<ShipSpinoff[]>;
 }

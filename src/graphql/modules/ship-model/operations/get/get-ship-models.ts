@@ -10,10 +10,17 @@ export const getShipModels: GetShipModels = (conn) => {
   return dbTryCatch(() => {
     return shipModelRepo
       .createQueryBuilder('model')
+      // Model specs
       .leftJoinAndSelect(
         'model.specs',
         'specs',
         'specs.id = model.specs_id',
+      )
+      // Model spinoffs
+      .leftJoinAndSelect(
+        'model.spinoffs',
+        'spinoff',
+        'spinoff.model_id = model.id',
       )
       .getMany();
   });

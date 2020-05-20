@@ -27,4 +27,16 @@ mutation CreateShipSpinoff($modelId:ID, $input: CreateShipSpinoffInput!) {
 
 ## DeleteShipSpinoff
 
+```
+mutation DeleteShipSpinoff($id: ID!) {
+  deleteShipSpinoff(id: $id)
+}
+```
+
 #### Query
+
+```json
+{
+  "id": "ID_HERE"
+}
+```
