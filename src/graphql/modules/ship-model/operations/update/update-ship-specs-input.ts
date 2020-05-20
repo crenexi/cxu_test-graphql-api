@@ -1,5 +1,5 @@
 import { InputType, Field, Int } from 'type-graphql';
-import { IsPositive } from 'class-validator';
+import { IsPositive, IsEnum } from 'class-validator';
 import { ShipSpecs } from '@root/entities';
 import {
   ShipSizeClass,
@@ -14,6 +14,7 @@ export class UpdateShipSpecsInput implements Partial<ShipSpecs> {
     () => ShipSizeClass,
     { nullable: true },
   )
+  @IsEnum(ShipSizeClass)
   sizeClass?: ShipSizeClass;
 
   /** Crew class */
@@ -21,6 +22,7 @@ export class UpdateShipSpecsInput implements Partial<ShipSpecs> {
     () => ShipCrewClass,
     { nullable: true },
   )
+  @IsEnum(ShipCrewClass)
   crewClass?: ShipCrewClass;
 
   /** Length class */
@@ -28,6 +30,7 @@ export class UpdateShipSpecsInput implements Partial<ShipSpecs> {
     () => ShipLengthClass,
     { nullable: true },
   )
+  @IsEnum(ShipLengthClass)
   lengthClass?: ShipLengthClass;
 
   /** Cargo capacity */

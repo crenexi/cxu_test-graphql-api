@@ -5,4 +5,5 @@ export const messages = {
   undefinedManufacturer: 'That manufacturer was not found',
   missingModelId: 'A ShipModel ID is required but was not provided',
   deleteSpinoffsFirst: 'Cannot delete ship model with existing spinoffs',
+  deleteIdentitiesFirst: 'Cannot delete manufacturer with existing identities',
 };

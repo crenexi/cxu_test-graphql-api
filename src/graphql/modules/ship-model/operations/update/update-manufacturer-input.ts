@@ -3,14 +3,14 @@ import { MaxLength } from 'class-validator';
 import { Manufacturer } from '@root/entities';
 
 @InputType()
-export class CreateManufacturerInput implements Partial<Manufacturer> {
+export class UpdateManufacturerInput implements Partial<Manufacturer> {
   /** Name */
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(50)
-  name: string;
+  name?: string;
 
   /** Moniker */
-  @Field()
+  @Field({ nullable: true })
   @MaxLength(25)
-  moniker: string;
+  moniker?: string;
 }
