@@ -26,6 +26,7 @@ import {
 import {
   deleteShipModel,
   deleteShipSpinoff,
+  deleteOrphanedShipSpecs,
 } from '../operations/delete';
 
 // Ship model types
@@ -36,14 +37,15 @@ type CreateModel = (input: CreateShipModelInput) => Promise<string>;
 type UpdateModel = (id: string, input: UpdateShipModelInput) => Promise<string>;
 type DeleteModel = (id: string) => Promise<string>;
 
+// Ship specs types
+type SpecsCount = () => Promise<number>;
+type DeleteOrphanedSpecs = () => Promise<string[]>;
+
 // Ship spinoff types
 type SpinoffsCount = (modelId?: string) => Promise<number>;
 type CreateSpinoff = (modelId: string, input: CreateShipSpinoffInput) => Promise<string>;
 type UpdateSpinoff = (id: string, input: UpdateShipSpinoffInput) => Promise<string>;
 type DeleteSpinoff = (id: string) => Promise<string>;
-
-// Other types
-type SpecsCount = () => Promise<number>;
 
 @Injectable({ scope: ProviderScope.Session })
 export class ShipModelProvider {
@@ -84,6 +86,11 @@ export class ShipModelProvider {
   /** Specs: count */
   specsCount: SpecsCount = () => {
     return this.conn.getRepository(ShipSpecs).count();
+  }
+
+  /** Specs: deletes specs with no associated model */
+  deleteOrphanedSpecs: DeleteOrphanedSpecs = () => {
+    return deleteOrphanedShipSpecs(this.conn);
   }
 
   /** Spinoff: count */

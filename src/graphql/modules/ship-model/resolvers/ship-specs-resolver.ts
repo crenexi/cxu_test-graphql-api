@@ -1,4 +1,4 @@
-import { Resolver, Query, Int } from 'type-graphql';
+import { Resolver, Query, Mutation, Int, ID } from 'type-graphql';
 import { ShipSpecs } from '@root/entities';
 import { ShipModelProvider } from '../providers';
 
@@ -11,5 +11,10 @@ export class ShipSpecsResolver {
   @Query(() => Int)
   shipSpecsCount(): Promise<number> {
     return this.shipModelProvider.specsCount();
+  }
+
+  @Mutation(() => [ID])
+  deleteOrphanedShipSpecs(): Promise<string[]> {
+    return this.shipModelProvider.deleteOrphanedSpecs();
   }
 }
