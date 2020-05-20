@@ -14,6 +14,7 @@ export const getShipModels: GetShipModels = (conn) => {
         'model.specs',
         'specs',
         'specs.id = model.specs_id',
-      ).getMany();
+      )
+      .getMany();
   });
 };

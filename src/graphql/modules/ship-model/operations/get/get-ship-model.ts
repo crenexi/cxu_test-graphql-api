@@ -20,7 +20,13 @@ export const getShipModel: GetShipModel = async (conn, { id }) => {
         'model.specs',
         'specs',
         'specs.id = model.specs_id',
-      ).getOne();
+      )
+      .leftJoinAndSelect(
+        'model.spinoffs',
+        'spinoff',
+        'spinoff.model_id = model.id',
+      )
+      .getOne();
   });
 
   // ShipModel or WarnNotFound

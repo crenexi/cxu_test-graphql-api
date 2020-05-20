@@ -29,7 +29,6 @@ fragment shipModelFields on ShipModel {
   description
   isFlightReady
   specs {
-    id
     cargoCapacity
   }
 }
@@ -68,7 +67,12 @@ fragment shipModelFields on ShipModel {
   description
   isFlightReady
   updatedAt
+  spinoffs {
+    id
+    name
+  }
   specs {
+    id
     sizeClass
     crewClass
     lengthClass
