@@ -18,7 +18,7 @@ export class ManufacturerResolver {
   }
 
   @Query(() => ManufacturerResult)
-  manufacturer(@Arg('id') id: string): Promise<typeof ManufacturerResult> {
+  manufacturer(@Arg('id', () => ID) id: string): Promise<typeof ManufacturerResult> {
     return this.shipModelProvider.getManufacturer(id);
   }
 
@@ -38,7 +38,7 @@ export class ManufacturerResolver {
   }
 
   @Mutation(() => ID)
-  deleteManufacturer(@Arg('id') id: string): Promise<string> {
+  deleteManufacturer(@Arg('id', () => ID) id: string): Promise<string> {
     return this.shipModelProvider.deleteManufacturer(id);
   }
 }
