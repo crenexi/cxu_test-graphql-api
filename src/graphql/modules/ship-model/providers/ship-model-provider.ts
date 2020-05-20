@@ -7,6 +7,7 @@ import {
   getShipModels,
   getShipModel,
   getSpinoffsCount,
+  getIdentitiesCount,
 } from '../operations/get';
 
 import {
@@ -31,7 +32,7 @@ import {
 
 // Ship model types
 type ModelsCount = () => Promise<number>;
-type Models = () => Promise<ShipModel[]>
+type Models = () => Promise<ShipModel[]>;
 type Model = (id: string) => Promise<typeof ShipModelResult>;
 type CreateModel = (input: CreateShipModelInput) => Promise<string>;
 type UpdateModel = (id: string, input: UpdateShipModelInput) => Promise<string>;
@@ -118,7 +119,7 @@ export class ShipModelProvider {
 
   /** Identity: count */
   identitiesCount: IdentitiesCount = (manufacturerId) => {
-
+    return getIdentitiesCount(this.conn, { manufacturerId });
   };
 
   // async getIdentities(): Promise<ShipIdentity[]> {
