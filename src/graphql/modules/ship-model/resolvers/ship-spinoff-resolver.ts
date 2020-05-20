@@ -3,6 +3,7 @@ import { ShipSpinoff } from '@root/entities';
 import { ShipModelProvider } from '../providers';
 
 import { CreateShipSpinoffInput } from '../operations/create';
+import { UpdateShipSpinoffInput } from '../operations/update';
 
 @Resolver(() => ShipSpinoff)
 export class ShipSpinoffResolver {
@@ -25,13 +26,13 @@ export class ShipSpinoffResolver {
     return this.shipModelProvider.createSpinoff(modelId, input);
   }
 
-  // @Mutation(() => ID)
-  // updateShipSpinoff(
-  //   @Arg('id', () => ID) id: string,
-  //   @Arg('input') input: UpdateShipSpinoffInput,
-  // ): Promise<string> {
-  //   return this.shipModelProvider.updateSpinoff(id, input);
-  // }
+  @Mutation(() => ID)
+  updateShipSpinoff(
+    @Arg('id', () => ID) id: string,
+    @Arg('input') input: UpdateShipSpinoffInput,
+  ): Promise<string> {
+    return this.shipModelProvider.updateSpinoff(id, input);
+  }
 
   @Mutation(() => ID)
   deleteShipSpinoff(@Arg('id', () => ID) id: string): Promise<string> {

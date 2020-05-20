@@ -9,5 +9,5 @@ export class CreateShipSpinoffInput implements Partial<ShipSpinoff> {
 
   /** Description */
   @Field()
-  description?: string;
+  description: string;
 }

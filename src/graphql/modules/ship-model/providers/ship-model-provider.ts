@@ -19,6 +19,8 @@ import {
 import {
   updateShipModel,
   UpdateShipModelInput,
+  updateShipSpinoff,
+  UpdateShipSpinoffInput,
 } from '../operations/update';
 
 import {
@@ -37,6 +39,7 @@ type DeleteModel = (id: string) => Promise<string>;
 // Ship spinoff types
 type SpinoffsCount = (modelId?: string) => Promise<number>;
 type CreateSpinoff = (modelId: string, input: CreateShipSpinoffInput) => Promise<string>;
+type UpdateSpinoff = (id: string, input: UpdateShipSpinoffInput) => Promise<string>;
 type DeleteSpinoff = (id: string) => Promise<string>;
 
 // Other types
@@ -91,6 +94,11 @@ export class ShipModelProvider {
   /** Spinoff: create */
   createSpinoff: CreateSpinoff = (modelId, input) => {
     return createShipSpinoff(this.conn, { modelId, input });
+  }
+
+  /** Spinoff: update */
+  updateSpinoff: UpdateSpinoff = (id, input) => {
+    return updateShipSpinoff(this.conn, { id, input });
   }
 
   /** Spinoff: delete */
