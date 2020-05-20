@@ -17,7 +17,7 @@ export const getSpinoffsCount: GetSpinoffsCount = async (conn, { modelId }) => {
     // Count spinoffs of a particular model
     return spinoffRepo
       .createQueryBuilder('spinoff')
-      .where('spinoff.model_id = :id', { modelId })
+      .where('spinoff.model_id = :modelId', { modelId })
       .getCount();
   });
 };

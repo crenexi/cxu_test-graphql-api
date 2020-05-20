@@ -17,7 +17,7 @@ export const getIdentitiesCount: GetIdentitiesCount = async (conn, { manufacture
     // Count identities of a particular manufacturer
     return identitiesRepo
       .createQueryBuilder('identity')
-      .where('identity.manufacturer_id = :id', { manufacturerId })
+      .where('identity.manufacturer_id = :manufacturerId', { manufacturerId })
       .getCount();
   });
 };
