@@ -58,7 +58,7 @@
     "body-parser": "^1.19.0",
     "chalk": "^3.0.0",
     "connect-redis": "^4.0.4",
-    "contentful": "^7.14.0",
+    "contentful": "^9.2.13",
     "cookie-parser": "^1.4.5",
     "core-util-is": "^1.0.2",
     "cors": "^2.8.5",
